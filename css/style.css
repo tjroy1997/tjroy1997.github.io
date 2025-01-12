@@ -53,3 +53,19 @@ footer {
   padding: 1rem 0;
   margin-top: 2rem;
 }
+
+.download-button {
+  display: inline-block;
+  background-color: #007acc;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.download-button:hover {
+  background-color: #005f99;
+}
+
