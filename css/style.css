@@ -35,6 +35,8 @@ section {
 
 h2 {
   color: #007acc;
+  border-bottom: 2px solid #007acc;
+  padding-bottom: 0.5rem;
 }
 
 ul {
@@ -42,16 +44,8 @@ ul {
   padding: 0;
 }
 
-li {
+ul li {
   margin-bottom: 0.5rem;
-}
-
-footer {
-  text-align: center;
-  background: #007acc;
-  color: white;
-  padding: 1rem 0;
-  margin-top: 2rem;
 }
 
 .download-button {
@@ -69,3 +63,10 @@ footer {
   background-color: #005f99;
 }
 
+footer {
+  text-align: center;
+  background: #007acc;
+  color: white;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
