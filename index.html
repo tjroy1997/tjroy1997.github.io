@@ -1,88 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tamal Joyti Roy - Personal Website</title>
-  <link rel="stylesheet" href="css/style.css">
-</head><body>
-  <header>
-    <h1>Tamal Joyti Roy</h1>
-    <p>2nd Year PhD Student, Measurement, Quantitative Methods & Learning Sciences</p>
-    <p>Email: <a href="mailto:tjroy@cougarnet.uh.edu">tjroy@cougarnet.uh.edu</a> | Phone: +1 713-505-4219</p>
-    <p>Address: 5514 Griggs Road, Houston, TX 77021</p>
-  </header>
-  
-  <main>
-    <section>
-      <h2>About Me</h2>
-      <p>
-        I am a second-year Ph.D. student at the University of Houston specializing in 
-        Measurement, Quantitative Methods, and Learning Sciences. My research areas 
-        include digital health education, health informatics, motivation, grit, engagement, 
-        academic procrastination, and self-efficacy. With a strong foundation in computer 
-        science and engineering, I integrate advanced statistical methods with machine 
-        learning to address real-world problems in education and healthcare.
-      </p>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter bg-gray-100 text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-gray-900">Your Name</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#home" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">Home</a>
+                    <a href="#projects" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">Projects</a>
+                    <a href="#about" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">About</a>
+                    <a href="#contact" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+        <div class="text-center max-w-3xl mx-auto px-4">
+            <h1 class="text-5xl font-bold mb-4">Hi, I'm Your Name</h1>
+            <p class="text-xl mb-6">A passionate developer creating innovative solutions</p>
+            <a href="#projects" class="inline-block bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">View My Work</a>
+        </div>
     </section>
 
-    <section class="publications">
-      <h2>Peer-Reviewed Publications</h2>
-      
-      <div class="journal-articles">
-        <h3>Journal Article</h3>
-        <div class="article">
-          <p class="year">2022</p>
-          <p class="citation">Hossain, M. M., Saha, N., Rodela, T. T., Tasnim, S., Nuzhath, T., Roy, T. J., Burdine, J. N., Ahmed, H. U., McKyer, E. L. J., Basu, B. K., & Ma, P. (2022). Global research on syndemics: a meta-knowledge analysis (2001-2020). <em>F1000Research, 11</em>(253), 253.</p>
-          <p class="doi"><a href="https://doi.org/10.12688/f1000research.74190.2">https://doi.org/10.12688/f1000research.74190.2</a></p>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card -->
+                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                    <img src="https://via.placeholder.com/400x200" alt="Project 1" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Project One</h3>
+                        <p class="text-gray-600 mb-4">A brief description of your project and the technologies used.</p>
+                        <a href="#" class="text-blue-600 hover:underline">View on GitHub</a>
+                    </div>
+                </div>
+                <!-- Repeat similar blocks for more projects -->
+            </div>
         </div>
-      </div>
-
-      <div class="conference-proceedings">
-        <h3>Conference Proceedings & Presentation</h3>
-        <div class="proceeding">
-          <p class="year">2024</p>
-          <p class="citation">Huynh, A. L., Roy, T. J., Jackson, K. N., Lee, A., & Mahbub Hossain, M. (2024). Effectiveness of AI-based chatbots in healthcare: An umbrella review.</p>
-          <p class="link"><a href="https://aisel.aisnet.org/treos_icis2024/130">https://aisel.aisnet.org/treos_icis2024/130</a></p>
-        </div>
-        <!-- Add other conference proceedings here -->
-      </div>
-
-      <div class="book-chapters">
-        <h3>Book Chapters</h3>
-        <div class="chapter">
-          <p class="year">2024</p>
-          <p class="citation">Shelton, L., Nguyen, K., Joseph, T., Roy, T. J., Roy, P., Alarcón, J., & Olvera, N. (in press). How is our community healthy? Program design and lessons learned while training college students to facilitate photovoice projects with children. In <em>The Palgrave Handbook on Participatory Action Research with Children</em>. Palgrave Macmillan.</p>
-        </div>
-        <!-- Add other book chapters here -->
-      </div>
-
-      <div class="manuscripts">
-        <h3>Manuscript Under Review</h3>
-        <ul>
-          <li>Factors Influencing Academic Success of First-Generation College Students in the United States: A Systematic Review</li>
-          <li>Preventing health information disorders (HIDs) in college students: Perspectives on health information hygiene in higher education</li>
-          <li>Understanding Medical Weight Problem Diagnosis in Hispanic Women and Men: The Role of Healthcare Utilization, Body Image, and Perceived Health Status</li>
-        </ul>
-        <h3>Manuscript Under Preparation</h3>
-        <ul>
-          <li>Emotional Eating in Hispanic Adolescents: Role of Anxiety and Sleep Quality</li>
-          <li>The Role of Self-Efficacy and Regulation Difficulties in Predicting Academic Procrastination</li>
-          <li>The Role of Anxiety, Body Discrepancy, and Sleep on Body Mass Index Among Latino Youth</li>
-          <li>The impact of teacher and student beliefs on math and science engagement</li>
-        </ul>
-      </div>
     </section>
 
-    <section>
-      <h2>Download My CV</h2>
-      <p>You can download my CV by clicking the button below:</p>
-      <a href="TJR_CV.pdf" class="download-button" download>Download CV</a>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <img src="https://via.placeholder.com/300" alt="Profile" class="w-64 h-64 rounded-full object-cover">
+                <div>
+                    <p class="text-lg text-gray-600 mb-4">I'm a developer with a passion for building scalable and user-friendly applications. My expertise includes [list skills].</p>
+                    <p class="text-lg text-gray-600">When I'm not coding, you can find me [hobbies/interests].</p>
+                </div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 Tamal Joyti Roy | <a href="mailto:tjroy@cougarnet.uh.edu">Contact Me</a></p>
-  </footer>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+            <div class="max-w-lg mx-auto">
+                <div class="space-y-4">
+                    <p class="text-gray-600">Email: <a href="mailto:your.email@example.com" class="text-blue-600 hover:underline">your.email@example.com</a></p>
+                    <p class="text-gray-600">GitHub: <a href="https://github.com/yourusername" class="text-blue-600 hover:underline">github.com/yourusername</a></p>
+                    <p class="text-gray-600">LinkedIn: <a href="https://linkedin.com/in/yourusername" class="text-blue-600 hover:underline">linkedin.com/in/yourusername</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Your Name. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
