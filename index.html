@@ -3,107 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamal Joyti Roy - Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Tamal Joyti Roy - PhD Student & Researcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --uh-red: #C8102E;
+            --uh-white: #FFFFFF;
+            --uh-black: #000000;
+            --uh-slate: #5A5A5A;
+            --uh-light-gray: #F5F5F5;
+            --uh-dark-red: #76232F;
+        }
+        
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--uh-light-gray);
+        }
+        
+        header {
+            background: var(--uh-red);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .contact-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+        
+        .contact-links a:hover {
+            background: rgba(255,255,255,0.35);
+        }
+        
+        nav {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--uh-red);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--uh-red);
+            font-weight: 700;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--uh-dark-red);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            background: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--uh-red);
+        }
+        
+        section h2 {
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--uh-red);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--uh-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        section h3 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 700;
+        }
+        
+        .experience-item, .education-item, .publication-item, .project-item {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .experience-item:last-child, .education-item:last-child, 
+        .publication-item:last-child, .project-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .item-title {
+            font-family: 'Source Sans 3', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--uh-black);
+        }
+        
+        .item-date {
+            color: var(--uh-slate);
+            font-style: italic;
+        }
+        
+        .item-subtitle {
+            color: var(--uh-red);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-description {
+            margin-top: 0.5rem;
+        }
+        
+        .item-description ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .item-description li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-category {
+            background: var(--uh-light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--uh-red);
+        }
+        
+        .skill-category h3 {
+            color: var(--uh-red);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .awards-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .award-item {
+            background: var(--uh-light-gray);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--uh-red);
+        }
+        
+        .award-title {
+            font-weight: 700;
+            color: var(--uh-black);
+        }
+        
+        .award-amount {
+            color: var(--uh-red);
+            font-weight: 700;
+        }
+        
+        footer {
+            background: var(--uh-red);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        a {
+            color: var(--uh-red);
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--uh-dark-red);
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .item-header {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
-<body class="font-inter bg-gray-100 text-gray-800">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold text-gray-900">Tamal Joyti Roy</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#home" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">Home</a>
-                    <a href="#projects" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">Projects</a>
-                    <a href="#about" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">About</a>
-                    <a href="#contact" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md">Contact</a>
-                </div>
-            </div>
+<body>
+    <header>
+        <h1>Tamal Joyti Roy</h1>
+        <p>3rd Year PhD Student</p>
+        <p>Measurement, Quantitative Methods & Learning Sciences (MQM-LS)</p>
+        <p>University of Houston</p>
+        <div class="contact-links">
+            <a href="mailto:tjroy@cougarnet.uh.edu">📧 Email</a>
+            <a href="tel:+17135054219">📱 +1 713-505-4219</a>
+            <a href="#" target="_blank">🎓 Google Scholar</a>
+            <a href="#" target="_blank">💼 LinkedIn</a>
+            <a href="#" target="_blank">🔬 ORCID</a>
         </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#projects">Research Projects</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#skills">Skills</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-        <div class="text-center max-w-3xl mx-auto px-4">
-            <h1 class="text-5xl font-bold mb-4">Hi, I'm Tamal Joyti Roy</h1>
-            <p class="text-xl mb-6">PhD Student in Measurement, Quantitative Methods, & Learning Sciences (MQM-LS) </p>
-            <a href="#projects" class="inline-block bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">View My Work</a>
-        </div>
-    </section>
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>I am a third-year PhD student in the Measurement, Quantitative Methods, and Learning Sciences (MQM-LS) program at the University of Houston. My research focuses on digital health education, student motivation, grit, engagement, academic procrastination, and self-efficacy. With a strong background in data science and quantitative methods, I aim to leverage advanced statistical techniques and machine learning to address critical challenges in education and health.</p>
+            <p style="margin-top: 1rem;">My interdisciplinary approach combines expertise in computer science, educational psychology, and public health to generate actionable insights that improve student outcomes and health interventions.</p>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Research Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                    <img src="https://via.placeholder.com/400x200" alt="Motivation Project" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Motivation, Grit, and Academic Engagement</h3>
-                        <p class="text-gray-600 mb-4">Designed a study exploring relationships among motivation, grit, and academic engagement. IRB approved (STUDY00004949).</p>
-                        <a href="#" class="text-blue-600 hover:underline">View Details</a>
+        <section id="education">
+            <h2>Education</h2>
+            <div class="education-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Ph.D. in Measurement, Quantitative Methods, and Learning Science</div>
+                        <div class="item-subtitle">University of Houston, USA</div>
                     </div>
+                    <div class="item-date">2023 - Present</div>
                 </div>
-                <!-- Project 2 -->
-                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                    <img src="https://via.placeholder.com/400x200" alt="First-Gen Success" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">First-Generation College Student Success</h3>
-                        <p class="text-gray-600 mb-4">Led systematic review analyzing success factors for first-generation students, screening 32+ articles.</p>
-                        <a href="#" class="text-blue-600 hover:underline">View Details</a>
-                    </div>
-                </div>
-                <!-- Project 3 -->
-                <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                    <img src="https://via.placeholder.com/400x200" alt="CoderKids" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">CoderKids</h3>
-                        <p class="text-gray-600 mb-4">Investigated impact of coding programs on children's engagement. IRB approved (STUDY00004640).</p>
-                        <a href="#" class="text-blue-600 hover:underline">View Details</a>
-                    </div>
+                <div class="item-description">
+                    <p><strong>Focus:</strong> Quantitative Methods</p>
+                    <p><strong>Research Areas:</strong> Digital health education, Health education, Students Motivation, Grits, Engagement, Academic procrastination, and Self-efficacy</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <img src="https://via.placeholder.com/300" alt="Profile" class="w-64 h-64 rounded-full object-cover">
-                <div>
-                    <p class="text-lg text-gray-600 mb-4">I’m a 2nd-year PhD student at the University of Houston in Measurement, Quantitative Methods, and Learning Sciences, with a B.Sc. in Computer Science from North Western University, Bangladesh. My research focuses on digital health education, health informatics, motivation, grit, and academic procrastination.</p>
-                    <p class="text-lg text-gray-600">As a Research Assistant, I lead data management for health intervention programs and mentor students. Previously, I worked as a Data Scientist at United We Care, implementing AI solutions. I’m skilled in Python, R, TensorFlow, and Tableau, with certifications in AI Productivity and Prompt Engineering.</p>
+            
+            <div class="education-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Bachelor of Science in Computer Science and Engineering</div>
+                        <div class="item-subtitle">Northwestern University, Bangladesh</div>
+                    </div>
+                    <div class="item-date">2016 - 2020</div>
+                </div>
+                <div class="item-description">
+                    <p><strong>Major:</strong> Computer Science and Engineering</p>
+                    <p><strong>Research Focus:</strong> Machine learning, Data science, and Data mining</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Get in Touch</h2>
-            <div class="max-w-lg mx-auto">
-                <div class="space-y-4">
-                    <p class="text-gray-600">Email: <a href="mailto:tiroy@cougarnet.uh.edu" class="text-blue-600 hover:underline">tiroy@cougarnet.uh.edu</a></p>
-                    <p class="text-gray-600">Phone: <a href="tel:+17135054219" class="text-blue-600 hover:underline">+1 713-505-4219</a></p>
-
-                    <p class="text-gray-600">LinkedIn: <a href="https://linkedin.com/in/tamaljoytiroy" class="text-blue-600 hover:underline">linkedin.com/in/tamaljoytiroy</a></p>
+        <section id="experience">
+            <h2>Professional Experience</h2>
+            
+            <div class="experience-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Research Assistant</div>
+                        <div class="item-subtitle">BOUNCE, University of Houston, College of Education</div>
+                    </div>
+                    <div class="item-date">June 2024 - Present</div>
+                </div>
+                <div class="item-description">
+                    <p><em>Grant-funded project by the Hispanic Federation (Part-time)</em></p>
+                    <ul>
+                        <li>Managed data operations for multiple health intervention programs, implementing standardized protocols to ensure data integrity and accuracy</li>
+                        <li>Directed data collection and analysis for the Diabetes Prevention Program and Nutrition Ambassador Program to support evidence-based program evaluation</li>
+                        <li>Mentored a team of graduate and undergraduate interns on research methodologies and professional development</li>
+                        <li>Contributed to scholarly publications by performing statistical analysis and assisting with manuscript preparation</li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>© 2025 Tamal Joyti Roy. All rights reserved.</p>
-        </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Graduate Assistant</div>
+                        <div class="item-subtitle">C.T. Bauer College of Business & Tilman J. Fertitta Family College of Medicine, University of Houston</div>
+                    </div>
+                    <div class="item-date">July 2025 - Sep 2025</div>
+                </div>
+                <div class="item-description">
+                    <ul>
+                        <li>Conducted a comprehensive systematic review to identify and analyze the primary factors contributing to the academic success of first-generation students in the United States</li>
+                        <li>Investigated the impact of emerging trends on health professions education by analyzing the roles of Artificial Intelligence (AI), grit, and self-efficacy</li>
+                        <li>Analyzed large-scale nationwide health data (e.g., HINTS) to understand the adoption and impact of wearable health devices among populations with chronic illnesses</li>
+                        <li>Authored scholarly commentaries and manuscripts on asset-based approaches in education and health</li>
+                        <li>Synthesized complex research findings and performed statistical analyses for multiple research papers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Data Scientist</div>
+                        <div class="item-subtitle">United We Care, India</div>
+                    </div>
+                    <div class="item-date">Nov 2021 - Jun 2023</div>
+                </div>
+                <div class="item-description">
+                    <p><em>Full-time</em></p>
+                    <ul>
+                        <li>Led enterprise-wide implementation of generative AI solutions and data science frameworks, driving technological innovation and operational efficiency</li>
+                        <li>Orchestrated SEO analytics strategy and optimization initiatives, leveraging data-driven insights to enhance digital presence and performance metrics</li>
+                        <li>Engineered advanced predictive models using PyTorch and scikit-learn, delivering actionable insights for business decision-making</li>
+                        <li>Designed and executed sophisticated statistical analyses, translating complex data into clear, actionable reports for stakeholders</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications">
+            <h2>Publications</h2>
+            
+            <h3 style="color: var(--uh-red); margin-top: 1.5rem; margin-bottom: 1rem; font-weight: 700;">Journal Articles</h3>
+            
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2025</h4>
+            
+            <div class="publication-item">
+                <p>Olvera, N., Scherer, R., <strong>Roy, T. J.</strong>, Chavez Cubas, N. W., Matthews-Ewald, M. R., & Arbona, C. (2025). Visual voices: Hispanic and African American youth perspectives on neighborhood and school health. <em>Children, 12</em>(9), 1165. <a href="https://doi.org/10.3390/children12091165" target="_blank">https://doi.org/10.3390/children12091165</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p>Olvera, N., Scherer, R., Wu, W., <strong>Roy, T. J.</strong>, Matthews-Ewald, M. R., Fan, W., & Arbona, C. (2025). The role of doctor visits, body image discrepancy, and perceived health in predicting medical weight problem diagnosis. <em>Healthcare, 13</em>(17), 2135. <a href="https://doi.org/10.3390/healthcare13172135" target="_blank">https://doi.org/10.3390/healthcare13172135</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Saha, N., Huynh, A. L., Das, J., Mazumder, H., Hossain, P., & Hossain, M. M. (in revision). Factors influencing academic success of first-generation college students in the United States: A systematic review. <em>Manuscript in revision for the Journal of First-generation Student Success</em>.</p>
+            </div>
+
+            <div class="publication-item">
+                <p>Olvera, N., <strong>Roy, T. J.</strong>, Scherer, R., Matthews-Ewald, M., Fan, W., & Arbona, C. (2025). Emotional eating in Hispanic youth: The role of anxiety and sleep quality. <em>Nutrients, 17</em>(9), 1588. <a href="https://doi.org/10.3390/nu17091588" target="_blank">https://doi.org/10.3390/nu17091588</a></p>
+            </div>
+
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2022</h4>
+            
+            <div class="publication-item">
+                <p>Hossain, M. M., Saha, N., Rodela, T. T., Tasnim, S., Nuzhath, T., <strong>Roy, T. J.</strong>, Burdine, J. N., Ahmed, H. U., McKyer, E. L. J., Basu, B. K., & Ma, P. (2022). Global research on syndemics: a meta-knowledge analysis (2001-2020). <em>F1000Research, 11</em>(253), 253. <a href="https://doi.org/10.12688/f1000research.74190.2" target="_blank">https://doi.org/10.12688/f1000research.74190.2</a></p>
+            </div>
+
+            <h3 style="color: var(--uh-red); margin-top: 2rem; margin-bottom: 1rem; font-weight: 700;">Conference Proceedings & Presentations</h3>
+            
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2025</h4>
+            
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Das, J., & Hossain, M. M. (2025, November 2–5). Factors associated with online medical record use among US adults with hypertension: Results from a nationally representative survey [Conference presentation]. American Public Health Association 2025 Annual Meeting & Expo, Washington, DC, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Das, J., & Hossain, M. M. (2025, November 2–5). Predictors of health and wellness apps use among smartphone users in the US: Findings from a nationwide study [Conference presentation]. American Public Health Association 2025 Annual Meeting & Expo, Washington, DC, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Das, J., & Hossain, M. M. (2025, November 2–5). Prevalence and correlates of wearable health technology use among people with diabetes in the US: Findings from a nationally representative survey [Conference presentation]. American Public Health Association 2025 Annual Meeting & Expo, Washington, DC, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p>Das, J., <strong>Roy, T. J.</strong>, & Hossain, M. M. (2025, November 2–5). Association between online health information-seeking behavior and perceived health-related misinformation among older adults in the US [Conference presentation]. American Public Health Association 2025 Annual Meeting & Expo, Washington, DC, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p>Saha, N., Guzman, Y. G., <strong>Roy, T. J.</strong>, Chavez Cubas, N. W., Daniel, P., Nguyen, K., & Olvera, N. (2025, November 2–5). Association between online health information-seeking behavior and perceived health-related misinformation among older adults in the US [Conference presentation]. American Public Health Association 2025 Annual Meeting & Expo, Washington, DC, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T.</strong>, Fan, W., Olvera, N., & Arbona, C. (2025, August). The role of self-efficacy and regulation difficulties in predicting academic procrastination [Poster abstract]. American Psychological Association 2025 Annual Convention, Denver, CO, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T.</strong>, Saha, N., Nguyen, N., Scherer, R., Fan, W., Arbona, C., & Olvera, N. (2025, August). The role of anxiety, body discrepancy, and sleep on body mass index among Latino youth [Poster abstract]. American Psychological Association 2025 Annual Convention, Denver, CO, United States.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T.</strong>, Roy, P., Scherer, R., Fan, W., Arbona, C., & Olvera, N. (2025, August). Emotional eating in Hispanic adolescents: Role of anxiety and sleep quality [Poster abstract]. American Psychological Association 2025 Annual Convention, Denver, CO, United States.</p>
+            </div>
+
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2024</h4>
+
+            <div class="publication-item">
+                <p>Huynh, A. L., <strong>Roy, T. J.</strong>, Jackson, K. N., Lee, A., & Mahbub Hossain, M. (2024). Effectiveness of AI-based chatbots in healthcare: An umbrella review. <a href="https://aisel.aisnet.org/treos_icis2024/130" target="_blank">https://aisel.aisnet.org/treos_icis2024/130</a></p>
+            </div>
+
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2022</h4>
+
+            <div class="publication-item">
+                <p>Ashiq Mahmood, M., <strong>Roy, T.J.</strong>, Ashiqul Amin, M., Roy, D., Mohanta, A., Fayez Dipty, F., & Mitra, S. (2023). A hybrid approach to find COVID-19 related lung infection utilizing 2-bit image processing. In <em>Lecture Notes in Networks and Systems</em> (pp. 119–127). Springer Nature Singapore. <a href="https://doi.org/10.1007/978-981-19-2821-5" target="_blank">https://doi.org/10.1007/978-981-19-2821-5</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Mahmood, M. A., & Mohanta, A. (2022). An efficient approach to validate COVID-19 related vaccine myths utilizing LDA algorithm. <em>Proceedings of the 2nd International Conference on Computing Advancements</em>, 53–58. <a href="https://doi.org/10.1145/3542954.3542963" target="_blank">https://doi.org/10.1145/3542954.3542963</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Mahmood, M. A., Mohanta, A., Roy, D., Jyoti, J. T., & Ghosh, P. K. (2022). A machine learning approach to analyze the performance of Bangladesh cricket in T20. <em>2022 International Conference on Innovations in Science, Engineering and Technology (ICISET)</em>, 129–134. <a href="https://doi.org/10.1109/ICISET54810.2022.9775839" target="_blank">https://doi.org/10.1109/ICISET54810.2022.9775839</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p>Roy, D., <strong>Roy, T. J.</strong>, Mahmud, I., & Alvi, N. (2022). An efficient approach to predict fear of human's mind during COVID-19 outbreaks utilizing data mining technique. In <em>Advances in Intelligent Systems and Computing</em> (pp. 41–51). Springer Singapore. <a href="http://dx.doi.org/10.2139/ssrn.3852813" target="_blank">http://dx.doi.org/10.2139/ssrn.3852813</a></p>
+            </div>
+
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2021</h4>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Mahmood, M. A., & Roy, D. (2021). A machine learning model to predict earthquake utilizing neural network. <em>2021 International Conference on Computer, Communication, Chemical, Materials and Electronic Engineering (IC4ME2)</em>, 1–4. <a href="https://doi.org/10.1109/IC4ME253898.2021.9768454" target="_blank">https://doi.org/10.1109/IC4ME253898.2021.9768454</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Mahmood, M. A., & Roy, D. (2021). An efficient approach to identify the key factors of failure of Bangladesh cricket team in test cricket utilizing hypothesis testing and clustering method. <em>2021 5th International Conference on Electrical Information and Communication Technology (EICT)</em>, 1–6. <a href="https://doi.org/10.1109/EICT54103.2021.9733495" target="_blank">https://doi.org/10.1109/EICT54103.2021.9733495</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, Mahmood, M. A., Mohanta, A., & Roy, D. (2021). An analytical approach to predict the COVID-19 death rate in Bangladesh utilizing multiple regression and SEIR model. <em>2021 IEEE International Conference on Robotics, Automation, Artificial-Intelligence and Internet-of-Things (RAAICON)</em>, 42–45. <a href="https://doi.org/10.1109/RAAICON54709.2021.9929470" target="_blank">https://doi.org/10.1109/RAAICON54709.2021.9929470</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p>Roy, D., Mahmood, M. A., <strong>Roy, T. J.</strong>, & Mohanta, A. (2021). A two-step clustering approach to measure soil quality of sundarban based on organic carbon and bulk density. <em>2021 IEEE International Conference on Robotics, Automation, Artificial-Intelligence and Internet-of-Things (RAAICON)</em>, 85–88. <a href="https://doi.org/10.1109/RAAICON54709.2021.9929604" target="_blank">https://doi.org/10.1109/RAAICON54709.2021.9929604</a></p>
+            </div>
+
+            <h3 style="color: var(--uh-red); margin-top: 2rem; margin-bottom: 1rem; font-weight: 700;">Book Chapters</h3>
+
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2024</h4>
+
+            <div class="publication-item">
+                <p>Shelton, L., Nguyen, K., Joseph, T., <strong>Roy, T. J.</strong>, Roy, P., Alarcón, J., & Olvera, N. (in press). How is our community healthy? Program design and lessons learned while training college students to facilitate photovoice projects with children. In <em>The Palgrave Handbook on Participatory Action Research with Children</em>. Palgrave Macmillan.</p>
+            </div>
+
+            <h4 style="color: var(--uh-slate); margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600;">2023</h4>
+
+            <div class="publication-item">
+                <p>Roy, D., Mahmood, M. A., & <strong>Roy, T. J.</strong> (2023). An efficient approach to assess the soil quality of Sundarbans utilizing hierarchical clustering. In <em>Applied Intelligence for Industry 4.0</em> (pp. 79–89). Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9781003256083" target="_blank">https://doi.org/10.1201/9781003256083</a></p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>Roy, T. J.</strong>, & Ashiq Mahmood, M. (2023). Global warming and Bangladesh: A machine learning approach to analyze the warming rate utilizing neural network. In <em>Lecture Notes in Electrical Engineering</em> (pp. 19–30). Springer Nature Singapore. <a href="https://doi-org.ezproxy.lib.uh.edu/10.1007/978-981-19-8032-9_2" target="_blank">https://doi.org/10.1007/978-981-19-8032-9_2</a></p>
+            </div>
+
+            <h3 style="color: var(--uh-red); margin-top: 2rem; margin-bottom: 1rem; font-weight: 700;">Manuscripts Under Review</h3>
+
+            <div class="publication-item">
+                <p>Preventing health information disorders (HIDs) in college students: Perspectives on health information hygiene in higher education (2025)</p>
+            </div>
+
+            <div class="publication-item">
+                <p>Understanding Medical Weight Problem Diagnosis in Hispanic Women and Men: The Role of Healthcare Utilization, Body Image, and Perceived Health Status (2025)</p>
+            </div>
+
+            <h3 style="color: var(--uh-red); margin-top: 2rem; margin-bottom: 1rem; font-weight: 700;">Manuscripts Under Preparation</h3>
+
+            <div class="publication-item">
+                <p>The Role of Self-Efficacy and Regulation Difficulties in Predicting Academic Procrastination (2025)</p>
+            </div>
+
+            <div class="publication-item">
+                <p>The Role of Anxiety, Body Discrepancy, and Sleep on Body Mass Index Among Latino Youth (2025)</p>
+            </div>
+
+            <div class="publication-item">
+                <p>The impact of teacher and student beliefs on math and science engagement (2024)</p>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Research Projects</h2>
+            
+            <div class="project-item">
+                <div class="item-header">
+                    <div class="item-title">Motivation, Grit, and Academic Engagement</div>
+                    <div class="item-date">September 2024</div>
+                </div>
+                <div class="item-description">
+                    <p>Designed and submitted a research study exploring the relationships among motivation, grit, and academic engagement. Received IRB approval (Protocol #STUDY00004949) under 2018 regulatory requirements.</p>
+                    <p><strong>Role:</strong> Co-PI</p>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="item-header">
+                    <div class="item-title">Systematic Review: First-Generation College Student Success</div>
+                    <div class="item-date">June 2024</div>
+                </div>
+                <div class="item-description">
+                    <ul>
+                        <li>Led a comprehensive systematic review investigating success factors among first-generation college students in the United States</li>
+                        <li>Screened and analyzed 32+ peer-reviewed articles</li>
+                        <li>Developed and implemented systematic search protocols across multiple academic databases</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="item-header">
+                    <div class="item-title">CoderKids</div>
+                    <div class="item-date">April 2024</div>
+                </div>
+                <div class="item-description">
+                    <p>Developed and submitted a research study investigating the impact of coding programs on children's engagement and learning outcomes. Received IRB approval (Protocol #STUDY00004640).</p>
+                    <p><strong>Role:</strong> Graduate student</p>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="item-header">
+                    <div class="item-title">Image to Text Classification: OCR Model Implementation</div>
+                    <div class="item-date">June 2022</div>
+                </div>
+                <div class="item-description">
+                    <ul>
+                        <li>Engineered an OCR model leveraging TensorFlow's deep learning capabilities and OpenCV</li>
+                        <li>Implemented an end-to-end text detection and conversion pipeline</li>
+                        <li>Successfully designed and integrated a categorization system for processing extracted text</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="awards">
+            <h2>Awards & Scholarships</h2>
+            <div class="awards-list">
+                <div class="award-item">
+                    <div class="award-title">Graduate Student Poster Award Finalist</div>
+                    <p>APA Division 15, American Psychological Association Annual Convention, 2025</p>
+                    <p><em>Selected as one of the top 10 from 619 submissions</em></p>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Joshua Weinstein Memorial Endowed Scholarship (2025-2026)</div>
+                    <div class="award-amount">$2,000</div>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">TA & RA Waiver (2025-2026)</div>
+                    <div class="award-amount">$9,180</div>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">PHLS Travel Fellowship (2025-2026)</div>
+                    <div class="award-amount">$500</div>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Graduate Tuition Fellowships (2024-2025)</div>
+                    <div class="award-amount">$8,162</div>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Graduate Tuition Fellowships (2023-2024)</div>
+                    <div class="award-amount">$9,929</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <p>Python, C, C++, Java, R</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Machine Learning</h3>
+                    <p>PyTorch, scikit-learn, TensorFlow</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Data Analysis</h3>
+                    <p>SPSS, Excel, RapidMiner Studio, MPLUS, HLM</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Visualization</h3>
+                    <p>Matplotlib, Excel, RapidMiner Studio, Tableau, Power BI</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Technologies</h3>
+                    <p>LaTeX, Git, Canvas, OpenCV</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Certifications</h3>
+                    <p>AI Productivity Hacks, Intermediate Python, Prompt Engineering for Generative AI, Social-Behavioral-Educational Research (CITI)</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: #667eea;">Professional Memberships</h3>
+            <div style="margin-top: 1rem;">
+                <p><strong>American Public Health Association (APHA)</strong> - Student Member (2025-Present)</p>
+                <p><strong>American Educational Research Association (AERA)</strong> - Student Member (2023-2024)</p>
+            </div>
+
+            <h3 style="margin-top: 2rem; color: #667eea;">Academic Service</h3>
+            <div style="margin-top: 1rem;">
+                <p><strong>Ad Hoc Reviewer</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Cureus Journal of Medical Science (2023-Present)</li>
+                    <li>JBI Evidence Synthesis (2025-Present)</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Tamal Joyti Roy. All rights reserved.</p>
+        <p>University of Houston | College of Education</p>
+        <p>📍 1800 El Paseo St, Houston, TX 77054</p>
     </footer>
 </body>
 </html>
