@@ -101,40 +101,13 @@
       <a class="gallery-item" href="gallery/galveston-2026-6.webp" target="_blank"><img src="gallery/galveston-2026-6.webp" alt="Friends gathered outside Bishop's Palace in Galveston" loading="lazy"><span>Exploring Galveston with friends</span></a>
     </div></article>
   </div></section>
-  <section id="impact"><div class="wrap"><div class="section-head"><h2>Research impact</h2><p>Live scholarly metrics connected through my ORCID record and refreshed automatically from OpenAlex.</p></div><div class="impact-shell">
-    <div class="impact-top"><div><div class="kicker">Live scholarly profile</div><h3 style="font:600 32px Newsreader,serif;margin:6px 0 0">Citations at a glance</h3><p>Publication reach and citation activity over time.</p></div><div class="impact-status" id="impact-status">Loading current metrics...</div></div>
-    <div class="impact-metrics"><div class="impact-metric"><b id="metric-citations">--</b><span>Citations</span></div><div class="impact-metric"><b id="metric-hindex">--</b><span>h-index</span></div><div class="impact-metric"><b id="metric-i10">--</b><span>i10-index</span></div><div class="impact-metric"><b id="metric-works">--</b><span>Indexed works</span></div></div>
-    <div class="impact-chart" id="impact-chart" aria-label="Citations by year"></div>
+  <section id="impact"><div class="wrap"><div class="section-head"><h2>Research impact</h2><p>Citation metrics from my Google Scholar profile, with direct access to the complete publication record.</p></div><div class="impact-shell">
+    <div class="impact-top"><div><div class="kicker">Google Scholar profile</div><h3 style="font:600 32px Newsreader,serif;margin:6px 0 0">Citations at a glance</h3><p>Publication reach and citation activity over time.</p></div><div class="impact-status">Updated July 18, 2026</div></div>
+    <div class="impact-metrics"><div class="impact-metric"><b>92</b><span>Citations</span></div><div class="impact-metric"><b>91</b><span>Citations since 2021</span></div><div class="impact-metric"><b>5</b><span>h-index</span></div><div class="impact-metric"><b>2</b><span>i10-index</span></div></div>
+    <div class="impact-chart" aria-label="Google Scholar citations by year"><div class="impact-bar-wrap"><div class="impact-bar" title="5 citations" style="height:32px"></div><small>2021</small></div><div class="impact-bar-wrap"><div class="impact-bar" title="6 citations" style="height:39px"></div><small>2022</small></div><div class="impact-bar-wrap"><div class="impact-bar" title="20 citations" style="height:129px"></div><small>2023</small></div><div class="impact-bar-wrap"><div class="impact-bar" title="21 citations" style="height:135px"></div><small>2024</small></div><div class="impact-bar-wrap"><div class="impact-bar" title="20 citations" style="height:129px"></div><small>2025</small></div><div class="impact-bar-wrap"><div class="impact-bar" title="19 citations" style="height:122px"></div><small>2026</small></div></div>
     <div class="impact-links"><a class="btn" href="https://scholar.google.com/citations?user=7d_3jGEAAAAJ&hl=en" target="_blank">Google Scholar &nearr;</a><a class="btn" href="https://orcid.org/0000-0002-5319-2726" target="_blank">ORCID &nearr;</a></div>
-    <div class="impact-note">Live figures are supplied by OpenAlex and may differ from Google Scholar because each database indexes different sources.</div>
+    <div class="impact-note">Google Scholar snapshot. Visit the profile for the latest citation totals and publication details.</div>
   </div></div></section>
 </main>
 <footer id="contact"><div class="wrap footer-grid"><div><h2>Let’s connect.</h2><p>University of Houston · College of Education · Houston, Texas</p></div><div class="social"><a href="mailto:tjroy@cougarnet.uh.edu">Email</a><a href="https://www.linkedin.com/in/tamaljoytiroy/" target="_blank">LinkedIn</a><a href="https://orcid.org/0000-0002-5319-2726" target="_blank">ORCID</a><a href="https://github.com/tjroy1997" target="_blank">GitHub</a></div></div></footer>
-<script>
-(async function(){
-  const status=document.getElementById('impact-status');
-  const chart=document.getElementById('impact-chart');
-  try{
-    const url='https://api.openalex.org/authors?filter=orcid:0000-0002-5319-2726&mailto=tjroy@cougarnet.uh.edu';
-    const response=await fetch(url);
-    if(!response.ok) throw new Error('Service unavailable');
-    const payload=await response.json();
-    const author=payload.results&&payload.results[0];
-    if(!author) throw new Error('Profile not found');
-    document.getElementById('metric-citations').textContent=(author.cited_by_count||0).toLocaleString();
-    document.getElementById('metric-hindex').textContent=(author.summary_stats&&author.summary_stats.h_index)||0;
-    document.getElementById('metric-i10').textContent=(author.summary_stats&&author.summary_stats.i10_index)||0;
-    document.getElementById('metric-works').textContent=(author.works_count||0).toLocaleString();
-    const current=new Date().getFullYear();
-    const rows=(author.counts_by_year||[]).filter(x=>x.year>=current-5&&x.year<=current).sort((a,b)=>a.year-b.year);
-    const max=Math.max(1,...rows.map(x=>x.cited_by_count||0));
-    chart.innerHTML=rows.map(x=>'<div class="impact-bar-wrap"><div class="impact-bar" title="'+x.cited_by_count+' citations" style="height:'+Math.max(3,Math.round((x.cited_by_count||0)/max*135))+'px"></div><small>'+x.year+'</small></div>').join('');
-    const updated=author.updated_date?new Date(author.updated_date).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}):'recently';
-    status.textContent='Live from OpenAlex · updated '+updated;
-  }catch(error){
-    status.textContent='Live metrics temporarily unavailable';
-    chart.innerHTML='<p style="color:#d5e1dc;margin:auto">Visit Google Scholar for current citation details.</p>';
-  }
-})();
-</script>
 </body></html>
