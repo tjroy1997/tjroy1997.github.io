@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tjroy1997.github.io/sitemap.xml
