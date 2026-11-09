@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Stats & Data Science Notes by Tamal Joyti Roy — quantitative methods, psychometrics, R, and data analysis.">
+  <title>Stats & Data Science Notes | Tamal Joyti Roy</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de;--shadow:0 18px 55px rgba(21,43,35,.10);--nav-bg:rgba(246,247,242,.9)}
+    [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530;--shadow:0 18px 55px rgba(0,0,0,.4);--nav-bg:rgba(15,22,19,.92)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif;transition:background .3s,color .3s}a{color:inherit}.wrap{width:min(800px,calc(100% - 40px));margin:auto}
+    nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;width:min(1120px,calc(100% - 40px))}.brand{font:600 22px Newsreader,serif;text-decoration:none}.navlinks{display:flex;gap:18px}.navlinks a{text-decoration:none;color:var(--muted);font-size:13px;font-weight:600}.navlinks a:hover{color:var(--accent)}
+    .theme-toggle,.menu-toggle{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:18px}
+    .menu-toggle{display:none}.nav-right{display:flex;align-items:center;gap:12px}
+    @media(max-width:760px){.menu-toggle{display:grid}.navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:20px;gap:16px;z-index:19}.navlinks.open{display:flex}.navlinks a{font-size:16px}}
+    .page-header{padding:72px 0 40px}.page-header h1{font:600 clamp(40px,6vw,64px)/1 Newsreader,serif;letter-spacing:-.03em;margin:8px 0 16px}.page-header p{color:var(--muted);font-size:18px;max-width:640px}
+    .note{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px;margin-bottom:28px;box-shadow:0 6px 20px rgba(21,43,35,.035)}
+    .note h2{font:600 28px Newsreader,serif;margin:0 0 8px}.note .date{color:var(--accent);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+    .note p{color:var(--muted);margin:12px 0}.note a{color:var(--green);font-weight:700;text-decoration:none}
+    .note a:hover{text-decoration:underline}
+    footer{background:var(--green);color:white;padding:40px 0;margin-top:60px}.footer-grid{display:flex;justify-content:space-between;gap:40px;align-items:end;width:min(1120px,calc(100% - 40px));margin:auto}footer h2{font:600 32px Newsreader,serif;margin:0 0 6px}footer p{margin:0;color:#d5e1dc}.social{display:flex;gap:16px}.social a{font-weight:700;text-underline-offset:4px}
+  </style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="index.html#work">Experience</a><a href="index.html#publications">Publications</a><a href="notes.html">Notes</a><a href="index.html#gallery">Gallery</a><a href="index.html#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button></div></div></nav>
+<main>
+  <header class="page-header wrap">
+    <div class="kicker" style="color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700">Writing</div>
+    <h1>Stats & Data Science Notes</h1>
+    <p>Short notes on quantitative methods, psychometrics, R, and data analysis. Mostly things I want to remember or explain clearly.</p>
+  </header>
+  <div class="wrap">
+    <article class="note">
+      <div class="date">Coming soon</div>
+      <h2>First note</h2>
+      <p>This page is ready for your first note. You can write about mediation analysis, effect sizes, SEM tips, R workflows, or anything else you’re thinking through.</p>
+      <p>Tell me the title and a short summary (or the full text) and I’ll add it here.</p>
+    </article>
+  </div>
+</main>
+<footer><div class="footer-grid"><div><h2>Let’s connect.</h2><p>University of Houston · Houston, Texas</p></div><div class="social"><a href="mailto:tjroy@cougarnet.uh.edu">Email</a><a href="https://www.linkedin.com/in/tamaljoytiroy/" target="_blank">LinkedIn</a><a href="https://github.com/tjroy1997" target="_blank">GitHub</a></div></div></footer>
+<script>
+(function(){
+  var themeBtn=document.getElementById('themeToggle');
+  function setTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('theme',t);themeBtn.textContent=t==='dark'?'☀':'☾'}
+  var saved=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  setTheme(saved);
+  themeBtn.addEventListener('click',function(){setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+  var menuBtn=document.getElementById('menuToggle');
+  var nav=document.getElementById('navlinks');
+  menuBtn.addEventListener('click',function(){nav.classList.toggle('open');menuBtn.textContent=nav.classList.contains('open')?'✕':'☰'});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');menuBtn.textContent='☰'})});
+})();
+</script>
+</body>
+</html>
