@@ -68,6 +68,12 @@
       .chapter{padding:16px}
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body{transition:none}}
+    .coding-track,.coding-lesson{scroll-margin-top:92px}
+    .coding-toc a,.coding-jump a{color:var(--accent);text-underline-offset:3px;font-weight:700}
+    .coding-jump{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px}
+    .code-sample{background:var(--paper);border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;max-width:100%;overflow-x:auto;color:var(--ink);line-height:1.55;tab-size:2}
+    .code-sample code{font:inherit;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.875rem}
   </style>
 </head>
 <body>
@@ -77,6 +83,7 @@
     <div class="kicker" style="color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700">Writing</div>
     <h1>Stats & Data Science Notes</h1>
     <p>Learn statistics through coins, games, school surveys, and paper airplanes. Start with a story, read a picture, and try a short question. Open the math notes when you’re ready for the formulas.</p>
+    <div class="coding-jump" aria-label="Coding tracks"><a href="#r-track">Learn data science with R</a><a href="#py-track">Learn data science with Python</a></div>
   </header>
   <div class="wrap">
     <nav class="toc" id="chapters" aria-labelledby="chapters-title">
@@ -886,6 +893,222 @@
         <li><a href="https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/power-analysis">Penn State on power analysis</a></li>
       </ul>
     </section>
+
+    <section class="chapter coding-track" id="r-track" aria-labelledby="r-title">
+      <div class="meta">Data science project · School reading log</div>
+      <h2 id="r-title">Data Science with R</h2>
+      <p>Use R or RStudio. This track uses base R, so you can begin without installing any R packages. Run these five code chunks in order in the same session. The first chunk includes the full practice dataset.</p>
+      <ol class="coding-toc">
+        <li><a href="#r-1">Read and clean the data</a></li>
+        <li><a href="#r-2">Make a new column</a></li>
+        <li><a href="#r-3">Filter and sort rows</a></li>
+        <li><a href="#r-4">Summarize by day</a></li>
+        <li><a href="#r-5">Draw and read a bar chart</a></li>
+      </ol>
+    </section>
+
+    <article class="chapter coding-lesson" id="r-1" aria-labelledby="r-1-title">
+      <div class="meta">R · Chapter 1</div>
+      <h2 id="r-1-title">Read and clean the data</h2>
+      <p>A CSV is a table written as text. Each row in this fictional reading log is one student’s record for one day. Trim extra spaces so “ Mon ” and “Mon” match. Remove the exact duplicate, then leave out rows that lack a measurement or have a negative count. A real zero is useful data, so keep it.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 1"><code>csv_text &lt;- "student,day,minutes,pages
+A, Mon ,20,12
+A,Tue,30,18
+B,Mon,15,9
+B,Tue,25,10
+B,Tue,25,10
+C,Mon,10,0
+C,Tue,40,24
+D,Mon,0,0
+D,Tue,20,8
+E,Mon,,7
+F,Tue,12,-2"
+raw &lt;- read.csv(text = csv_text, na.strings = c("", "NA"),
+                stringsAsFactors = FALSE)
+
+clean &lt;- raw
+clean$day &lt;- trimws(clean$day)
+clean &lt;- unique(clean)
+clean &lt;- clean[complete.cases(clean) &amp;
+               clean$minutes &gt;= 0 &amp; clean$pages &gt;= 0, ]
+
+cat(nrow(raw), "raw rows;", nrow(clean), "clean rows\n")
+print(clean)</code></pre>
+      <p><strong>Check your result.</strong> You should see 11 raw rows and 8 clean rows. Student D’s Monday record stays because both recorded values are zero.</p>
+      <p><strong>Try it.</strong> Find the three rows that the cleaning rules remove. How is a blank different from zero?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-1">This chapter in Python</a><a href="#r-2">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-2" aria-labelledby="r-2-title">
+      <div class="meta">R · Chapter 2</div>
+      <h2 id="r-2-title">Make a new column</h2>
+      <p>A rate helps compare sessions of different lengths. Divide pages by minutes to find pages per minute. Calculate the rate only when reading time is greater than zero. A zero-minute record has no defined reading rate, while reading zero pages in ten minutes gives a rate of zero.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 2"><code>clean$pages_per_minute &lt;- NA_real_
+has_time &lt;- clean$minutes &gt; 0
+clean$pages_per_minute[has_time] &lt;-
+  clean$pages[has_time] / clean$minutes[has_time]
+
+print(clean[c("student", "day", "pages_per_minute")])</code></pre>
+      <p><strong>Check your result.</strong> A’s Monday rate is 12 ÷ 20 = 0.60 pages per minute. D’s Monday rate is missing, shown as NA in R and NaN in pandas.</p>
+      <p><strong>Try it.</strong> Find C’s rate on Monday. Compare it with D’s rate on that day.</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-2">This chapter in Python</a><a href="#r-3">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-3" aria-labelledby="r-3-title">
+      <div class="meta">R · Chapter 3</div>
+      <h2 id="r-3-title">Filter and sort rows</h2>
+      <p>Ask a smaller question. Which records show at least 20 minutes of reading? A filter keeps rows that match a rule. Sort the result so the longest sessions appear first. Keep this result in a new table so you can still use the full clean dataset later.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 3"><code>long_sessions &lt;- clean[clean$minutes &gt;= 20, ]
+long_sessions &lt;- long_sessions[
+  order(-long_sessions$minutes, long_sessions$student,
+        long_sessions$day), ]
+
+print(long_sessions[c("student", "day", "minutes", "pages")])</code></pre>
+      <p><strong>Check your result.</strong> Five rows pass the filter. C’s 40-minute Tuesday session comes first.</p>
+      <p><strong>Try it.</strong> Change the rule from at least 20 minutes to more than 20 minutes. How many rows remain?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-3">This chapter in Python</a><a href="#r-4">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-4" aria-labelledby="r-4-title">
+      <div class="meta">R · Chapter 4</div>
+      <h2 id="r-4-title">Summarize by day</h2>
+      <p>A group summary turns many rows into one row per group. Split the full clean table by day, count the records, and calculate the mean pages for each day. The mean is total pages divided by the number of records in that group, including the valid zero-page records.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 4"><code>daily &lt;- aggregate(pages ~ day, data = clean, FUN = mean)
+names(daily)[names(daily) == "pages"] &lt;- "mean_pages"
+counts &lt;- table(clean$day)
+daily$records &lt;- as.integer(counts[daily$day])
+
+print(daily[c("day", "records", "mean_pages")])</code></pre>
+      <p><strong>Check your result.</strong> Monday has four records and a mean of 5.25 pages. Tuesday has four records and a mean of 15 pages.</p>
+      <p><strong>Try it.</strong> Calculate Monday’s mean by hand from the four page counts. What changes if you drop the two zero-page records?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-4">This chapter in Python</a><a href="#r-5">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-5" aria-labelledby="r-5-title">
+      <div class="meta">R · Chapter 5</div>
+      <h2 id="r-5-title">Draw and read a bar chart</h2>
+      <p>A bar chart compares categories. Here each bar stands for a day and its height shows mean pages per record. Start the vertical axis at zero so the bar heights show the comparison fairly. These two days describe the reading log. You would need more data to tell whether Tuesday is usually higher.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 5"><code>bars &lt;- barplot(
+  daily$mean_pages, names.arg = daily$day,
+  ylim = c(0, 18), col = "#17628b",
+  main = "Average pages by day",
+  ylab = "Mean pages per record", xlab = "Day"
+)
+text(bars, daily$mean_pages, labels = daily$mean_pages, pos = 3)</code></pre>
+      <p><strong>Check your result.</strong> The Tuesday bar reaches 15 pages and the Monday bar reaches 5.25. The gap is 9.75 pages per record.</p>
+      <p><strong>Try it.</strong> Make a second chart that shows the mean minutes by day. Do the two charts tell the same story about which day was higher?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-5">This chapter in Python</a><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">R reference →</a></div>
+    </article>
+
+    <section class="chapter coding-track" id="py-track" aria-labelledby="py-title">
+      <div class="meta">Data science project · School reading log</div>
+      <h2 id="py-title">Data Science with Python</h2>
+      <p>Use Python or a Jupyter notebook. Install pandas and Matplotlib with <code>python -m pip install pandas matplotlib</code> in a terminal. Run these five code chunks in order in the same session. The first chunk includes the full practice dataset.</p>
+      <ol class="coding-toc">
+        <li><a href="#py-1">Read and clean the data</a></li>
+        <li><a href="#py-2">Make a new column</a></li>
+        <li><a href="#py-3">Filter and sort rows</a></li>
+        <li><a href="#py-4">Summarize by day</a></li>
+        <li><a href="#py-5">Draw and read a bar chart</a></li>
+      </ol>
+    </section>
+
+    <article class="chapter coding-lesson" id="py-1" aria-labelledby="py-1-title">
+      <div class="meta">Python · Chapter 1</div>
+      <h2 id="py-1-title">Read and clean the data</h2>
+      <p>A CSV is a table written as text. Each row in this fictional reading log is one student’s record for one day. Trim extra spaces so “ Mon ” and “Mon” match. Remove the exact duplicate, then leave out rows that lack a measurement or have a negative count. A real zero is useful data, so keep it.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 1"><code>from io import StringIO
+import pandas as pd
+
+csv_text = """student,day,minutes,pages
+A, Mon ,20,12
+A,Tue,30,18
+B,Mon,15,9
+B,Tue,25,10
+B,Tue,25,10
+C,Mon,10,0
+C,Tue,40,24
+D,Mon,0,0
+D,Tue,20,8
+E,Mon,,7
+F,Tue,12,-2"""
+raw = pd.read_csv(StringIO(csv_text))
+
+clean = raw.assign(day=raw["day"].str.strip())
+clean = clean.drop_duplicates().dropna()
+clean = clean.loc[
+    (clean["minutes"] &gt;= 0) &amp; (clean["pages"] &gt;= 0)
+].copy()
+clean = clean.astype({"minutes": "int64", "pages": "int64"})
+
+print(len(raw), "raw rows;", len(clean), "clean rows")
+print(clean)</code></pre>
+      <p><strong>Check your result.</strong> You should see 11 raw rows and 8 clean rows. Student D’s Monday record stays because both recorded values are zero.</p>
+      <p><strong>Try it.</strong> Find the three rows that the cleaning rules remove. How is a blank different from zero?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-1">This chapter in R</a><a href="#py-2">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-2" aria-labelledby="py-2-title">
+      <div class="meta">Python · Chapter 2</div>
+      <h2 id="py-2-title">Make a new column</h2>
+      <p>A rate helps compare sessions of different lengths. Divide pages by minutes to find pages per minute. Calculate the rate only when reading time is greater than zero. A zero-minute record has no defined reading rate, while reading zero pages in ten minutes gives a rate of zero.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 2"><code>has_time = clean["minutes"] &gt; 0
+clean["pages_per_minute"] = clean["pages"].div(
+    clean["minutes"].where(has_time)
+)
+
+print(clean[["student", "day", "pages_per_minute"]])</code></pre>
+      <p><strong>Check your result.</strong> A’s Monday rate is 12 ÷ 20 = 0.60 pages per minute. D’s Monday rate is missing, shown as NA in R and NaN in pandas.</p>
+      <p><strong>Try it.</strong> Find C’s rate on Monday. Compare it with D’s rate on that day.</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-2">This chapter in R</a><a href="#py-3">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-3" aria-labelledby="py-3-title">
+      <div class="meta">Python · Chapter 3</div>
+      <h2 id="py-3-title">Filter and sort rows</h2>
+      <p>Ask a smaller question. Which records show at least 20 minutes of reading? A filter keeps rows that match a rule. Sort the result so the longest sessions appear first. Keep this result in a new table so you can still use the full clean dataset later.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 3"><code>long_sessions = clean.loc[clean["minutes"] &gt;= 20].sort_values(
+    ["minutes", "student", "day"], ascending=[False, True, True]
+)
+
+print(long_sessions[["student", "day", "minutes", "pages"]])</code></pre>
+      <p><strong>Check your result.</strong> Five rows pass the filter. C’s 40-minute Tuesday session comes first.</p>
+      <p><strong>Try it.</strong> Change the rule from at least 20 minutes to more than 20 minutes. How many rows remain?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-3">This chapter in R</a><a href="#py-4">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-4" aria-labelledby="py-4-title">
+      <div class="meta">Python · Chapter 4</div>
+      <h2 id="py-4-title">Summarize by day</h2>
+      <p>A group summary turns many rows into one row per group. Split the full clean table by day, count the records, and calculate the mean pages for each day. The mean is total pages divided by the number of records in that group, including the valid zero-page records.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 4"><code>daily = clean.groupby("day", as_index=False).agg(
+    records=("pages", "size"),
+    mean_pages=("pages", "mean"),
+)
+
+print(daily)</code></pre>
+      <p><strong>Check your result.</strong> Monday has four records and a mean of 5.25 pages. Tuesday has four records and a mean of 15 pages.</p>
+      <p><strong>Try it.</strong> Calculate Monday’s mean by hand from the four page counts. What changes if you drop the two zero-page records?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-4">This chapter in R</a><a href="#py-5">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-5" aria-labelledby="py-5-title">
+      <div class="meta">Python · Chapter 5</div>
+      <h2 id="py-5-title">Draw and read a bar chart</h2>
+      <p>A bar chart compares categories. Here each bar stands for a day and its height shows mean pages per record. Start the vertical axis at zero so the bar heights show the comparison fairly. These two days describe the reading log. You would need more data to tell whether Tuesday is usually higher.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 5"><code>import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(6, 4))
+bars = ax.bar(daily["day"], daily["mean_pages"], color="#17628b")
+ax.set(title="Average pages by day", xlabel="Day",
+       ylabel="Mean pages per record", ylim=(0, 18))
+ax.bar_label(bars, padding=3)
+fig.tight_layout()
+plt.show()</code></pre>
+      <p><strong>Check your result.</strong> The Tuesday bar reaches 15 pages and the Monday bar reaches 5.25. The gap is 9.75 pages per record.</p>
+      <p><strong>Try it.</strong> Make a second chart that shows the mean minutes by day. Do the two charts tell the same story about which day was higher?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-5">This chapter in R</a><a href="https://pandas.pydata.org/docs/user_guide/index.html">Python reference →</a></div>
+    </article>
   </div>
 </main>
 <footer><div class="footer-grid"><div><h2>Let’s connect.</h2><p>University of Houston · Houston, Texas</p></div><div class="social"><a href="mailto:tjroy@cougarnet.uh.edu">Email</a><a href="https://www.linkedin.com/in/tamaljoytiroy/" target="_blank">LinkedIn</a><a href="https://github.com/tjroy1997" target="_blank">GitHub</a></div></div></footer>
