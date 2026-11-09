@@ -40,7 +40,7 @@
     .nav-right{display:flex;align-items:center;gap:12px}
     @media(max-width:760px){
       .menu-toggle{display:grid}
-      .navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:20px;gap:16px;z-index:19}
+      .navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:20px;gap:16px;z-index:19;max-height:calc(100vh - 72px);max-height:calc(100dvh - 72px);overflow-y:auto}
       .navlinks.open{display:flex}
       .navlinks a{font-size:16px}
     }
@@ -72,7 +72,36 @@
 </script>
 </head>
 <body>
-<nav><div class="wrap"><a class="brand" href="#top">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="#work">Experience</a><a href="#publications">Publications</a><a href="#research">Research</a><a href="#awards">Awards</a><a href="#skills">Methods</a><a href="notes.html">Notes</a><a href="#posters">Posters</a><a href="#gallery">Gallery</a><a href="#impact">Impact</a><a href="#education">Education</a><a href="#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button></div></div></nav>
+<nav><div class="wrap"><a class="brand" href="#top">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="#work">Experience</a><a href="#publications">Publications</a><a href="#research">Research</a><a href="#awards">Awards</a><a href="#skills">Methods</a><a href="notes.html">Notes</a><a href="#posters">Posters</a><a href="#gallery">Gallery</a><a href="#impact">Impact</a><a href="#education">Education</a><a href="#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="Menu">☰</button></div></div></nav>
+<script>
+(function(){
+  var menuBtn=document.getElementById('menuToggle');
+  var nav=document.getElementById('navlinks');
+  function setMenu(open){
+    nav.classList.toggle('open',open);
+    menuBtn.setAttribute('aria-expanded',String(open));
+    menuBtn.textContent=open?'✕':'☰';
+  }
+  menuBtn.addEventListener('click',function(){setMenu(!nav.classList.contains('open'))});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+
+  var themeBtn=document.getElementById('themeToggle');
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme',theme);
+    themeBtn.textContent=theme==='dark'?'☀':'☾';
+    themeBtn.setAttribute('aria-pressed',String(theme==='dark'));
+  }
+  var saved;
+  try { saved=window.localStorage.getItem('theme'); } catch {}
+  setTheme(saved==='dark'||saved==='light'?saved:
+    (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+  themeBtn.addEventListener('click',function(){
+    var theme=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    setTheme(theme);
+    try { window.localStorage.setItem('theme',theme); } catch {}
+  });
+})();
+</script>
 <main id="top">
   <header class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">Quantitative researcher · Educator · Data scientist</div><h1>Research at the intersection of education, health & data science.</h1><p class="lead">I'm a doctoral student in Measurement, Quantitative Methods & Learning Sciences at the University of Houston. With a background in computer science and machine learning, I bring computational and psychometric methods to questions of student motivation, engagement, and digital health.</p><div class="actions"><a class="btn primary" href="#publications">Explore my research →</a><a class="btn" href="mailto:tjroy@cougarnet.uh.edu">Email me</a></div></div><img class="portrait" src="https://avatars.githubusercontent.com/u/46474086?v=4" alt="Portrait of Tamal Joyti Roy"></div></header>
   <div class="wrap stats"><div class="stat"><b>9</b><span>Peer-reviewed journal articles</span></div><div class="stat"><b>19</b><span>Conference presentations</span></div><div class="stat"><b>3</b><span>Book chapters</span></div><a class="stat" href="TJR_CV.pdf" target="_blank" aria-label="Open Tamal Joyti Roy's latest CV"><b>2026</b><span>View latest CV ↗</span></a></div>
@@ -180,17 +209,6 @@ document.querySelectorAll('.gallery-event').forEach(function(event){
 </div>
 <script>
 (function(){
-  // Theme
-  var themeBtn=document.getElementById('themeToggle');
-  function setTheme(t){document.documentElement.setAttribute('data-theme',t;localStorage.setItem('theme',t);themeBtn.textContent=t==='dark'?'☀':'☾'}
-  var saved=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-  setTheme(saved);
-  themeBtn.addEventListener('click',function(){setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
-  // Mobile menu
-  var menuBtn=document.getElementById('menuToggle');
-  var nav=document.getElementById('navlinks');
-  menuBtn.addEventListener('click',function(){nav.classList.toggle('open');menuBtn.textContent=nav.classList.contains('open')?'✕':'☰'});
-  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');menuBtn.textContent='☰'})});
   // Lightbox
   var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
   var items=[].slice.call(document.querySelectorAll('.gallery-item'));
