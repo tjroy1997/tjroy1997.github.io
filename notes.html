@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Stats & Data Science Notes by Tamal Joyti Roy — quantitative methods, psychometrics, R, and data analysis.">
+  <meta name="description" content="Stats & Data Science Notes by Tamal Joyti Roy — 13 chapters covering core statistical methods and formulas.">
   <title>Stats & Data Science Notes | Tamal Joyti Roy</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
   <style>
     :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de;--shadow:0 18px 55px rgba(21,43,35,.10);--nav-bg:rgba(246,247,242,.9)}
     [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530;--shadow:0 18px 55px rgba(0,0,0,.4);--nav-bg:rgba(15,22,19,.92)}
@@ -15,11 +18,15 @@
     .theme-toggle,.menu-toggle{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:18px}
     .menu-toggle{display:none}.nav-right{display:flex;align-items:center;gap:12px}
     @media(max-width:760px){.menu-toggle{display:grid}.navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:20px;gap:16px;z-index:19}.navlinks.open{display:flex}.navlinks a{font-size:16px}}
-    .page-header{padding:72px 0 40px}.page-header h1{font:600 clamp(40px,6vw,64px)/1 Newsreader,serif;letter-spacing:-.03em;margin:8px 0 16px}.page-header p{color:var(--muted);font-size:18px;max-width:640px}
-    .note{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px;margin-bottom:28px;box-shadow:0 6px 20px rgba(21,43,35,.035)}
-    .note h2{font:600 28px Newsreader,serif;margin:0 0 8px}.note .date{color:var(--accent);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-    .note p{color:var(--muted);margin:12px 0}.note a{color:var(--green);font-weight:700;text-decoration:none}
-    .note a:hover{text-decoration:underline}
+    .page-header{padding:72px 0 24px}.page-header h1{font:600 clamp(40px,6vw,64px)/1 Newsreader,serif;letter-spacing:-.03em;margin:8px 0 16px}.page-header p{color:var(--muted);font-size:18px;max-width:640px}
+    .toc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 28px;margin-bottom:36px}
+    .toc h2{font:600 22px Newsreader,serif;margin:0 0 12px}.toc ol{margin:0;padding-left:20px}.toc li{margin:6px 0}.toc a{color:var(--green);text-decoration:none;font-weight:600}.toc a:hover{text-decoration:underline}
+    .chapter{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px;margin-bottom:32px;box-shadow:0 6px 20px rgba(21,43,35,.035)}
+    .chapter h2{font:600 32px Newsreader,serif;margin:0 0 6px}.chapter h3{font:600 22px Newsreader,serif;margin:28px 0 10px}
+    .chapter .meta{color:var(--accent);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+    .chapter p{color:var(--muted);margin:12px 0}.chapter ul,.chapter ol{color:var(--muted);padding-left:20px}.chapter li{margin:6px 0}
+    .formula{background:#f0f3ef;border-left:3px solid var(--green);padding:12px 16px;border-radius:8px;margin:16px 0;overflow-x:auto}
+    [data-theme="dark"] .formula{background:#15201c}
     footer{background:var(--green);color:white;padding:40px 0;margin-top:60px}.footer-grid{display:flex;justify-content:space-between;gap:40px;align-items:end;width:min(1120px,calc(100% - 40px));margin:auto}footer h2{font:600 32px Newsreader,serif;margin:0 0 6px}footer p{margin:0;color:#d5e1dc}.social{display:flex;gap:16px}.social a{font-weight:700;text-underline-offset:4px}
   </style>
 </head>
@@ -29,14 +36,56 @@
   <header class="page-header wrap">
     <div class="kicker" style="color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700">Writing</div>
     <h1>Stats & Data Science Notes</h1>
-    <p>Short notes on quantitative methods, psychometrics, R, and data analysis. Mostly things I want to remember or explain clearly.</p>
+    <p>A 13-chapter walkthrough of core statistical methods, formulas, and ideas. Written for clarity and practical use.</p>
   </header>
   <div class="wrap">
-    <article class="note">
-      <div class="date">Coming soon</div>
-      <h2>First note</h2>
-      <p>This page is ready for your first note. You can write about mediation analysis, effect sizes, SEM tips, R workflows, or anything else you’re thinking through.</p>
-      <p>Tell me the title and a short summary (or the full text) and I’ll add it here.</p>
+    <nav class="toc">
+      <h2>Chapters</h2>
+      <ol>
+        <li><a href="#ch1">Descriptive Statistics</a></li>
+        <li>Probability Basics</li>
+        <li>Random Variables & Distributions</li>
+        <li>Sampling Distributions</li>
+        <li>Estimation & Confidence Intervals</li>
+        <li>Hypothesis Testing</li>
+        <li>Comparing Two Groups (t-tests)</li>
+        <li>Analysis of Variance (ANOVA)</li>
+        <li>Correlation & Simple Linear Regression</li>
+        <li>Multiple Regression</li>
+        <li>Categorical Data & Chi-Square</li>
+        <li>Nonparametric Methods</li>
+        <li>Effect Size, Power & Putting It Together</li>
+      </ol>
+    </nav>
+
+    <article class="chapter" id="ch1">
+      <div class="meta">Chapter 1</div>
+      <h2>Descriptive Statistics</h2>
+      <p>Descriptive statistics summarize and describe the main features of a dataset. They do not make inferences beyond the data at hand.</p>
+
+      <h3>Measures of Central Tendency</h3>
+      <p><strong>Mean</strong> — the arithmetic average:</p>
+      <div class="formula">$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$</div>
+      <p><strong>Median</strong> — the middle value when data are ordered. Robust to outliers.</p>
+      <p><strong>Mode</strong> — the most frequent value. Useful for categorical or multimodal data.</p>
+
+      <h3>Measures of Spread</h3>
+      <p><strong>Variance</strong> (sample):</p>
+      <div class="formula">$$s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$$</div>
+      <p><strong>Standard deviation</strong> — square root of variance, in the same units as the data:</p>
+      <div class="formula">$$s = \sqrt{s^2}$$</div>
+      <p><strong>Range</strong> = max − min. Simple but sensitive to outliers.</p>
+      <p><strong>Interquartile range (IQR)</strong> = Q3 − Q1. Captures the middle 50% of the data.</p>
+
+      <h3>Shape</h3>
+      <ul>
+        <li><strong>Skewness</strong> — asymmetry. Positive skew means a long right tail.</li>
+        <li><strong>Kurtosis</strong> — tail heaviness relative to a normal distribution.</li>
+      </ul>
+
+      <h3>Why it matters</h3>
+      <p>Always look at the distribution (histogram, boxplot, or density) before choosing a summary. The mean and standard deviation are excellent when data are roughly symmetric; the median and IQR are better when there are outliers or strong skew.</p>
+      <p>Next: <em>Chapter 2 — Probability Basics</em></p>
     </article>
   </div>
 </main>
