@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Statistical Method Finder | Tamal Joyti Roy</title>
+<meta name="description" content="An interactive guide to choosing statistical models based on research aims, outcome types, group structure and study design.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+<script>
+(function(){var t;try{t=localStorage.getItem('theme')}catch(e){};if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();
+</script>
+<style>
+:root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de;--nav:rgba(246,247,242,.94);--tint:#edf2ee;--code:#17251f}
+[data-theme=dark]{color-scheme:dark;--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#7cc3a9;--line:#2a3530;--nav:rgba(15,22,19,.94);--tint:#182c23;--code:#0b1410}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 "DM Sans",sans-serif}
+a{color:var(--green)}button,select{font:inherit}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{width:min(1150px,calc(100% - 36px));margin:auto}
+nav.site{position:sticky;top:0;z-index:10;background:var(--nav);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav.site .wrap{display:flex;align-items:center;justify-content:space-between;min-height:70px;gap:14px}
+.brand{font:600 22px Newsreader,serif;text-decoration:none;color:var(--ink)}.navlinks{display:flex;align-items:center;gap:18px}.navlinks a{font-weight:700;font-size:13px;text-decoration:none;color:var(--muted)}.navlinks a:hover,.navlinks a[aria-current]{color:var(--accent)}
+.menu,.theme{width:40px;height:40px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:50%;cursor:pointer}.menu{display:none}
+.hero{padding:62px 0 36px}.kicker{color:var(--accent);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+h1,h2,h3{font-family:Newsreader,serif;line-height:1.1;letter-spacing:-.025em}h1{font-size:clamp(45px,6vw,70px);margin:12px 0 22px;font-weight:600;max-width:860px}h2{font-size:clamp(28px,3vw,38px);font-weight:600;margin:0 0 10px}h3{font-size:25px;font-weight:600;margin:0 0 10px}
+.hero p{font-size:18px;color:var(--muted);max-width:850px;margin:0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:25px}.chip{font-size:12px;font-weight:700;border-radius:99px;border:1px solid var(--line);padding:7px 12px;background:var(--card);color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:20px;align-items:start;padding-bottom:54px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:27px;min-width:0;box-shadow:0 5px 18px rgba(0,0,0,.025)}
+.controls{display:grid;gap:19px}.field{display:grid;gap:7px}.field label{display:block;font-size:14px;font-weight:700}.field p{font-size:12px;color:var(--muted);margin:0}
+select{width:100%;min-height:47px;padding:10px 36px 10px 13px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.togglebox{display:flex;align-items:flex-start;gap:10px;padding:12px;background:var(--paper);border-radius:9px;border:1px solid var(--line);cursor:pointer}
+.togglebox input{width:18px;height:18px;flex:none;margin:3px 0 0;accent-color:var(--green)}
+.togglebox span{font-size:13px}.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.btn{border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-weight:700;font-size:13px}.btn.primary{background:var(--green);color:var(--paper)}[data-theme=dark] .btn.primary{color:#0f1613}
+.btn.secondary{background:var(--tint);color:var(--ink);border:1px solid var(--line)}
+.result{position:sticky;top:89px}.result-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.status{font-size:11px;letter-spacing:.08em;font-weight:700;text-transform:uppercase;color:var(--green);background:var(--tint);border-radius:100px;padding:5px 10px}
+.recommendation{padding:23px 0 13px;border-bottom:1px solid var(--line)}.recommendation h3{font-size:clamp(26px,3vw,39px);margin:8px 0}.recommendation p{color:var(--muted);margin:8px 0 0}
+.eyebrow{font-weight:700;color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.09em}
+.details{display:grid;gap:15px;margin-top:22px}.detail{border:1px solid var(--line);background:var(--paper);border-radius:11px;padding:14px}.detail b{display:block;font-size:13px;margin-bottom:6px}.detail p,.detail ul{font-size:13px;color:var(--muted);margin:0}.detail ul{padding-left:20px}.detail li{margin:4px 0}
+pre{background:var(--code);color:#eef5f0;white-space:pre;overflow:auto;border-radius:9px;padding:15px;font-size:12px;line-height:1.6;tab-size:2}
+.code-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:20px 0 8px}.code-title strong{font-size:14px}.code-title button{background:var(--tint);border:1px solid var(--line);border-radius:99px;padding:5px 11px;color:var(--ink);cursor:pointer;font-size:12px}
+.disclaimer{margin-top:18px;color:var(--muted);font-size:12px;border-left:3px solid var(--accent);padding-left:11px}
+.info{border-top:1px solid var(--line);padding:36px 0 60px}.info p{color:var(--muted)}.examples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.example{cursor:pointer;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:18px;color:var(--ink)}
+.example b{display:block;font-size:15px;margin-bottom:7px}.example span{color:var(--muted);font-size:13px}
+.resources{display:flex;gap:18px;flex-wrap:wrap;padding-top:18px}.resources a{font-size:13px;font-weight:700}
+footer{background:var(--green);color:var(--paper);padding:36px 0}footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:25px}footer a{color:inherit;font-weight:700}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.result{position:static}.examples{grid-template-columns:1fr}.hero{padding:44px 0 28px}}
+@media(max-width:650px){.navlinks{display:none;position:absolute;left:0;right:0;top:70px;padding:22px;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}.navlinks.open{display:flex}.menu{display:inline-block}.panel{padding:20px}.hero p{font-size:16px}footer .wrap{display:block}footer a{display:inline-block;margin-top:14px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body>
+<nav class="site"><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><div style="display:flex;align-items:center;gap:11px"><div class="navlinks" id="navlinks"><a href="index.html">Portfolio</a><a href="notes.html">Notes</a><a href="math-symbols.html">K–12 Math</a><a href="method-finder.html" aria-current="page">Method Finder</a><a href="index.html#contact">Contact</a></div><button class="theme" type="button" id="theme" aria-label="Toggle dark mode">☾</button><button class="menu" type="button" id="menu" aria-label="Open menu" aria-expanded="false">☰</button></div></div></nav>
+<main><header class="hero wrap"><div class="kicker">Interactive learning tool · Statistics & data science</div><h1>Which statistical method should I use?</h1><p>Describe your research question and the structure of your data. This interactive guide suggests a starting analysis, explains why, and flags assumptions to check before you fit a model.</p><div class="chips"><span class="chip">No upload required</span><span class="chip">Works on mobile</span><span class="chip">R starting code</span><span class="chip">Explains alternatives</span></div></header>
+<div class="wrap layout">
+<section class="panel" aria-labelledby="questions-title"><div class="kicker">Step 01–05</div><h2 id="questions-title">Tell me about your data</h2>
+<form id="wizard" class="controls">
+<div class="field"><label for="goal">1. What do you want to learn?</label><p>Start with the research question, not the software.</p><select id="goal"><option value="compare">Compare groups or time points</option><option value="predict">Explain or predict an outcome</option><option value="associate">Measure relationships between variables</option><option value="describe">Summarize or describe a sample</option><option value="measurement">Measure a latent construct (questionnaire/items)</option></select></div>
+<div class="field"><label for="outcome">2. What type of outcome do you have?</label><p>Use the scale of the observed response, not just the variable name.</p><select id="outcome"><option value="continuous">Continuous (scores, height, test marks)</option><option value="binary">Binary (yes/no, success/failure)</option><option value="ordinal">Ordinal (ordered ratings or Likert items)</option><option value="nominal">Nominal (3+ unordered categories)</option><option value="count">Count (number of events)</option><option value="survival">Time to event (with possible censoring)</option><option value="latent">Multiple items measuring a construct</option></select></div>
+<div class="field"><label for="structure">3. How are observations related?</label><p>This determines whether independence assumptions hold.</p><select id="structure"><option value="independent">Independent people or units</option><option value="paired">Paired or matched observations (two conditions)</option><option value="repeated">Repeated measures (3+ observations per unit)</option><option value="clustered">Clustered or nested (students in schools, etc.)</option></select></div>
+<div class="field"><label for="groups">4. How many groups/conditions are compared?</label><p>For pre–post designs, count conditions or time points, not people.</p><select id="groups"><option value="two">Two</option><option value="many">Three or more</option><option value="one">One sample versus a benchmark</option><option value="none">Not applicable</option></select></div>
+<div class="field"><label for="predictors">5. How many predictors do you plan to use?</label><select id="predictors"><option value="single">One explanatory variable</option><option value="multiple">Several predictors/covariates</option></select></div>
+<label class="togglebox"><input id="skew" type="checkbox"><span><strong>Data may violate usual distributional assumptions.</strong><br>Strong skew, outliers, or an ordinal response requiring rank-based alternatives.</span></label>
+<label class="togglebox"><input id="small" type="checkbox"><span><strong>Small or sparse sample.</strong><br>Few observations, rare events, or low expected cell counts.</span></label>
+<div class="form-actions"><button class="btn primary" type="submit">Recommend a method →</button><button class="btn secondary" id="reset" type="button">Reset choices</button></div>
+</form></section>
+<section class="panel result" id="result" aria-live="polite" aria-labelledby="result-title"><div class="result-head"><div class="kicker">Your analysis plan</div><span class="status">Educational guidance</span></div>
+<div class="recommendation"><div class="eyebrow" id="category">Recommended starting point</div><h3 id="result-title">Welch two-sample t-test</h3><p id="explanation">Compare two independent groups on a continuous outcome without assuming equal group variances.</p></div>
+<div class="details">
+<div class="detail"><b>Why this fits</b><p id="reason">The outcome is continuous and observations come from different people in two groups.</p></div>
+<div class="detail"><b>Check before analysis</b><ul id="assumptions"></ul></div>
+<div class="detail"><b>Other methods worth considering</b><p id="alternatives"></p></div>
+<div class="detail"><b>Report</b><p id="report"></p></div>
+</div>
+<div class="code-title"><strong>Example R starting point</strong><button id="copy" type="button">Copy code</button></div>
+<pre id="rcode" tabindex="0"><code></code></pre>
+<p class="disclaimer">A recommendation is not a diagnosis of your dataset. Consider sampling, missingness, assumptions, variable coding, causal identification, and the estimand before finalizing an analysis. This page does not upload or inspect your data.</p>
+</section>
+</div>
+<section class="info wrap"><div class="kicker">Try one of these scenarios</div><h2>See how changing the design changes the method</h2>
+<div class="examples"><button class="example" data-preset="prepost" type="button"><b>Pretest vs. posttest</b><span>Same students measured twice on a continuous score</span></button><button class="example" data-preset="cluster" type="button"><b>Students nested in schools</b><span>Predict test scores with correlated observations</span></button><button class="example" data-preset="binary" type="button"><b>Predict a yes/no outcome</b><span>Multiple predictors and binary response data</span></button></div>
+<div class="resources"><a href="https://stats.oarc.ucla.edu/other/mult-pkg/whatstat/" target="_blank" rel="noopener noreferrer">UCLA statistical test guide ↗</a><a href="https://www.icpsr.umich.edu/sites/icpsr/teaching-learning/build-your-data-skills/choosing-the-right-statistical-test" target="_blank" rel="noopener noreferrer">ICPSR selection guide ↗</a><a href="notes.html">Learn core statistical concepts ↗</a></div>
+</section></main><footer><div class="wrap"><div><strong>Method Finder · Tamal Joyti Roy</strong><div style="font-size:13px">An open educational resource for research and statistical literacy.</div></div><a href="notes.html">Back to Notes</a></div></footer>
+<script>
+(function(){
+'use strict';
+var fields=['goal','outcome','structure','groups','predictors'],checks=['skew','small'];
+var form=document.getElementById('wizard'),codeOutput=document.querySelector('#rcode code');
+var el=function(id){return document.getElementById(id)};
+function value(id){return el(id).value}
+function details(main,why,assumptions,alternatives,report,code,label){
+return{main:main,why:why,assumptions:assumptions,alternatives:alternatives,report:report,code:code,label:label||'Recommended starting point'};
+}
+function choose(){
+var goal=value('goal'),o=value('outcome'),s=value('structure'),g=value('groups'),multi=value('predictors')==='multiple',skew=el('skew').checked,small=el('small').checked;
+var clustered=s==='clustered',repeated=s==='repeated',paired=s==='paired',dependent=clustered||repeated;
+var d;
+if(goal==='measurement'||o==='latent'){
+d=details('Exploratory or confirmatory factor analysis (EFA/CFA)','Use EFA when dimensionality is unknown; use CFA to test a prespecified factor structure. An IRT model may be suitable for item-level response modeling.',['Review the construct theory and item content.','Select estimation appropriate to the item response scale.','Inspect identification, factor loadings, local dependence and model fit.'],'Use measurement invariance analysis to compare groups or time; SEM for structural relationships involving latent variables.','Report factor loadings, model fit, reliability estimates, and the theoretical basis for the structure.','# R: example CFA using lavaan\nlibrary(lavaan)\nmodel <- "factor =~ item1 + item2 + item3"\nfit <- cfa(model, data = df)\nsummary(fit, fit.measures = TRUE, standardized = TRUE)','Measurement model');
+}else if(goal==='describe'){
+if(o==='survival')d=details('Kaplan–Meier survival curve','Describe estimated survival probabilities over follow-up when observations may be censored.',['Clearly define time origin, event and censoring.','Inspect follow-up completeness and censoring mechanisms.'],'Summarize event counts and median survival when estimable.','Provide a survival curve with uncertainty intervals and number at risk.','library(survival)\nfit <- survfit(Surv(time, event) ~ 1, data = df)\nplot(fit)','Descriptive survival analysis');
+else if(o==='continuous')d=details('Descriptive statistics and confidence intervals','Summarize location and spread without fitting a predictive model.',['Inspect skewness, outliers and missing values.','Account for complex samples or weights when applicable.'],'Use median and IQR for marked skew, or distribution plots and robust intervals.','Report n, mean/SD or median/IQR, and an appropriately constructed confidence interval.','summary(df$y)\nsd(df$y, na.rm = TRUE)\nhist(df$y)','Descriptive analysis');
+else d=details('Frequencies, proportions, and distribution summaries','Summarize categories or counts and their uncertainty.',['Check missingness and category definitions.','For rare events, use suitable exact or interval estimators.'],'For counts, also report rate per exposure; for ordinal data, median and full category distribution.','Report denominators, counts, proportions, and confidence intervals as appropriate.','table(df$y, useNA = "ifany")\nprop.table(table(df$y))','Descriptive analysis');
+}else if(goal==='compare'){
+if(o==='survival'){
+d=details(multi||dependent?'Cox proportional hazards model':'Kaplan–Meier curves and log-rank test','Compare time-to-event outcomes while accounting for censoring. Cox regression supports covariate adjustment.',['Define event and censoring consistently.','For Cox, assess proportional hazards and potential time-varying effects.','Consider competing events where relevant.'],'Use competing-risk methods when one event precludes another; accelerated failure-time modeling if more appropriate.','Report survival curves or hazard ratios with confidence intervals.','library(survival)\nfit <- coxph(Surv(time, event) ~ group, data = df)\nsummary(fit)','Survival comparison');
+}else if(o==='continuous'){
+if(clustered||repeated||paired&&multi){
+d=details('Linear mixed-effects model','Model continuous outcomes with repeated or clustered measurements while retaining the dependence within people or groups.',['Specify the clustering variable and plausible random-effects structure.','Inspect residuals and fitted values; assess model convergence.','Include time, group and their interaction if the design requires them.'],'GEE targets population-average effects; for complete balanced repeated data, repeated-measures ANOVA may be considered.','Report fixed effects, intervals, variance components and clustering details.','library(lme4)\nfit <- lmer(y ~ group + (1 | id), data = df)\nsummary(fit)','Dependent observations');
+}else if(paired){
+d=details(skew?'Wilcoxon signed-rank test':'Paired-samples t-test','Compare two related measurements on the same unit, using the within-pair differences.',['Pairs must be correctly matched.','For a paired t-test, examine distribution of differences, not each marginal distribution.','For signed-rank inference, consider whether the distribution of paired differences is symmetric.'],'For heavily skewed paired differences, use a paired bootstrap or a sign test where warranted.','Report paired mean difference with CI, or the nonparametric effect and a suitable interval.','t.test(df$before, df$after, paired = TRUE)','Paired comparison');
+}else if(g==='one'){
+d=details('One-sample t-test','Test a continuous sample mean against a justified benchmark.',['Observations should be independent.','Check influential outliers and the distribution for small samples.'],'For strong skew, consider a bootstrap or an appropriate nonparametric location test.','Report sample mean, difference from the benchmark, confidence interval and n.','t.test(df$y, mu = 50)','One-sample inference');
+}else if(g==='two'){
+d=details(skew?'Robust comparison / Mann–Whitney U test':'Welch two-sample t-test','Compare two independent groups on a numeric outcome. Welch’s test allows unequal variances.',['Observations are independent across groups.','Inspect outliers and group distributions.','Mann–Whitney does not generally test equality of medians without additional shape assumptions.'],'Use permutation or bootstrap inference; regression adjustment if covariates are needed.','Report group summaries, estimated difference and CI; distinguish mean and distributional estimands.','t.test(y ~ group, data = df)','Two-group comparison');
+}else{
+d=details(skew?'Kruskal–Wallis test / robust ANOVA':'Welch one-way ANOVA','Compare a continuous outcome across three or more independent groups.',['Observations are independent.','Examine distributional shapes, sample size and dispersion.','Prespecify pairwise comparisons and multiplicity control.'],'Factorial ANOVA or linear regression for multiple predictors; mixed models if clustered.','Report group estimates, omnibus test and adjusted post-hoc contrasts.','oneway.test(y ~ group, data = df, var.equal = FALSE)','Multi-group comparison');
+}
+}else if(o==='binary'){
+if(paired&&!multi&&g==='two')d=details('McNemar’s test','Compare paired binary outcomes across two linked conditions.',['Each pair has one response in each condition.','Inference depends on discordant pairs; small counts need exact procedures.'],'Use conditional logistic regression for matched analyses with covariates.','Report the paired 2×2 table and discordant-pair results.','tab <- table(df$before, df$after)\nmcnemar.test(tab)','Matched binary outcome');
+else if(dependent||paired)d=details('Mixed-effects logistic regression or logistic GEE','Account for within-unit correlation in a binary outcome.',['Use the appropriate link, dependence specification and adequate event counts.','Check separation and clustered sample sizes.'],'Mixed logistic regression estimates conditional effects; GEE estimates population-average effects.','Report odds ratios, CIs and model structure.','library(lme4)\nfit <- glmer(y ~ group + (1 | id),\n             data = df, family = binomial)\nsummary(fit)','Repeated or clustered binary outcome');
+else if(multi)d=details('Binary logistic regression','Estimate associations between groups/covariates and the odds of a binary outcome.',['Confirm outcome coding and adequate events per parameter.','Assess separation, continuous predictor functional form and influential cases.'],'Penalized logistic regression can help in sparse settings; adjusted risk estimates may be more interpretable.','Report adjusted odds ratios and 95% confidence intervals.','fit <- glm(y ~ group + x1 + x2,\n           data = df, family = binomial)\nsummary(fit)','Adjusted binary comparison');
+else d=details('Chi-square test of independence / Fisher exact test','Examine whether outcome proportions differ among independent groups.',['Use counts of independent observations.','Check expected cell counts; sparse 2×2 tables may favor Fisher’s exact test.'],'Binary logistic regression provides effect estimates and permits covariate adjustment.','Report counts, proportions, a risk difference or ratio/odds ratio with CI, and the test.','tab <- table(df$group, df$y)\nchisq.test(tab)\n# If sparse 2x2: fisher.test(tab)','Categorical comparison');
+}else if(o==='ordinal'){
+if(paired&&!multi&&g==='two')d=details('Paired ordinal comparison (Wilcoxon signed-rank / sign test)','Analyze within-pair changes in ordered responses.',['Check matching, ties and the assumptions of the chosen signed-rank analysis.','Ordinal transitions may be more informative than a single p-value.'],'Use cumulative-link mixed models with multiple predictors or time points.','Report transition tables, paired effect estimate and uncertainty.','wilcox.test(df$before, df$after,\n            paired = TRUE, exact = FALSE)','Ordinal paired comparison');
+else if(dependent||paired||multi)d=details('Ordinal logistic mixed model / cumulative-link model','Model ordered response categories while accounting for predictors and, when needed, clustering.',['Check proportional odds or use a more flexible ordinal model.','Ensure sufficient counts in each response category.','For repeated data, specify the grouping effect.'],'GEE ordinal models or partial proportional-odds models may be useful.','Report cumulative odds ratios, intervals and assumptions.','library(ordinal)\nfit <- clmm(as.factor(y) ~ x1 + (1 | id),\n            data = df)','Ordinal regression');
+else d=details(g==='two'?'Mann–Whitney U test':g==='many'?'Kruskal–Wallis test':'Ordinal frequency analysis','Compare ordered outcomes without treating category spacing as necessarily equal.',['Assess independent observations and ties.','Rank tests compare distributions, not automatically medians.'],'Cumulative-link ordinal regression if adjusted comparisons are required.','Report category proportions and a suitable ordinal effect size.','wilcox.test(y ~ group, data = df)','Unadjusted ordinal comparison');
+}else if(o==='count'){
+d=details(dependent||paired?'Mixed-effects negative binomial / Poisson count model':'Poisson or negative binomial regression','Count outcomes require a nonnegative count distribution and often a log link.',['Compare mean and variance to assess overdispersion.','Include an exposure offset if observation times differ.','Inspect zero frequencies and clustered dependence.'],'Consider hurdle or zero-inflated models only when justified by the data-generating process.','Report incidence-rate ratios with intervals; define the exposure denominator.','fit <- glm(events ~ group + offset(log(exposure)),\n           family = poisson, data = df)\nsummary(fit)','Count-outcome model');
+}else{
+d=details('Multinomial logistic regression / contingency table','Nominal categories are unordered, so standard linear regression is inappropriate.',['Check adequate counts per category and outcome coding.','For repeated data, use methods allowing within-unit dependence.'],'Use a chi-square test for a simple independent contingency table without covariate adjustment.','Report predicted probabilities or relative-risk ratios with CIs.','library(nnet)\nfit <- multinom(y ~ group + x1, data = df)','Nominal categorical model');
+}
+}else if(goal==='associate'){
+if(o==='continuous'&&!multi&&!dependent&&!paired){
+d=details(skew?'Spearman rank correlation':'Pearson correlation','Quantify a bivariate association between two numerical measures.',['Inspect a scatterplot, dependence and influential observations.','Pearson measures linear association; Spearman assesses monotonic association.'],'Regression can adjust for covariates; partial correlation addresses specified controls.','Report r or Spearman’s rho, 95% CI and scatterplot.','cor.test(df$x, df$y,\n         method = "'+(skew?'spearman':'pearson')+'")','Bivariate association');
+}else if(o==='ordinal'&&!multi&&!dependent&&!paired){
+d=details('Spearman rho or Kendall tau','Quantify monotonic association for ranked or ordinal measurements.',['Inspect category frequency, ties and direction.','Avoid interpreting correlation as causation.'],'Ordinal regression if an ordered outcome and predictors are distinguished.','Report the coefficient, confidence interval and sample size.','cor.test(df$x, df$y,\n         method = "spearman")','Ordinal association');
+}else if(o==='binary'&&!multi&&!dependent&&!paired){
+d=details('Chi-square association / binary logistic regression','Evaluate association with a binary response. The method depends on predictor type.',['For categorical cross-tabs inspect expected cell counts.','For a numeric predictor consider logistic regression and functional form.'],'Fisher exact for sparse 2×2 tables or an adjusted logistic regression.','Report contingency proportions or an odds ratio and interval.','fit <- glm(y ~ x, data = df,\n           family = binomial)\nsummary(fit)','Binary association');
+}
+}
+if(!d){
+if(o==='survival')d=details('Cox proportional hazards regression','Model time until an event while allowing right censoring.',['Verify status coding and assumptions about censoring.','Assess proportional hazards.'],'Consider AFT models or competing-risk approaches when needed.','Report hazard ratios, CIs and survival probabilities.','library(survival)\nfit <- coxph(Surv(time,event) ~ x1+x2, data=df)','Time-to-event model');
+else if(o==='binary')d=details(dependent||paired?'Mixed-effects logistic regression':'Binary logistic regression','Model the probability of a binary outcome from predictors.',['Check separation and number of outcome events.','Specify dependence when observations are not independent.'],'Consider penalization for small samples or GEE for marginal effects.','Report adjusted odds ratios and 95% CIs.','fit <- glm(y ~ x1+x2, family=binomial,\n           data=df)\nsummary(fit)','Binary regression');
+else if(o==='ordinal')d=details(dependent||paired?'Ordinal logistic mixed model':'Proportional-odds ordinal regression','Ordered categories can be modeled without assuming equal distances.',['Check proportional odds and category frequencies.','Account for repeated responses if needed.'],'Partial proportional-odds models if assumptions fail.','Report cumulative odds ratios and CIs.','library(MASS)\nfit <- polr(as.ordered(y) ~ x1+x2,\n            data=df, Hess=TRUE)','Ordinal regression');
+else if(o==='nominal')d=details('Multinomial logistic regression','Model three or more unordered outcome categories.',['Adequate counts in categories and identification.','Adjust for dependence if clustered.'],'Consider binary logistic regression when a substantively defensible binary outcome exists.','Report predicted category probabilities and intervals.','library(nnet)\nfit <- multinom(y ~ x1+x2, data=df)','Nominal regression');
+else if(o==='count')d=details('Poisson / negative binomial regression','Model event counts, allowing an exposure offset when appropriate.',['Evaluate overdispersion, excess zeros and exposure.','Account for correlated observations when needed.'],'Use a negative binomial model if Poisson variance assumptions fail.','Report incidence-rate ratios and CIs.','fit <- glm(y ~ x1+x2, family=poisson,\n           data=df)\nsummary(fit)','Count regression');
+else if(dependent||paired)d=details('Linear mixed-effects model','Model a continuous outcome while allowing within-unit or within-cluster correlation.',['Evaluate random effects, residuals and convergence.','Distinguish within-unit and between-unit effects.'],'GEE for marginal effects; fixed-effects models when appropriate.','Report fixed effects, confidence intervals and variance components.','library(lme4)\nfit <- lmer(y ~ x1+x2 + (1|id),data=df)','Continuous mixed model');
+else d=details(multi?'Multiple linear regression':'Simple linear regression','Model a continuous response as a function of explanatory variables.',['Check functional form, residual patterns, influential observations and multicollinearity.','Interpret associations, not causation without identifying assumptions.'],'Use generalized additive, robust or non-linear regression for misspecified functional forms.','Report coefficients, CIs, R², sample size and diagnostics.','fit <- lm(y ~ '+(multi?'x1 + x2':'x')+', data=df)\nsummary(fit)','Continuous regression');
+}
+if(skew&&!d.main.includes('Wilcoxon')&&!d.main.includes('Mann–Whitney')&&!d.main.includes('Spearman')){
+d.assumptions.push('Your skew/outlier flag calls for particular attention to residual checks, robust inference, or a different response model.');
+}
+if(small){
+d.assumptions.push('Small/sparse-sample flag: review precision, separation, expected counts and exact/penalized options instead of relying solely on large-sample approximations.');
+}
+if(multi&&goal==='compare'&&o==='continuous'&&!dependent&&!paired){
+d.alternatives+=' With multiple covariates, prespecify an adjusted linear regression/ANCOVA rather than relying on an unadjusted comparison alone.';
+}
+return d;
+}
+function render(){
+var d=choose();
+el('category').textContent=d.label;
+el('result-title').textContent=d.main;
+el('explanation').textContent=d.why;
+el('reason').textContent='Given your selected goal, '+value('outcome')+' outcome, '+value('structure')+' observation structure, and '+value('groups')+' comparison groups, this is a plausible first analysis. Review the notes below for exceptions.';
+var ul=el('assumptions');ul.replaceChildren();
+d.assumptions.forEach(function(note){var li=document.createElement('li');li.textContent=note;ul.appendChild(li)});
+el('alternatives').textContent=d.alternatives;el('report').textContent=d.report;
+codeOutput.textContent=d.code;
+}
+form.addEventListener('submit',function(ev){ev.preventDefault();render();document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'})});
+fields.concat(checks).forEach(function(id){el(id).addEventListener('change',render)});
+el('reset').addEventListener('click',function(){form.reset();render()});
+document.querySelectorAll('[data-preset]').forEach(function(btn){
+btn.addEventListener('click',function(){
+var preset=btn.dataset.preset;
+form.reset();
+if(preset==='prepost'){el('goal').value='compare';el('outcome').value='continuous';el('structure').value='paired';el('groups').value='two'}
+if(preset==='cluster'){el('goal').value='predict';el('outcome').value='continuous';el('structure').value='clustered';el('groups').value='none';el('predictors').value='multiple'}
+if(preset==='binary'){el('goal').value='predict';el('outcome').value='binary';el('structure').value='independent';el('groups').value='none';el('predictors').value='multiple'}
+render();document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+})});
+el('copy').addEventListener('click',function(){
+var text=codeOutput.textContent;
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){el('copy').textContent='Copied';setTimeout(function(){el('copy').textContent='Copy code'},1300)},function(){el('copy').textContent='Select code to copy'})}
+else{el('copy').textContent='Select code to copy'}
+});
+el('theme').addEventListener('click',function(){var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);el('theme').textContent=t==='dark'?'☀':'☾';try{localStorage.setItem('theme',t)}catch(e){}});
+el('theme').textContent=document.documentElement.getAttribute('data-theme')==='dark'?'☀':'☾';
+el('menu').addEventListener('click',function(){var open=el('navlinks').classList.toggle('open');el('menu').textContent=open?'✕':'☰';el('menu').setAttribute('aria-expanded',String(open))});
+el('navlinks').querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){el('navlinks').classList.remove('open');el('menu').setAttribute('aria-expanded','false')})});
+render();
+})();
+</script></body></html>
