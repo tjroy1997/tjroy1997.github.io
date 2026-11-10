@@ -74,7 +74,17 @@
     .code-sample{background:var(--paper);border:1px solid var(--line);border-radius:8px;
       padding:14px 16px;max-width:100%;overflow-x:auto;color:var(--ink);line-height:1.55;tab-size:2}
     .code-sample code{font:inherit;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.875rem}
-  </style>
+  
+    .learning-pages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:28px}
+    .learning-page{display:flex;gap:15px;align-items:flex-start;border:1px solid var(--line);border-radius:15px;background:var(--card);padding:19px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
+    .learning-page:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .learning-page>span:last-child{display:grid;gap:5px;min-width:0}
+    .learning-icon{display:grid;place-items:center;min-width:46px;height:46px;background:var(--paper);color:var(--green);border:1px solid var(--line);border-radius:12px;font:600 27px Newsreader,serif}
+    .learning-label{font-size:10px;font-weight:700;letter-spacing:.09em;color:var(--accent);text-transform:uppercase}
+    .learning-page strong{font-size:16px;line-height:1.3}.learning-page small{font-size:12px;color:var(--muted);line-height:1.5}
+    .learning-arrow{font-size:12px;font-weight:700;color:var(--green);margin-top:3px}
+    @media(max-width:650px){.learning-pages{grid-template-columns:1fr}.learning-page{padding:15px}}
+</style>
 </head>
 <body>
 <nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="index.html#work">Experience</a><a href="index.html#publications">Publications</a><a href="notes.html">Notes</a><a href="index.html#gallery">Gallery</a><a href="index.html#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="Menu">☰</button></div></div></nav>
@@ -113,6 +123,16 @@
     <h1>Stats & Data Science Notes</h1>
     <p>Learn statistics through coins, games, school surveys, and paper airplanes. Start with a story, read a picture, and try a short question. Open the math notes when you’re ready for the formulas.</p>
     <div class="coding-jump" aria-label="Coding tracks"><a href="#r-track">Learn data science with R</a><a href="#py-track">Learn data science with Python</a></div>
+    <div class="learning-pages" aria-label="Additional interactive learning resources">
+      <a class="learning-page" href="math-symbols.html">
+        <span class="learning-icon" aria-hidden="true">∑</span>
+        <span><span class="learning-label">Foundations · K–12</span><strong>Math Symbols &amp; Formulas</strong><small>155 explanations and 74 symbols, searchable by grade—with worked examples.</small><span class="learning-arrow">Explore mathematics →</span></span>
+      </a>
+      <a class="learning-page" href="method-finder.html">
+        <span class="learning-icon" aria-hidden="true">ƒ</span>
+        <span><span class="learning-label">Interactive decision guide</span><strong>Statistical Method Finder</strong><small>Describe your data, explore suitable statistical tests, and get R starting code.</small><span class="learning-arrow">Find a method →</span></span>
+      </a>
+    </div>
   </header>
   <div class="wrap">
     <nav class="toc" id="chapters" aria-labelledby="chapters-title">
