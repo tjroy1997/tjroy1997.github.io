@@ -1,1 +1,75 @@
-PLACEHOLDER_WILL_REPLACE
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Stats & Data Science Notes by Tamal Joyti Roy — 13 chapters covering core statistical methods and formulas.">
+  <title>Stats & Data Science Notes | Tamal Joyti Roy</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de}
+    [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif}
+    a{color:inherit;text-decoration:none}.wrap{width:min(800px,calc(100% - 40px));margin:auto}
+    nav{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:16px 0}
+    nav .wrap{display:flex;justify-content:space-between;align-items:center}
+    .brand{font:600 22px Newsreader,serif}
+    h1{font:600 42px Newsreader,serif;margin:30px 0 12px}
+    .start-box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:18px 20px;margin:16px 0}
+    .why-how-what{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0 20px;font-size:15px}
+    .chapter{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:24px}
+    .chapter h2{font:600 28px Newsreader,serif;margin:0 0 8px}
+    code{background:var(--paper);padding:2px 6px;border-radius:4px;font-size:13px}
+  </style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><a href="index.html">← Home</a></div></nav>
+<main class="wrap">
+  <h1>Stats & Data Science Notes</h1>
+  <p>Learn statistics through coins, games, school surveys, and paper airplanes.</p>
+  <div class="start-box">
+    <strong style="display:block;margin-bottom:6px;color:var(--green)">Why this method · How to run it · What the result means</strong>
+    <span style="color:var(--muted)">Most tutorials skip these three questions. For the key methods below you’ll find a short answer to each.</span>
+  </div>
+
+  <article class="chapter" id="ch6">
+    <h2>Hypothesis Testing</h2>
+    <div class="why-how-what">
+      <p style="margin:0 0 8px"><strong>Why this method?</strong> You have a claim (null hypothesis) and want to see whether your data are surprising enough under that claim to question it.</p>
+      <p style="margin:0 0 8px"><strong>How to run it:</strong> Depends on the test (t-test, chi-square, etc.). The logic is the same: compare your result to what the null predicts.</p>
+      <p style="margin:0"><strong>What the result means:</strong> The p-value is the probability of a result at least this extreme if the null were true. A small p-value is evidence against the null, not proof that your alternative is correct. Always pair it with an estimate and interval.</p>
+    </div>
+  </article>
+
+  <article class="chapter" id="ch7">
+    <h2>Comparing Two Groups (t-tests)</h2>
+    <div class="why-how-what">
+      <p style="margin:0 0 8px"><strong>Why this method?</strong> You have two groups (or paired measurements) and want to know if their means differ more than you’d expect from ordinary variation.</p>
+      <p style="margin:0 0 8px"><strong>How to run it (R):</strong> <code>t.test(score ~ group, data = df)</code> &nbsp;·&nbsp; <strong>Python:</strong> <code>from scipy import stats; stats.ttest_ind(a, b)</code></p>
+      <p style="margin:0"><strong>What the result means:</strong> A small p-value suggests the observed difference is unlikely if the true means were equal. Also look at the confidence interval and effect size (Cohen’s d) to judge practical importance.</p>
+    </div>
+  </article>
+
+  <article class="chapter" id="ch8">
+    <h2>Analysis of Variance (ANOVA)</h2>
+    <div class="why-how-what">
+      <p style="margin:0 0 8px"><strong>Why this method?</strong> You have three or more groups and want to test whether their means are all the same, without running many separate t-tests.</p>
+      <p style="margin:0 0 8px"><strong>How to run it (R):</strong> <code>aov(distance ~ design, data = df)</code> &nbsp;·&nbsp; <strong>Python:</strong> <code>from scipy import stats; stats.f_oneway(g1, g2, g3)</code></p>
+      <p style="margin:0"><strong>What the result means:</strong> A significant F-test says at least one group mean differs. It does not tell you which groups differ — follow up with pairwise comparisons, and report effect size (η² or ω²).</p>
+    </div>
+  </article>
+
+  <article class="chapter" id="ch9">
+    <h2>Correlation & Simple Linear Regression</h2>
+    <div class="why-how-what">
+      <p style="margin:0 0 8px"><strong>Why this method?</strong> You want to describe the straight-line relationship between two continuous variables (correlation) or predict one from the other (regression).</p>
+      <p style="margin:0 0 8px"><strong>How to run it (R):</strong> <code>cor.test(x, y)</code> or <code>lm(y ~ x, data = df)</code> &nbsp;·&nbsp; <strong>Python:</strong> <code>scipy.stats.pearsonr(x, y)</code> or <code>statsmodels.OLS</code></p>
+      <p style="margin:0"><strong>What the result means:</strong> Correlation (r) shows direction and strength (−1 to +1). In regression, the slope is the expected change in y for a one-unit increase in x. Always check the scatterplot — a strong curve can still give a weak r.</p>
+    </div>
+  </article>
+
+  <p style="margin-top:32px"><a href="notes.html" style="color:var(--green);font-weight:700">Full notes with all 13 chapters →</a> (once restored)</p>
+  <p><a href="tools.html" style="color:var(--green);font-weight:700">Tools →</a> · <a href="snippets.html" style="color:var(--green);font-weight:700">Snippets →</a> · <a href="playground.html" style="color:var(--green);font-weight:700">Playground →</a></p>
+</main>
+</body>
+</html>
