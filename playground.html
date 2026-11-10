@@ -21,13 +21,15 @@
     th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
     .links{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap}
     .links a{color:var(--green);font-weight:700}
+    canvas{width:100%;max-width:100%;height:auto;margin-top:16px;border-radius:8px;background:var(--paper)}
+    h2{margin-top:0;font-size:22px}
   </style>
 </head>
 <body>
 <nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><a href="index.html">← Home</a></div></nav>
 <main class="wrap">
   <h1>Data Playground</h1>
-  <p>Paste a small CSV (with a header row). Instant summary statistics for numeric columns.</p>
+  <p>Paste a small CSV (with a header row). Instant summary statistics for numeric columns, plus a simple visualization when a grouping variable is present.</p>
   <textarea id="csv">group,score
 A,10
 A,12
@@ -53,14 +55,154 @@ document.getElementById("run").onclick=function(){
     const sd=Math.sqrt(vals.reduce((a,b)=>a+(b-mean)**2,0)/(vals.length-1));
     const sorted=[...vals].sort((a,b)=>a-b);
     const med=sorted.length%2?sorted[(sorted.length-1)/2]:(sorted[sorted.length/2-1]+sorted[sorted.length/2])/2;
-    return {name:h,n:vals.length,mean:mean.toFixed(2),sd:sd.toFixed(2),min:Math.min(...vals),max:Math.max(...vals),median:med.toFixed(2)};
+    return {name:h,n:vals.length,mean:mean.toFixed(2),sd:sd.toFixed(2),min:Math.min(...vals),max:Math.max(...vals),median:med.toFixed(2),vals};
   }).filter(Boolean);
+
   let html="<h2>Summary</h2><table><tr><th>Column</th><th>n</th><th>Mean</th><th>SD</th><th>Median</th><th>Min</th><th>Max</th></tr>";
   numeric.forEach(c=>{html+=`<tr><td>${c.name}</td><td>${c.n}</td><td>${c.mean}</td><td>${c.sd}</td><td>${c.median}</td><td>${c.min}</td><td>${c.max}</td></tr>`;});
   html+="</table>";
   if(!numeric.length)html="<p>No numeric columns found.</p>";
+
+  // Visualization: detect first categorical + first numeric for grouped bar chart
+  let vizHtml = "";
+  const catIdx = headers.findIndex((h,i)=>{
+    const sample = rows.map(r=>r[i]).filter(Boolean);
+    return sample.length > 0 && sample.every(v=>isNaN(parseFloat(v)));
+  });
+  const numIdx = headers.findIndex((h,i)=> numeric.some(n=>n.name===h));
+
+  if(catIdx>=0 && numIdx>=0){
+    const groups = {};
+    rows.forEach(r=>{
+      const g = r[catIdx] || "(blank)";
+      const v = parseFloat(r[numIdx]);
+      if(!isNaN(v)){
+        if(!groups[g]) groups[g]=[];
+        groups[g].push(v);
+      }
+    });
+    const groupNames = Object.keys(groups);
+    if(groupNames.length>=1 && groupNames.length<=12){
+      vizHtml += `<h2 style="margin-top:24px">Mean ${headers[numIdx]} by ${headers[catIdx]}</h2>`;
+      vizHtml += `<canvas id="chart" width="720" height="320"></canvas>`;
+      vizHtml += `<p style="font-size:13px;color:var(--muted);margin-top:8px">Bars show group means. Dots show individual observations.</p>`;
+    }
+  } else if(numeric.length>0){
+    vizHtml += `<h2 style="margin-top:24px">Distribution of ${numeric[0].name}</h2>`;
+    vizHtml += `<canvas id="chart" width="720" height="280"></canvas>`;
+  }
+
+  html += vizHtml;
   document.getElementById("out").innerHTML=html;
   document.getElementById("out").style.display="block";
+
+  // Draw chart
+  const canvas = document.getElementById("chart");
+  if(canvas){
+    const ctx = canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    const W = rect.width, H = rect.height;
+
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--paper") || "#f6f7f2";
+    ctx.fillRect(0,0,W,H);
+
+    if(catIdx>=0 && numIdx>=0){
+      const groups = {};
+      rows.forEach(r=>{
+        const g = r[catIdx] || "(blank)";
+        const v = parseFloat(r[numIdx]);
+        if(!isNaN(v)){
+          if(!groups[g]) groups[g]=[];
+          groups[g].push(v);
+        }
+      });
+      const groupNames = Object.keys(groups);
+      const means = groupNames.map(g=>groups[g].reduce((a,b)=>a+b,0)/groups[g].length);
+      const maxVal = Math.max(...means, ...Object.values(groups).flat()) * 1.15;
+      const barW = Math.min(60, (W-80)/groupNames.length * 0.6);
+      const gap = (W-80 - barW*groupNames.length)/(groupNames.length+1);
+
+      // y-axis
+      ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue("--line") || "#dfe4de";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(50,20);
+      ctx.lineTo(50,H-40);
+      ctx.lineTo(W-20,H-40);
+      ctx.stroke();
+
+      // bars + dots
+      groupNames.forEach((g,i)=>{
+        const mean = means[i];
+        const x = 50 + gap + i*(barW+gap);
+        const barH = (mean / maxVal) * (H-70);
+        const y = H-40 - barH;
+
+        ctx.fillStyle = "#164c3d";
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(x, y, barW, barH);
+        ctx.globalAlpha = 1;
+
+        // individual points
+        groups[g].forEach(v=>{
+          const py = H-40 - (v / maxVal)*(H-70);
+          ctx.fillStyle = "#a21d36";
+          ctx.beginPath();
+          ctx.arc(x + barW/2 + (Math.random()-0.5)*8, py, 3.5, 0, Math.PI*2);
+          ctx.fill();
+        });
+
+        // labels
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--ink") || "#18201d";
+        ctx.font = "12px DM Sans, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(g, x + barW/2, H-22);
+        ctx.fillText(mean.toFixed(1), x + barW/2, y-6);
+      });
+
+      ctx.textAlign = "right";
+      ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--muted") || "#62706a";
+      ctx.font = "11px DM Sans, sans-serif";
+      ctx.fillText(maxVal.toFixed(0), 42, 28);
+      ctx.fillText("0", 42, H-36);
+    } else if(numeric.length>0){
+      // simple histogram
+      const vals = numeric[0].vals;
+      const min = Math.min(...vals), max = Math.max(...vals);
+      const bins = 8;
+      const binW = (max-min)/bins || 1;
+      const counts = Array(bins).fill(0);
+      vals.forEach(v=>{
+        let b = Math.min(bins-1, Math.floor((v-min)/binW));
+        counts[b]++;
+      });
+      const maxC = Math.max(...counts);
+      const bw = (W-80)/bins;
+
+      ctx.strokeStyle = getComputedStyle(document.body).getPropertyValue("--line") || "#dfe4de";
+      ctx.beginPath();
+      ctx.moveTo(50,20);
+      ctx.lineTo(50,H-40);
+      ctx.lineTo(W-20,H-40);
+      ctx.stroke();
+
+      counts.forEach((c,i)=>{
+        const h = (c/maxC)*(H-70);
+        const x = 50 + i*bw + 4;
+        ctx.fillStyle = "#164c3d";
+        ctx.fillRect(x, H-40-h, bw-8, h);
+        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--ink") || "#18201d";
+        ctx.font = "11px DM Sans, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText((min + i*binW).toFixed(1), x+(bw-8)/2, H-24);
+      });
+    }
+  }
 };
 </script>
 </body>
