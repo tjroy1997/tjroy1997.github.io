@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Useful tools — BMI calculator and unit converter by Tamal Joyti Roy">
+  <meta name="description" content="Useful tools — BMI, unit converter, effect size, and sample size calculators by Tamal Joyti Roy">
   <title>Tools · Tamal Joyti Roy</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +30,7 @@
     .result{margin-top:18px;font-size:20px;font-weight:600}
     .result strong{color:var(--green);font-size:28px}
     .cat{display:inline-block;margin-left:8px;padding:4px 10px;border-radius:999px;background:rgba(22,76,61,.1);color:var(--green);font-size:14px}
+    .note{color:var(--muted);font-size:14px;margin-top:8px}
     footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
     .theme-toggle{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:18px}
   </style>
@@ -39,7 +40,7 @@
 <main class="wrap">
   <header>
     <h1>Useful Tools</h1>
-    <p class="lead">Real-time calculators for health metrics and unit conversions. All calculations run locally in your browser.</p>
+    <p class="lead">Real-time calculators for health metrics, unit conversions, and research statistics. All calculations run locally in your browser.</p>
   </header>
   <div class="tools">
     <article class="card">
@@ -49,7 +50,7 @@
         <div><label for="weight">Weight (kg)</label><input type="number" id="weight" value="70" step="0.1" min="20" max="300"></div>
       </div>
       <div class="result">BMI: <strong id="bmi">24.2</strong> <span class="cat" id="bmi-cat">Normal weight</span></div>
-      <p style="color:var(--muted);font-size:14px;margin-top:8px">Categories: <18.5 Underweight · 18.5–24.9 Normal · 25–29.9 Overweight · ≥30 Obese</p>
+      <p class="note">Categories: <18.5 Underweight · 18.5–24.9 Normal · 25–29.9 Overweight · ≥30 Obese</p>
     </article>
 
     <article class="card">
@@ -87,12 +88,36 @@
       </div>
       <div class="result">Result: <strong id="conv">1</strong></div>
     </article>
+
+    <article class="card">
+      <h2>Cohen’s d (Effect Size)</h2>
+      <div class="row">
+        <div><label for="m1">Mean 1</label><input type="number" id="m1" value="10" step="any"></div>
+        <div><label for="m2">Mean 2</label><input type="number" id="m2" value="12" step="any"></div>
+        <div><label for="sd1">SD 1</label><input type="number" id="sd1" value="2" step="any" min="0"></div>
+        <div><label for="sd2">SD 2</label><input type="number" id="sd2" value="2" step="any" min="0"></div>
+        <div><label for="n1">n1 (optional)</label><input type="number" id="n1" value="30" step="1" min="1"></div>
+        <div><label for="n2">n2 (optional)</label><input type="number" id="n2" value="30" step="1" min="1"></div>
+      </div>
+      <div class="result">Cohen’s d: <strong id="cohensd">1.00</strong> <span class="cat" id="d-cat">Large</span></div>
+      <p class="note">Pooled SD is used. Conventional benchmarks: 0.2 small · 0.5 medium · 0.8 large.</p>
+    </article>
+
+    <article class="card">
+      <h2>Sample Size (Two-group t-test)</h2>
+      <div class="row">
+        <div><label for="d">Expected Cohen’s d</label><input type="number" id="d" value="0.5" step="0.1" min="0.1"></div>
+        <div><label for="power">Power (1-β)</label><input type="number" id="power" value="0.80" step="0.05" min="0.5" max="0.99"></div>
+        <div><label for="alpha">Alpha (α)</label><input type="number" id="alpha" value="0.05" step="0.01" min="0.01" max="0.2"></div>
+      </div>
+      <div class="result">Required n per group: <strong id="n">64</strong></div>
+      <p class="note">Approximate equal-sample two-sided independent t-test. Based on normal approximation.</p>
+    </article>
   </div>
 </main>
 <footer>Calculations are performed entirely in your browser. No data is sent anywhere.</footer>
 <script>
 (function(){
-  // Theme
   var themeBtn=document.getElementById('themeToggle');
   function setTheme(theme){
     document.documentElement.setAttribute('data-theme',theme);
@@ -105,23 +130,21 @@
     setTheme(t); try{localStorage.setItem('theme',t)}catch{}
   };
 
-  // BMI
   function calcBMI(){
     var h=parseFloat(document.getElementById('height').value)/100;
     var w=parseFloat(document.getElementById('weight').value);
     if(!h||!w||h<=0)return;
     var bmi=(w/(h*h)).toFixed(1);
     document.getElementById('bmi').textContent=bmi;
-    var cat='Obese',cls='';
-    if(bmi<18.5){cat='Underweight'}
-    else if(bmi<25){cat='Normal weight'}
-    else if(bmi<30){cat='Overweight'}
+    var cat='Obese';
+    if(bmi<18.5)cat='Underweight';
+    else if(bmi<25)cat='Normal weight';
+    else if(bmi<30)cat='Overweight';
     document.getElementById('bmi-cat').textContent=cat;
   }
   document.getElementById('height').oninput=calcBMI;
   document.getElementById('weight').oninput=calcBMI;
 
-  // Converter
   var factors={m:1,km:1000,cm:0.01,ft:0.3048,in:0.0254,mi:1609.344,kg:1,g:0.001,lb:0.45359237,oz:0.0283495231};
   function convert(){
     var val=parseFloat(document.getElementById('value').value);
@@ -134,11 +157,48 @@
       result=to==='c'?c:to==='f'?c*9/5+32:c+273.15;
     }else if(factors[from]&&factors[to]){
       result=val*factors[from]/factors[to];
-    }else{return}
+    }else return;
     document.getElementById('conv').textContent=result.toPrecision(6).replace(/\.?0+$/,'');
   }
   ['value','from','to'].forEach(function(id){document.getElementById(id).oninput=convert});
   convert();
+
+  function calcD(){
+    var m1=+document.getElementById('m1').value;
+    var m2=+document.getElementById('m2').value;
+    var sd1=+document.getElementById('sd1').value;
+    var sd2=+document.getElementById('sd2').value;
+    var n1=+document.getElementById('n1').value||30;
+    var n2=+document.getElementById('n2').value||30;
+    if(sd1<=0||sd2<=0)return;
+    var pooled=Math.sqrt(((n1-1)*sd1*sd1+(n2-1)*sd2*sd2)/(n1+n2-2));
+    var d=Math.abs(m1-m2)/pooled;
+    document.getElementById('cohensd').textContent=d.toFixed(2);
+    var cat='Large';
+    if(d<0.2)cat='Negligible';
+    else if(d<0.5)cat='Small';
+    else if(d<0.8)cat='Medium';
+    document.getElementById('d-cat').textContent=cat;
+  }
+  ['m1','m2','sd1','sd2','n1','n2'].forEach(function(id){document.getElementById(id).oninput=calcD});
+  calcD();
+
+  function calcN(){
+    var d=+document.getElementById('d').value;
+    var power=+document.getElementById('power').value;
+    var alpha=+document.getElementById('alpha').value;
+    if(d<=0)return;
+    var zalpha=1.96;
+    if(alpha===0.01)zalpha=2.58;
+    else if(alpha===0.1)zalpha=1.645;
+    var zbeta=0.84;
+    if(power===0.9)zbeta=1.28;
+    else if(power===0.95)zbeta=1.645;
+    var n=Math.ceil(2*((zalpha+zbeta)/d)**2);
+    document.getElementById('n').textContent=n;
+  }
+  ['d','power','alpha'].forEach(function(id){document.getElementById(id).oninput=calcN});
+  calcN();
 })();
 </script>
 </body>
