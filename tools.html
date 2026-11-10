@@ -1,1 +1,145 @@
-PLACEHOLDER
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Useful tools — BMI calculator and unit converter by Tamal Joyti Roy">
+  <title>Tools · Tamal Joyti Roy</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de;--shadow:0 18px 55px rgba(21,43,35,.10);--nav-bg:rgba(246,247,242,.9)}
+    [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530;--shadow:0 18px 55px rgba(0,0,0,.4);--nav-bg:rgba(15,22,19,.92)}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(900px,calc(100% - 40px));margin:auto}
+    nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}
+    nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font:600 22px Newsreader,serif}
+    .back{font-weight:600;color:var(--muted)}
+    .back:hover{color:var(--accent)}
+    header{padding:60px 0 30px}
+    h1{font:600 clamp(36px,6vw,52px)/1 Newsreader,serif;margin:0 0 12px}
+    .lead{color:var(--muted);font-size:18px}
+    .tools{display:grid;gap:24px;padding-bottom:80px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 6px 20px rgba(21,43,35,.035)}
+    .card h2{font:600 28px Newsreader,serif;margin:0 0 16px}
+    label{display:block;margin:12px 0 6px;font-weight:600;font-size:14px}
+    input,select{width:100%;max-width:220px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font-size:16px}
+    .row{display:flex;gap:16px;flex-wrap:wrap;align-items:end}
+    .result{margin-top:18px;font-size:20px;font-weight:600}
+    .result strong{color:var(--green);font-size:28px}
+    .cat{display:inline-block;margin-left:8px;padding:4px 10px;border-radius:999px;background:rgba(22,76,61,.1);color:var(--green);font-size:14px}
+    footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+    .theme-toggle{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:18px}
+  </style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="/">Tamal Joyti Roy</a><div style="display:flex;align-items:center;gap:12px"><a class="back" href="/">← Back to site</a><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">☾</button></div></div></nav>
+<main class="wrap">
+  <header>
+    <h1>Useful Tools</h1>
+    <p class="lead">Real-time calculators for health metrics and unit conversions. All calculations run locally in your browser.</p>
+  </header>
+  <div class="tools">
+    <article class="card">
+      <h2>BMI Calculator</h2>
+      <div class="row">
+        <div><label for="height">Height (cm)</label><input type="number" id="height" value="170" step="0.1" min="50" max="250"></div>
+        <div><label for="weight">Weight (kg)</label><input type="number" id="weight" value="70" step="0.1" min="20" max="300"></div>
+      </div>
+      <div class="result">BMI: <strong id="bmi">24.2</strong> <span class="cat" id="bmi-cat">Normal weight</span></div>
+      <p style="color:var(--muted);font-size:14px;margin-top:8px">Categories: <18.5 Underweight · 18.5–24.9 Normal · 25–29.9 Overweight · ≥30 Obese</p>
+    </article>
+
+    <article class="card">
+      <h2>Unit Converter</h2>
+      <div class="row">
+        <div><label for="value">Value</label><input type="number" id="value" value="1" step="any"></div>
+        <div><label for="from">From</label>
+          <select id="from">
+            <optgroup label="Length">
+              <option value="m">meters</option><option value="km">kilometers</option><option value="cm">centimeters</option>
+              <option value="ft">feet</option><option value="in">inches</option><option value="mi">miles</option>
+            </optgroup>
+            <optgroup label="Weight / Mass">
+              <option value="kg">kilograms</option><option value="g">grams</option><option value="lb">pounds</option><option value="oz">ounces</option>
+            </optgroup>
+            <optgroup label="Temperature">
+              <option value="c">Celsius (°C)</option><option value="f">Fahrenheit (°F)</option><option value="k">Kelvin (K)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div><label for="to">To</label>
+          <select id="to">
+            <optgroup label="Length">
+              <option value="m">meters</option><option value="km">kilometers</option><option value="cm">centimeters</option>
+              <option value="ft">feet</option><option value="in">inches</option><option value="mi">miles</option>
+            </optgroup>
+            <optgroup label="Weight / Mass">
+              <option value="kg">kilograms</option><option value="g">grams</option><option value="lb">pounds</option><option value="oz">ounces</option>
+            </optgroup>
+            <optgroup label="Temperature">
+              <option value="c">Celsius (°C)</option><option value="f">Fahrenheit (°F)</option><option value="k">Kelvin (K)</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="result">Result: <strong id="conv">1</strong></div>
+    </article>
+  </div>
+</main>
+<footer>Calculations are performed entirely in your browser. No data is sent anywhere.</footer>
+<script>
+(function(){
+  // Theme
+  var themeBtn=document.getElementById('themeToggle');
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme',theme);
+    themeBtn.textContent=theme==='dark'?'☀':'☾';
+  }
+  var saved; try{saved=localStorage.getItem('theme')}catch{}
+  setTheme(saved==='dark'||saved==='light'?saved:(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+  themeBtn.onclick=function(){
+    var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    setTheme(t); try{localStorage.setItem('theme',t)}catch{}
+  };
+
+  // BMI
+  function calcBMI(){
+    var h=parseFloat(document.getElementById('height').value)/100;
+    var w=parseFloat(document.getElementById('weight').value);
+    if(!h||!w||h<=0)return;
+    var bmi=(w/(h*h)).toFixed(1);
+    document.getElementById('bmi').textContent=bmi;
+    var cat='Obese',cls='';
+    if(bmi<18.5){cat='Underweight'}
+    else if(bmi<25){cat='Normal weight'}
+    else if(bmi<30){cat='Overweight'}
+    document.getElementById('bmi-cat').textContent=cat;
+  }
+  document.getElementById('height').oninput=calcBMI;
+  document.getElementById('weight').oninput=calcBMI;
+
+  // Converter
+  var factors={m:1,km:1000,cm:0.01,ft:0.3048,in:0.0254,mi:1609.344,kg:1,g:0.001,lb:0.45359237,oz:0.0283495231};
+  function convert(){
+    var val=parseFloat(document.getElementById('value').value);
+    var from=document.getElementById('from').value;
+    var to=document.getElementById('to').value;
+    if(isNaN(val))return;
+    var result;
+    if(['c','f','k'].includes(from)){
+      var c=from==='c'?val:from==='f'?(val-32)*5/9:val-273.15;
+      result=to==='c'?c:to==='f'?c*9/5+32:c+273.15;
+    }else if(factors[from]&&factors[to]){
+      result=val*factors[from]/factors[to];
+    }else{return}
+    document.getElementById('conv').textContent=result.toPrecision(6).replace(/\.?0+$/,'');
+  }
+  ['value','from','to'].forEach(function(id){document.getElementById(id).oninput=convert});
+  convert();
+})();
+</script>
+</body>
+</html>
