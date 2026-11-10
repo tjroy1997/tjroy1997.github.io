@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Data Playground · Tamal Joyti Roy</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de}
+    [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif}
+    a{color:inherit;text-decoration:none}.wrap{width:min(860px,calc(100% - 40px));margin:auto}
+    nav{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:16px 0}
+    nav .wrap{display:flex;justify-content:space-between;align-items:center}
+    .brand{font:600 22px Newsreader,serif}
+    h1{font:600 42px Newsreader,serif;margin:40px 0 12px}
+    textarea{width:100%;height:160px;font-family:ui-monospace,monospace;font-size:13px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+    button{margin-top:12px;padding:10px 18px;border-radius:999px;border:1px solid var(--green);background:var(--green);color:#fff;font-weight:700;cursor:pointer}
+    .result{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+    .links{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap}
+    .links a{color:var(--green);font-weight:700}
+  </style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><a href="index.html">← Home</a></div></nav>
+<main class="wrap">
+  <h1>Data Playground</h1>
+  <p>Paste a small CSV (with a header row). Instant summary statistics for numeric columns.</p>
+  <textarea id="csv">group,score
+A,10
+A,12
+B,15
+B,18
+A,11
+B,16</textarea>
+  <button id="run">Analyze</button>
+  <div id="out" class="result" style="display:none"></div>
+  <div class="links"><a href="tools.html">Tools →</a><a href="snippets.html">Snippets →</a><a href="notes.html">Notes →</a></div>
+</main>
+<script>
+document.getElementById("run").onclick=function(){
+  const text=document.getElementById("csv").value.trim();
+  if(!text)return;
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());
+  const headers=lines[0].split(",").map(h=>h.trim());
+  const rows=lines.slice(1).map(l=>l.split(",").map(c=>c.trim()));
+  const numeric=headers.map((h,i)=>{
+    const vals=rows.map(r=>parseFloat(r[i])).filter(v=>!isNaN(v));
+    if(vals.length<2)return null;
+    const mean=vals.reduce((a,b)=>a+b,0)/vals.length;
+    const sd=Math.sqrt(vals.reduce((a,b)=>a+(b-mean)**2,0)/(vals.length-1));
+    const sorted=[...vals].sort((a,b)=>a-b);
+    const med=sorted.length%2?sorted[(sorted.length-1)/2]:(sorted[sorted.length/2-1]+sorted[sorted.length/2])/2;
+    return {name:h,n:vals.length,mean:mean.toFixed(2),sd:sd.toFixed(2),min:Math.min(...vals),max:Math.max(...vals),median:med.toFixed(2)};
+  }).filter(Boolean);
+  let html="<h2>Summary</h2><table><tr><th>Column</th><th>n</th><th>Mean</th><th>SD</th><th>Median</th><th>Min</th><th>Max</th></tr>";
+  numeric.forEach(c=>{html+=`<tr><td>${c.name}</td><td>${c.n}</td><td>${c.mean}</td><td>${c.sd}</td><td>${c.median}</td><td>${c.min}</td><td>${c.max}</td></tr>`;});
+  html+="</table>";
+  if(!numeric.length)html="<p>No numeric columns found.</p>";
+  document.getElementById("out").innerHTML=html;
+  document.getElementById("out").style.display="block";
+};
+</script>
+</body>
+</html>
