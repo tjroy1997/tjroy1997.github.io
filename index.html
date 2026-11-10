@@ -51,6 +51,17 @@
     .lb-close{top:20px;right:20px}
     .lb-prev{left:20px;top:50%;transform:translateY(-50%)}
     .lb-next{right:20px;top:50%;transform:translateY(-50%)}
+
+    /* Personal mobile photography collection */
+    #mobile-photography{scroll-margin-top:100px}
+    #mobile-photography .gallery-grid{min-height:210px}
+    #mobile-photography .carousel-controls{display:none}
+    #mobile-photography.has-photos .carousel-controls{display:flex}
+    .mobile-photo-empty{flex:1;display:flex;min-width:0;min-height:200px;align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;border:1px dashed var(--line);border-radius:15px;background:var(--paper);padding:26px}
+    .mobile-photo-empty-mark{font-size:32px;line-height:1;color:var(--green)}
+    .mobile-photo-empty strong{font:600 23px Newsreader,serif;color:var(--ink)}
+    .mobile-photo-empty span{font-size:14px;color:var(--muted);max-width:440px}
+    #mobile-photography .gallery-item:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 </style>
 <script type="application/ld+json">
 {
@@ -143,7 +154,21 @@
     <article class="card"><div class="meta">APA 2025 · LEARNING SCIENCES</div><h3>The Role of Self-Efficacy and Regulation Difficulties in Predicting Academic Procrastination</h3><p>Explores how self-efficacy and difficulties regulating motivation and learning activities relate to academic procrastination.</p><div class="actions"><a class="btn" href="posters/self-efficacy-regulation-academic-procrastination.pdf" target="_blank">Open poster ↗</a></div></article>
     <article class="card"><div class="meta">APA 2025 · ADOLESCENT HEALTH</div><h3>The Role of Anxiety, Body Discrepancy and Sleep on Body Mass Index among Latino Youth</h3><p>Investigates gender-specific associations of body size discrepancy, sleep quality, and social anxiety with BMI.</p><div class="actions"><a class="btn" href="posters/anxiety-body-discrepancy-sleep-bmi.pdf" target="_blank">Open poster ↗</a></div></article>
   </div></div></section>
-  <section id="gallery"><div class="wrap"><div class="section-head"><h2>Gallery</h2><p>Highlights from conferences, presentations, and the scholarly community. New occasions will be added as separate collections.</p></div>
+  <section id="gallery"><div class="wrap"><div class="section-head"><h2>Gallery</h2><p>From conferences and research presentations to personal moments captured on my phone—a visual record of both professional and everyday life.</p></div>
+
+    <article class="gallery-event mobile-photo-feature" id="mobile-photography" aria-labelledby="mobilePhotographyTitle">
+      <div class="gallery-event-head">
+        <div><div class="kicker">Personal collection · Through my lens</div><h3 id="mobilePhotographyTitle">Mobile Photography</h3></div>
+        <p>A journal of light, places, details, and everyday scenes captured on my phone. <span id="mobilePhotoCount" aria-live="polite">The collection is being prepared.</span></p>
+      </div>
+      <div class="gallery-grid" id="mobilePhotoGrid" aria-label="Mobile photography collection">
+        <div class="mobile-photo-empty" id="mobilePhotoEmpty">
+          <div class="mobile-photo-empty-mark" aria-hidden="true">◎</div>
+          <strong>A photo journal in progress</strong>
+          <span>Once photographs are uploaded, they will appear automatically in this collection.</span>
+        </div>
+      </div>
+    </article>
     <article class="gallery-event"><div class="gallery-event-head"><div><div class="kicker">Conference collection</div><h3>APHA 2026</h3></div><p>American Public Health Association Annual Meeting · San Antonio, Texas · November 2025</p></div><div class="gallery-grid">
       <a class="gallery-item" href="gallery/PaEfb.webp" target="_blank"><img src="gallery/PaEfb.webp" alt="Tamal Joyti Roy and colleagues at the APHA 2026 poster session" loading="lazy"><span>At the APHA 2026 poster session</span></a>
       <a class="gallery-item" href="gallery/image.webp" target="_blank"><img src="gallery/image.webp" alt="Tamal Joyti Roy with collaborator in front of anxiety mediation poster" loading="lazy"><span>With collaborator at the poster</span></a>
@@ -201,6 +226,59 @@ document.querySelectorAll('.gallery-event').forEach(function(event){
 });
 </script>
 
+<script>
+(function(){
+  'use strict';
+  var grid=document.getElementById('mobilePhotoGrid');
+  var section=document.getElementById('mobile-photography');
+  var counter=document.getElementById('mobilePhotoCount');
+  if(!grid||!section||!counter)return;
+  // The public GitHub Contents API provides an automatic listing of uploaded image files.
+  var endpoint='https://api.github.com/repos/tjroy1997/tjroy1997.github.io/contents/gallery/mobile-photography?ref=main';
+  function captionFrom(filename){
+    return filename.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim()||'Mobile photograph';
+  }
+  fetch(endpoint,{headers:{'Accept':'application/vnd.github+json'}})
+    .then(function(response){if(!response.ok)throw new Error('Could not load the photo folder');return response.json()})
+    .then(function(files){
+      if(!Array.isArray(files))throw new Error('Unexpected gallery data');
+      var photos=files.filter(function(file){
+        return file.type==='file'&&/\.(jpe?g|png|webp|gif|avif)$/i.test(file.name);
+      }).sort(function(a,b){return a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'})});
+      if(photos.length===0){
+        counter.textContent='New photos will appear here soon.';
+        return;
+      }
+      var fragment=document.createDocumentFragment();
+      photos.forEach(function(file){
+        var caption=captionFrom(file.name);
+        var path='gallery/mobile-photography/'+encodeURIComponent(file.name);
+        var anchor=document.createElement('a');
+        anchor.className='gallery-item';
+        anchor.href=path;
+        anchor.setAttribute('aria-label','View photograph: '+caption);
+        var img=document.createElement('img');
+        img.src=path;
+        img.alt='Mobile photograph: '+caption;
+        img.loading='lazy';
+        img.decoding='async';
+        var label=document.createElement('span');
+        label.textContent=caption;
+        anchor.append(img,label);
+        fragment.appendChild(anchor);
+      });
+      grid.replaceChildren(fragment);
+      section.classList.add('has-photos');
+      counter.textContent=photos.length+' photograph'+(photos.length===1?'':'s')+' in this collection.';
+    })
+    .catch(function(){
+      counter.textContent='Gallery temporarily unavailable.';
+      var status=document.querySelector('#mobilePhotoEmpty span');
+      if(status)status.textContent='Unable to load photos right now. Please check back shortly.';
+    });
+})();
+</script>
+
 <div class="lightbox" id="lightbox">
   <button class="lb-close" id="lbClose">✕</button>
   <button class="lb-prev" id="lbPrev">←</button>
@@ -209,17 +287,39 @@ document.querySelectorAll('.gallery-event').forEach(function(event){
 </div>
 <script>
 (function(){
-  // Lightbox
+  // Delegated gallery controls also work for images added after page load.
   var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
-  var items=[].slice.call(document.querySelectorAll('.gallery-item'));
   var current=0;
-  function openLb(i){current=i;lbImg.src=items[i].querySelector('img').src;lb.classList.add('open')}
-  items.forEach(function(item,i){item.addEventListener('click',function(e){e.preventDefault();openLb(i)})});
-  document.getElementById('lbClose').addEventListener('click',function(){lb.classList.remove('open')});
-  document.getElementById('lbPrev').addEventListener('click',function(){openLb((current-1+items.length)%items.length)});
-  document.getElementById('lbNext').addEventListener('click',function(){openLb((current+1)%items.length)});
-  lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open')});
-  document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft')openLb((current-1+items.length)%items.length);if(e.key==='ArrowRight')openLb((current+1)%items.length)});
+  function items(){return Array.prototype.slice.call(document.querySelectorAll('.gallery-item'))}
+  function openLb(index){
+    var photos=items();
+    if(!photos.length)return;
+    current=(index+photos.length)%photos.length;
+    var img=photos[current].querySelector('img');
+    if(!img)return;
+    lbImg.src=img.currentSrc||img.src;
+    lbImg.alt=img.alt||'Gallery photograph';
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeLb(){lb.classList.remove('open');document.body.style.overflow=''}
+  document.addEventListener('click',function(e){
+    var anchor=e.target.closest&&e.target.closest('.gallery-item');
+    if(!anchor)return;
+    e.preventDefault();
+    var index=items().indexOf(anchor);
+    if(index!==-1)openLb(index);
+  });
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  document.getElementById('lbPrev').addEventListener('click',function(){openLb(current-1)});
+  document.getElementById('lbNext').addEventListener('click',function(){openLb(current+1)});
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')closeLb();
+    if(e.key==='ArrowLeft')openLb(current-1);
+    if(e.key==='ArrowRight')openLb(current+1);
+  });
 })();
 </script>
 </body></html>
