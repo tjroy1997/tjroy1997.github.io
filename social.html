@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Social updates, research reflections, and conversations from Tamal Joyti Roy on X and Facebook.">
+<meta property="og:title" content="Social Updates | Tamal Joyti Roy">
+<meta property="og:description" content="Ideas on research, statistics, science communication, and life beyond academia.">
+<meta property="og:type" content="website">
+<title>Social Updates | Tamal Joyti Roy</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+<script>
+(function(){
+let t;
+try{t=localStorage.getItem('theme')}catch(e){}
+if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.dataset.theme=t;
+})();
+</script>
+<style>
+:root{--paper:#f6f7f2;--card:#fff;--ink:#18201d;--muted:#62706a;--accent:#a21d36;--green:#164c3d;--line:#dfe4de;--nav:rgba(246,247,242,.94)}
+[data-theme=dark]{color-scheme:dark;--paper:#0f1613;--card:#1a2320;--ink:#e8ece9;--muted:#a0aea8;--accent:#e85d75;--green:#3d8c72;--line:#2a3530;--nav:rgba(15,22,19,.94)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif}a{color:inherit}.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+nav{position:sticky;top:0;z-index:5;background:var(--nav);border-bottom:1px solid var(--line);backdrop-filter:blur(15px)}
+nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font:600 22px Newsreader,serif;text-decoration:none;white-space:nowrap}
+.right{display:flex;align-items:center;gap:12px}.navlinks{display:flex;gap:20px}.navlinks a{font-size:13px;font-weight:700;color:var(--muted);text-decoration:none}.navlinks a:hover,.navlinks [aria-current=page]{color:var(--accent)}
+.toggle{display:grid;place-items:center;width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:19px;cursor:pointer}.menu{display:none}
+header{padding:86px 0 75px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+h1,h2,h3{font-family:Newsreader,serif;line-height:1.1}h1{font-size:clamp(52px,7vw,82px);letter-spacing:-.035em;margin:15px 0 22px;max-width:850px;font-weight:600}h2{font-size:clamp(34px,4vw,46px);margin:0 0 12px;font-weight:600}h3{font-size:27px;margin:0;font-weight:600}
+.lead{font-size:19px;max-width:730px;color:var(--muted);margin:0}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:29px}
+.pill{border-radius:999px;padding:11px 20px;border:1px solid var(--line);text-decoration:none;background:var(--card);font-weight:700;font-size:13px}.pill.primary{background:var(--green);color:white;border-color:var(--green)}
+main section{padding:0 0 72px}.head{border-top:1px solid var(--line);padding-top:34px;display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:25px}.head p{max-width:480px;color:var(--muted);font-size:14px;margin:0}
+.feeds{display:grid;grid-template-columns:1fr 1fr;gap:19px;align-items:start}.feed{background:var(--card);border:1px solid var(--line);border-radius:19px;overflow:hidden;min-width:0}
+.feedhead{display:flex;align-items:center;gap:14px;padding:22px;border-bottom:1px solid var(--line)}.symbol{width:45px;height:45px;border:1px solid var(--line);border-radius:13px;display:grid;place-items:center;font:700 25px Arial}
+.fb{background:#1877f2;color:#fff;border-color:#1877f2}.feedhead small{display:block;color:var(--muted);margin-top:5px}.frame{padding:14px;min-height:360px}.frame iframe{display:block;width:100%;max-width:500px;margin:auto;border:none}
+.placeholder{min-height:325px;background:var(--paper);border:1px dashed var(--line);border-radius:14px;padding:32px;display:flex;flex-direction:column;justify-content:center;gap:11px}.placeholder b{font-size:18px}.placeholder p{color:var(--muted);font-size:14px;margin:0}
+.foot{padding:12px 22px 21px;color:var(--muted);font-size:13px}.foot a{font-weight:700;color:var(--green);text-decoration:underline;text-underline-offset:3px}
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.note{border:1px solid var(--line);background:var(--card);border-radius:15px;padding:21px}.note b{display:block;margin-bottom:8px}.note p{color:var(--muted);font-size:13px;margin:0}
+footer{background:var(--green);color:white;padding:45px 0}footer .wrap{display:flex;justify-content:space-between;gap:24px;align-items:center}footer h2{font-size:32px;margin:0}footer p{font-size:13px;margin:5px 0 0;color:#d5e1dc}footer a{font-size:14px;font-weight:700;margin-left:15px}
+@media(max-width:850px){.feeds{grid-template-columns:1fr}.notes{grid-template-columns:1fr}header{padding:54px 0}.head{display:block}.head p{margin-top:10px}}
+@media(max-width:650px){.menu{display:grid}.navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:20px;max-height:calc(100dvh - 72px);overflow:auto}.navlinks.open{display:flex}.navlinks a{font-size:16px}.lead{font-size:17px}.frame{padding:10px}footer .wrap{display:block}footer a{display:inline-block;margin:14px 14px 0 0}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+<a class="brand" href="index.html">Tamal Joyti Roy</a>
+<div class="right">
+<div class="navlinks" id="links"><a href="index.html">Home</a><a href="index.html#research">Research</a><a href="index.html#publications">Publications</a><a href="notes.html">Notes</a><a href="social.html" aria-current="page">Social updates</a><a href="index.html#contact">Contact</a></div>
+<button type="button" class="toggle" id="theme" aria-label="Toggle dark mode">☾</button>
+<button type="button" class="toggle menu" id="menu" aria-label="Open navigation" aria-expanded="false">☰</button>
+</div>
+</div></nav>
+<main>
+<header><div class="wrap"><div class="eyebrow">Beyond the publications · Social updates</div><h1>Ideas, updates &amp; everyday curiosity.</h1><p class="lead">Short reflections on research, statistics, science, teaching, and life beyond academia. Follow the conversation on X and Facebook.</p><div class="actions"><a class="pill primary" href="#feeds">Explore updates ↓</a><a class="pill" href="index.html">← Back to portfolio</a></div></div></header>
+<section id="feeds"><div class="wrap">
+<div class="head"><div><div class="eyebrow">From the source</div><h2>Latest social posts</h2></div><p>These are platform-hosted public feeds. Once connected, new posts can appear without editing this website.</p></div>
+<div class="feeds">
+<article class="feed"><div class="feedhead"><span class="symbol">𝕏</span><div><h3>On X</h3><small>Research thoughts · Conversations</small></div></div><div class="frame" id="xFeed"><div class="placeholder"><b>Public X timeline</b><p>Ready for your account link. Public X posts will automatically display here after configuration.</p></div></div><div class="foot" id="xFoot">Public profile posts only.</div></article>
+<article class="feed"><div class="feedhead"><span class="symbol fb">f</span><div><h3>On Facebook</h3><small>Reflections · News · Everyday life</small></div></div><div class="frame" id="fbFeed"><div class="placeholder"><b>Facebook updates</b><p>Ready for your link. A public Facebook Page can display an automatically updating feed.</p></div></div><div class="foot" id="fbFoot">Full feeds require a public Facebook Page.</div></article>
+</div></div></section>
+<section><div class="wrap"><div class="head"><div><div class="eyebrow">About this page</div><h2>Stay in the conversation</h2></div></div><div class="notes">
+<div class="note"><b>Current posts</b><p>Live embeds are supplied by X and Facebook; neither platform requires reposting content here manually.</p></div>
+<div class="note"><b>Public content only</b><p>Private posts are not displayed. Personal Facebook profiles are linked rather than shown as a continuous feed.</p></div>
+<div class="note"><b>Privacy matters</b><p>Ad blockers and browser privacy settings may limit embedded feeds; links to the original accounts remain available.</p></div>
+</div></div></section>
+</main>
+<footer><div class="wrap"><div><h2>Keep the conversation going.</h2><p>Research, learning, and thoughtful exchange.</p></div><div><a href="index.html">Portfolio</a><a href="notes.html">Learning resources</a><a href="mailto:tjroy@cougarnet.uh.edu">Email</a></div></div></footer>
+<script>
+(function(){
+  const theme=document.getElementById('theme'),menu=document.getElementById('menu'),links=document.getElementById('links');
+  function updateTheme(){theme.textContent=document.documentElement.dataset.theme==='dark'?'☀':'☾';theme.setAttribute('aria-pressed',document.documentElement.dataset.theme==='dark'?'true':'false')}
+  updateTheme();
+  theme.addEventListener('click',()=>{let next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;updateTheme();try{localStorage.setItem('theme',next)}catch(e){}});
+  menu.addEventListener('click',()=>{let opened=links.classList.toggle('open');menu.textContent=opened?'✕':'☰';menu.setAttribute('aria-expanded',String(opened))});
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');menu.textContent='☰';menu.setAttribute('aria-expanded','false')}));
+  function urlOf(text,hosts){if(!text||typeof text!=='string')return null;try{let u=new URL(text);if(u.protocol!=='https:'||!hosts.includes(u.hostname)||!u.pathname||u.pathname==='/')return null;return u}catch(e){return null}}
+  function placeholder(el,title,detail){el.innerHTML='';const div=document.createElement('div');div.className='placeholder';const b=document.createElement('b');b.textContent=title;const p=document.createElement('p');p.textContent=detail;div.append(b,p);el.append(div)}
+  function link(foot,href,label){foot.replaceChildren();let a=document.createElement('a');a.href=href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;foot.append(a)}
+  function x(config){
+    let u=urlOf(config.xProfile,['x.com','www.x.com','twitter.com','www.twitter.com']),feed=document.getElementById('xFeed'),foot=document.getElementById('xFoot');
+    if(!u||!/^\/[A-Za-z0-9_]{1,15}\/?$/.test(u.pathname)){placeholder(feed,'Public X timeline','Add your public X profile link to connect your latest posts.');return}
+    const profile='https://twitter.com/'+u.pathname.slice(1).replace(/\/$/,'');
+    feed.replaceChildren();const a=document.createElement('a');a.className='twitter-timeline';a.href=profile;a.textContent='View recent public X posts';a.dataset.height='640';a.dataset.theme=document.documentElement.dataset.theme==='dark'?'dark':'light';a.dataset.dnt='true';feed.append(a);
+    link(foot,profile,'Open X profile ↗');
+    if(window.twttr&&window.twttr.widgets){window.twttr.widgets.load(feed)}else{let script=document.createElement('script');script.src='https://platform.twitter.com/widgets.js';script.async=true;script.charset='utf-8';document.body.append(script)}
+  }
+  function facebook(config){
+    const page=urlOf(config.facebookPage,['facebook.com','www.facebook.com','web.facebook.com']),personal=urlOf(config.facebookProfile,['facebook.com','www.facebook.com','web.facebook.com']),feed=document.getElementById('fbFeed'),foot=document.getElementById('fbFoot');
+    if(!page){placeholder(feed,personal?'Facebook personal profile':'Facebook Page updates',personal?'Personal Facebook timelines cannot be embedded automatically. Open the profile below to see recent public posts.':'Add a public Facebook Page link for an automatically updating timeline.');if(personal)link(foot,personal.href,'Open Facebook profile ↗');return}
+    feed.replaceChildren();const iframe=document.createElement('iframe');iframe.title='Facebook Page feed';iframe.height='640';iframe.loading='lazy';iframe.scrolling='no';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.setAttribute('allow','encrypted-media; clipboard-write; web-share');let width=Math.max(180,Math.min(500,Math.floor(feed.getBoundingClientRect().width-20)));iframe.src='https://www.facebook.com/plugins/page.php?href='+encodeURIComponent(page.href)+'&tabs=timeline&width='+width+'&height=640&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false';feed.append(iframe);link(foot,page.href,'Open Facebook Page ↗');
+  }
+  fetch('social-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('Not found');return r.json()}).then(config=>{x(config);facebook(config)}).catch(()=>{x({});facebook({})});
+})();
+</script>
+</body></html>
