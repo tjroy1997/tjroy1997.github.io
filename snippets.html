@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Code Snippets · Tamal Joyti Roy</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de}
+    [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif}
+    a{color:inherit;text-decoration:none}.wrap{width:min(860px,calc(100% - 40px));margin:auto}
+    nav{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:16px 0}
+    nav .wrap{display:flex;justify-content:space-between;align-items:center}
+    .brand{font:600 22px Newsreader,serif}
+    h1{font:600 42px Newsreader,serif;margin:40px 0 12px}
+    .lead{color:var(--muted);margin-bottom:32px}
+    .snippet{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
+    .snippet h2{font:600 22px Newsreader,serif;margin:0 0 8px}
+    pre{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px;overflow-x:auto;font-size:13.5px;line-height:1.5}
+    .tabs{display:flex;gap:8px;margin-bottom:8px}
+    .tab{padding:6px 12px;border-radius:999px;border:1px solid var(--line);cursor:pointer;font-size:13px;font-weight:600}
+    .tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+    .links{margin-top:24px;display:flex;gap:16px;flex-wrap:wrap}
+    .links a{color:var(--green);font-weight:700}
+  </style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><a href="index.html">← Home</a></div></nav>
+<main class="wrap">
+  <h1>Code Snippets</h1>
+  <p class="lead">Copy-paste R and Python snippets for common data tasks. Click a tab to switch language.</p>
+  <div class="snippet"><h2>Read & clean a CSV</h2><div class="tabs"><span class="tab active" data-lang="r">R</span><span class="tab" data-lang="py">Python</span></div><pre id="clean"><code># R
+df <- read.csv("data.csv", na.strings = c("", "NA"))
+df <- unique(df)
+df <- df[complete.cases(df), ]
+df$group <- trimws(df$group)</code></pre></div>
+  <div class="snippet"><h2>Summary statistics by group</h2><div class="tabs"><span class="tab active" data-lang="r">R</span><span class="tab" data-lang="py">Python</span></div><pre id="summary"><code># R
+aggregate(score ~ group, data = df, FUN = function(x) c(mean = mean(x), sd = sd(x), n = length(x)))</code></pre></div>
+  <div class="snippet"><h2>Simple linear regression</h2><div class="tabs"><span class="tab active" data-lang="r">R</span><span class="tab" data-lang="py">Python</span></div><pre id="lm"><code># R
+model <- lm(y ~ x, data = df)
+summary(model)
+confint(model)</code></pre></div>
+  <div class="snippet"><h2>Cohen’s d</h2><div class="tabs"><span class="tab active" data-lang="r">R</span><span class="tab" data-lang="py">Python</span></div><pre id="d"><code># R
+cohens_d <- function(m1, m2, s1, s2, n1, n2) {
+  pooled <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2) / (n1 + n2 - 2))
+  (m2 - m1) / pooled
+}</code></pre></div>
+  <div class="snippet"><h2>Bar chart</h2><div class="tabs"><span class="tab active" data-lang="r">R</span><span class="tab" data-lang="py">Python</span></div><pre id="plot"><code># R
+library(ggplot2)
+ggplot(df, aes(x = day, y = mean_score)) +
+  geom_col(fill = "#164c3d") +
+  theme_minimal()</code></pre></div>
+  <div class="links"><a href="tools.html">Tools →</a><a href="playground.html">Data Playground →</a><a href="notes.html">Full Notes →</a></div>
+</main>
+<script>
+const snippets={
+clean:{r:'# R\ndf <- read.csv("data.csv", na.strings = c("", "NA"))\ndf <- unique(df)\ndf <- df[complete.cases(df), ]\ndf$group <- trimws(df$group)',py:'# Python\nimport pandas as pd\ndf = pd.read_csv("data.csv")\ndf = df.drop_duplicates()\ndf = df.dropna()\ndf["group"] = df["group"].str.strip()'},
+summary:{r:'# R\naggregate(score ~ group, data = df, FUN = function(x) c(mean = mean(x), sd = sd(x), n = length(x)))',py:'# Python\ndf.groupby("group")["score"].agg(["mean", "std", "count"])'},
+lm:{r:'# R\nmodel <- lm(y ~ x, data = df)\nsummary(model)\nconfint(model)',py:'# Python\nimport statsmodels.api as sm\nX = sm.add_constant(df["x"])\nmodel = sm.OLS(df["y"], X).fit()\nprint(model.summary())'},
+d:{r:'# R\ncohens_d <- function(m1, m2, s1, s2, n1, n2) {\n  pooled <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2) / (n1 + n2 - 2))\n  (m2 - m1) / pooled\n}',py:'# Python\ndef cohens_d(m1, m2, s1, s2, n1, n2):\n    pooled = ((n1-1)*s1**2 + (n2-1)*s2**2) / (n1 + n2 - 2)\n    return (m2 - m1) / (pooled ** 0.5)'},
+plot:{r:'# R\nlibrary(ggplot2)\nggplot(df, aes(x = day, y = mean_score)) +\n  geom_col(fill = "#164c3d") +\n  theme_minimal()',py:'# Python\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nsns.barplot(data=df, x="day", y="mean_score", color="#164c3d")\nplt.show()'}
+};
+document.querySelectorAll('.tabs').forEach(tabs=>{
+  const pre=tabs.nextElementSibling;const id=pre.id;
+  tabs.querySelectorAll('.tab').forEach(tab=>{
+    tab.onclick=()=>{
+      tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      pre.querySelector('code').textContent=snippets[id][tab.dataset.lang];
+    };
+  });
+});
+</script>
+</body>
+</html>
