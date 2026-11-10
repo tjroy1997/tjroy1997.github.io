@@ -1,1 +1,1271 @@
-FULL_CONTENT_FROM_LOCAL_FILE
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Stats & Data Science Notes by Tamal Joyti Roy — 13 chapters covering core statistical methods and formulas.">
+  <title>Stats & Data Science Notes | Tamal Joyti Roy</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <style>
+    :root{--ink:#18201d;--muted:#62706a;--paper:#f6f7f2;--card:#fff;--accent:#a21d36;--green:#164c3d;--line:#dfe4de;--shadow:0 18px 55px rgba(21,43,35,.10);--nav-bg:rgba(246,247,242,.9)}
+    [data-theme="dark"]{--ink:#e8ece9;--muted:#a0aea8;--paper:#0f1613;--card:#1a2320;--accent:#e85d75;--green:#3d8c72;--line:#2a3530;--shadow:0 18px 55px rgba(0,0,0,.4);--nav-bg:rgba(15,22,19,.92)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",sans-serif;transition:background .3s,color .3s}a{color:inherit}.wrap{width:min(800px,calc(100% - 40px));margin:auto}
+    nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;width:min(1120px,calc(100% - 40px))}.brand{font:600 22px Newsreader,serif;text-decoration:none}.navlinks{display:flex;gap:18px}.navlinks a{text-decoration:none;color:var(--muted);font-size:13px;font-weight:600}.navlinks a:hover{color:var(--accent)}
+    .theme-toggle,.menu-toggle{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:18px}
+    .menu-toggle{display:none}.nav-right{display:flex;align-items:center;gap:12px}
+    @media(max-width:760px){.menu-toggle{display:grid}.navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:20px;gap:16px;z-index:19;max-height:calc(100vh - 72px);max-height:calc(100dvh - 72px);overflow-y:auto}.navlinks.open{display:flex}.navlinks a{font-size:16px}}
+    .page-header{padding:72px 0 24px}.page-header h1{font:600 clamp(40px,6vw,64px)/1 Newsreader,serif;letter-spacing:-.03em;margin:8px 0 16px}.page-header p{color:var(--muted);font-size:18px;max-width:640px}
+    .toc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 28px;margin-bottom:36px}
+    .toc h2{font:600 22px Newsreader,serif;margin:0 0 12px}.toc ol{margin:0;padding-left:20px}.toc li{margin:6px 0}.toc a{color:var(--green);text-decoration:none;font-weight:600}.toc a:hover{text-decoration:underline}
+    .chapter{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px;margin-bottom:32px;box-shadow:0 6px 20px rgba(21,43,35,.035)}
+    .chapter h2{font:600 32px Newsreader,serif;margin:0 0 6px}.chapter h3{font:600 22px Newsreader,serif;margin:28px 0 10px}
+    .chapter .meta{color:var(--accent);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+    .chapter p{color:var(--muted);margin:12px 0}.chapter ul,.chapter ol{color:var(--muted);padding-left:20px}.chapter li{margin:6px 0}
+    .formula{background:#f0f3ef;border-left:3px solid var(--green);padding:12px 16px;border-radius:8px;margin:16px 0;overflow-x:auto}
+    [data-theme="dark"] .formula{background:#15201c}
+    footer{background:var(--green);color:white;padding:40px 0;margin-top:60px}.footer-grid{display:flex;justify-content:space-between;gap:40px;align-items:end;width:min(1120px,calc(100% - 40px));margin:auto}footer h2{font:600 32px Newsreader,serif;margin:0 0 6px}footer p{margin:0;color:#d5e1dc}.social{display:flex;gap:16px}.social a{font-weight:700;text-underline-offset:4px}
+    .toc{position:static;backdrop-filter:none;scroll-margin-top:92px}
+    .toc ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:36px}
+    .toc a,.chapter-links a,.reading a{color:var(--accent);text-underline-offset:3px}
+    .chapter{scroll-margin-top:92px}
+    .chapter h2{line-height:1.12}
+    .chapter p{color:var(--ink);max-width:68ch}
+    .chapter .chapter-intro{font-size:1.1rem}
+    .lesson-figure{--plot-primary:#17628b;--plot-secondary:#b05020;--plot-axis:#737e79;--plot-contrast:#fff;
+      margin:22px 0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+    [data-theme="dark"] .lesson-figure{--plot-primary:#76c7ef;--plot-secondary:#f8a475;--plot-axis:#8d9a93;--plot-contrast:#18201d}
+    .lesson-figure svg{display:block;width:100%;max-width:520px;height:auto;margin:auto}
+    .lesson-figure svg text{fill:var(--ink);font:600 17px "DM Sans",sans-serif}
+    .lesson-figure svg .small{font-size:14px}
+    .lesson-figure svg .on-fill{fill:var(--plot-contrast)}
+    .lesson-figure svg .axis{stroke:var(--plot-axis);stroke-width:1.2}
+    .lesson-figure svg .guide{stroke:var(--plot-secondary);stroke-width:2;stroke-dasharray:4 3}
+    .lesson-figure svg .strong,.lesson-figure svg .mean-dot{stroke:var(--plot-primary);stroke-width:2.5}
+    .lesson-figure svg .strong-alt{stroke:var(--plot-secondary);stroke-width:2.5}
+    .lesson-figure svg .mean-dot{fill:var(--paper)}
+    .lesson-figure svg .primary{fill:var(--plot-primary)}
+    .lesson-figure svg .secondary,.lesson-figure svg .accent-label{fill:var(--plot-secondary)}
+    .lesson-figure svg .box{fill:var(--card);stroke:var(--plot-axis);stroke-width:1.2}
+    .lesson-figure figcaption{max-width:64ch;margin:8px auto 0;color:var(--muted);font-size:.9rem}
+    .chapter details{margin:12px 0;border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+    .chapter details p{margin:8px 0 0}
+    .chapter summary{cursor:pointer;color:var(--ink);font-weight:700}
+    .chapter-links{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+      margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem;font-weight:700}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    @media(max-width:620px){
+      .toc ol{grid-template-columns:1fr}
+      .chapter,.toc{padding:20px}
+      .lesson-figure{padding:8px}
+      .footer-grid{flex-wrap:wrap;gap:20px}
+    }
+    @media(max-width:400px){
+      main .wrap{width:calc(100% - 24px)}
+      .chapter{padding:16px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body{transition:none}}
+    .coding-track,.coding-lesson{scroll-margin-top:92px}
+    .coding-toc a,.coding-jump a{color:var(--accent);text-underline-offset:3px;font-weight:700}
+    .coding-jump{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px}
+    .code-sample{background:var(--paper);border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;max-width:100%;overflow-x:auto;color:var(--ink);line-height:1.55;tab-size:2}
+    .code-sample code{font:inherit;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.875rem}
+  
+    .learning-pages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:28px}
+    .learning-page{display:flex;gap:15px;align-items:flex-start;border:1px solid var(--line);border-radius:15px;background:var(--card);padding:19px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
+    .learning-page:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .learning-page>span:last-child{display:grid;gap:5px;min-width:0}
+    .learning-icon{display:grid;place-items:center;min-width:46px;height:46px;background:var(--paper);color:var(--green);border:1px solid var(--line);border-radius:12px;font:600 27px Newsreader,serif}
+    .learning-label{font-size:10px;font-weight:700;letter-spacing:.09em;color:var(--accent);text-transform:uppercase}
+    .learning-page strong{font-size:16px;line-height:1.3}.learning-page small{font-size:12px;color:var(--muted);line-height:1.5}
+    .learning-arrow{font-size:12px;font-weight:700;color:var(--green);margin-top:3px}
+    @media(max-width:650px){.learning-pages{grid-template-columns:1fr}.learning-page{padding:15px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="index.html#work">Experience</a><a href="index.html#publications">Publications</a><a href="notes.html">Notes</a><a href="index.html#gallery">Gallery</a><a href="index.html#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="Menu">☰</button></div></div></nav>
+<script>
+(function(){
+  var menuBtn=document.getElementById('menuToggle');
+  var nav=document.getElementById('navlinks');
+  function setMenu(open){
+    nav.classList.toggle('open',open);
+    menuBtn.setAttribute('aria-expanded',String(open));
+    menuBtn.textContent=open?'✕':'☰';
+  }
+  menuBtn.addEventListener('click',function(){setMenu(!nav.classList.contains('open'))});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+
+  var themeBtn=document.getElementById('themeToggle');
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme',theme);
+    themeBtn.textContent=theme==='dark'?'☀':'☾';
+    themeBtn.setAttribute('aria-pressed',String(theme==='dark'));
+  }
+  var saved;
+  try { saved=window.localStorage.getItem('theme'); } catch {}
+  setTheme(saved==='dark'||saved==='light'?saved:
+    (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+  themeBtn.addEventListener('click',function(){
+    var theme=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    setTheme(theme);
+    try { window.localStorage.setItem('theme',theme); } catch {}
+  });
+})();
+</script>
+<main>
+  <header class="page-header wrap">
+    <div class="kicker" style="color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700">Writing</div>
+    <h1>Stats & Data Science Notes</h1>
+    <p>Learn statistics through coins, games, school surveys, and paper airplanes. Start with a story, read a picture, and try a short question. Open the math notes when you’re ready for the formulas.</p>
+    <div style="background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:18px 20px;margin:20px 0 8px;max-width:640px">
+      <strong style="display:block;margin-bottom:6px;color:var(--green)">Why this method · How to run it · What the result means</strong>
+      <span style="color:var(--muted);font-size:15px">Most tutorials skip these three questions. For the key methods below you’ll find a short answer to each before the deeper explanation.</span>
+    </div>
+    <div class="coding-jump" aria-label="Coding tracks"><a href="#r-track">Learn data science with R</a><a href="#r-adv">Tidyverse & mediation</a><a href="#py-track">Learn data science with Python</a></div>
+    <div class="learning-pages" aria-label="Additional interactive learning resources">
+      <a class="learning-page" href="math-symbols.html">
+        <span class="learning-icon" aria-hidden="true">∑</span>
+        <span><span class="learning-label">Foundations · K–12</span><strong>Math Symbols &amp; Formulas</strong><small>155 explanations and 74 symbols, searchable by grade—with worked examples.</small><span class="learning-arrow">Explore mathematics →</span></span>
+      </a>
+      <a class="learning-page" href="method-finder.html">
+        <span class="learning-icon" aria-hidden="true">ƒ</span>
+        <span><span class="learning-label">Interactive decision guide</span><strong>Statistical Method Finder</strong><small>Describe your data, explore suitable statistical tests, and get R starting code.</small><span class="learning-arrow">Find a method →</span></span>
+      </a>
+    </div>
+  </header>
+  <div class="wrap">
+    <nav class="toc" id="chapters" aria-labelledby="chapters-title">
+      <h2 id="chapters-title">Chapters</h2>
+      <ol>
+        <li><a href="#ch1">Descriptive Statistics</a></li>
+        <li><a href="#ch2">Probability Basics</a></li>
+        <li><a href="#ch3">Random Variables &amp; Distributions</a></li>
+        <li><a href="#ch4">Sampling Distributions</a></li>
+        <li><a href="#ch5">Estimation &amp; Confidence Intervals</a></li>
+        <li><a href="#ch6">Hypothesis Testing</a></li>
+        <li><a href="#ch7">Comparing Two Groups (t-tests)</a></li>
+        <li><a href="#ch8">Analysis of Variance (ANOVA)</a></li>
+        <li><a href="#ch9">Correlation &amp; Simple Linear Regression</a></li>
+        <li><a href="#ch10">Multiple Regression</a></li>
+        <li><a href="#ch11">Categorical Data &amp; Chi-Square</a></li>
+        <li><a href="#ch12">Nonparametric Methods</a></li>
+        <li><a href="#ch13">Effect Size, Power &amp; Putting It Together</a></li>
+      </ol>
+    </nav>
+
+    <article class="chapter" id="ch1" aria-labelledby="ch1-title">
+      <div class="meta">Chapter 01</div>
+      <h2 id="ch1-title">Descriptive Statistics</h2>
+      <p class="chapter-intro">Five students read 2, 3, 3, 4, and 13 pages last night. What is a fair way to describe what the group read? The answer depends on what you mean by “typical.”</p>
+
+      <h3>Find the center</h3>
+      <p>The <strong>mean</strong> is what everyone would have if you shared the total evenly. Add the pages to get 25, then divide by five to get 5 pages. The <strong>median</strong> is the middle value after sorting, which is 3 pages. With an even number of values, average the middle two. The <strong>mode</strong> is the most common value, also 3 pages here.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 180" role="img" aria-label="Pages read by five students">
+          <title>Pages read by five students</title>
+          <line x1="42" y1="114" x2="406" y2="114" class="axis"/>
+          <line x1="70" y1="114" x2="70" y2="120" class="axis"/>
+          <text x="70" y="140" text-anchor="middle" class="small">1</text>
+          <line x1="98" y1="114" x2="98" y2="120" class="axis"/>
+          <text x="98" y="140" text-anchor="middle" class="small">2</text>
+          <line x1="126" y1="114" x2="126" y2="120" class="axis"/>
+          <text x="126" y="140" text-anchor="middle" class="small">3</text>
+          <line x1="154" y1="114" x2="154" y2="120" class="axis"/>
+          <text x="154" y="140" text-anchor="middle" class="small">4</text>
+          <line x1="182" y1="114" x2="182" y2="120" class="axis"/>
+          <text x="182" y="140" text-anchor="middle" class="small">5</text>
+          <line x1="210" y1="114" x2="210" y2="120" class="axis"/>
+          <text x="210" y="140" text-anchor="middle" class="small">6</text>
+          <line x1="238" y1="114" x2="238" y2="120" class="axis"/>
+          <text x="238" y="140" text-anchor="middle" class="small">7</text>
+          <line x1="266" y1="114" x2="266" y2="120" class="axis"/>
+          <text x="266" y="140" text-anchor="middle" class="small">8</text>
+          <line x1="294" y1="114" x2="294" y2="120" class="axis"/>
+          <text x="294" y="140" text-anchor="middle" class="small">9</text>
+          <line x1="322" y1="114" x2="322" y2="120" class="axis"/>
+          <text x="322" y="140" text-anchor="middle" class="small">10</text>
+          <line x1="350" y1="114" x2="350" y2="120" class="axis"/>
+          <text x="350" y="140" text-anchor="middle" class="small">11</text>
+          <line x1="378" y1="114" x2="378" y2="120" class="axis"/>
+          <text x="378" y="140" text-anchor="middle" class="small">12</text>
+          <line x1="406" y1="114" x2="406" y2="120" class="axis"/>
+          <text x="406" y="140" text-anchor="middle" class="small">13</text>
+          <circle cx="98" cy="96" r="7" class="primary"/>
+          <circle cx="126" cy="96" r="7" class="primary"/>
+          <circle cx="126" cy="74" r="7" class="primary"/>
+          <circle cx="154" cy="96" r="7" class="primary"/>
+          <circle cx="406" cy="96" r="7" class="primary"/>
+          <line x1="182" y1="38" x2="182" y2="111" class="guide"/>
+          <text x="192" y="30" text-anchor="start">Mean = 5 pages</text>
+          <text x="230" y="166" text-anchor="middle">Pages read</text>
+        </svg>
+        <figcaption>Each dot is one reader. Two students read 3 pages. The dot at 13 stretches the plot to the right.</figcaption>
+      </figure>
+
+      <h3>Look at the spread and shape</h3>
+      <p>The <strong>range</strong> is 13 − 2 = 11 pages. The <strong>interquartile range</strong> measures the width of the middle half, from the first quartile to the third quartile. <strong>Standard deviation</strong> measures spread around the mean in the original units. A dot plot shows individual values. A histogram groups values into intervals. Here the dots stretch farther to the right, so the data are <strong>right-skewed</strong>. The median gives a better sense of what most students read in this example.</p>
+
+      <h3>Try it</h3>
+      <p>If the last student had read 23 pages instead of 13, what would happen to the mean and median?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>The mean would rise to 7 pages because the total rises to 35. The median would stay at 3 because the middle entry stays in place.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>The mean is the sum divided by the number of observations. The sample variance averages squared deviations using a divisor of n − 1, and the sample standard deviation is its square root. Here <em>x</em><sub>i</sub> is one value and <em>n</em> is the number of values. <strong>Kurtosis</strong> reflects the tendency toward extreme values relative to a normal distribution.</p>
+        <div class="formula">$$\bar{x}=\frac{\sum_i x_i}{n},\quad s^2=\frac{\sum_i(x_i-\bar{x})^2}{n-1},\quad s=\sqrt{s^2}$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch2">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch2" aria-labelledby="ch2-title">
+      <div class="meta">Chapter 02</div>
+      <h2 id="ch2-title">Probability Basics</h2>
+      <p class="chapter-intro">A bag has three blue marbles and two orange ones. You shake the bag and pick a marble without looking. How likely is it to be blue?</p>
+
+      <h3>Count the possible outcomes</h3>
+      <p>Each of the five marbles is equally likely to be picked, and three are blue. The <strong>probability</strong> of blue is 3 out of 5, or 60%. An <strong>outcome</strong> is one possible result. An <strong>event</strong> is a set of results you care about, such as drawing any blue marble. A probability of 0 means impossible, and 1 means certain. A long run of repeated draws with replacement should produce a blue fraction close to 60%.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 152" role="img" aria-label="The marble bag before and after a blue draw">
+          <title>The marble bag before and after a blue draw</title>
+          <text x="117" y="30" text-anchor="middle">Before picking</text>
+          <text x="343" y="30" text-anchor="middle">After keeping a blue</text>
+          <circle cx="45" cy="76" r="15" class="primary"/>
+          <text x="45" y="81" text-anchor="middle" class="on-fill">B</text>
+          <circle cx="81" cy="76" r="15" class="primary"/>
+          <text x="81" y="81" text-anchor="middle" class="on-fill">B</text>
+          <circle cx="117" cy="76" r="15" class="primary"/>
+          <text x="117" y="81" text-anchor="middle" class="on-fill">B</text>
+          <circle cx="153" cy="76" r="15" class="secondary"/>
+          <text x="153" y="81" text-anchor="middle" class="on-fill">O</text>
+          <circle cx="189" cy="76" r="15" class="secondary"/>
+          <text x="189" y="81" text-anchor="middle" class="on-fill">O</text>
+          <circle cx="289" cy="76" r="15" class="primary"/>
+          <text x="289" y="81" text-anchor="middle" class="on-fill">B</text>
+          <circle cx="325" cy="76" r="15" class="primary"/>
+          <text x="325" y="81" text-anchor="middle" class="on-fill">B</text>
+          <circle cx="361" cy="76" r="15" class="secondary"/>
+          <text x="361" y="81" text-anchor="middle" class="on-fill">O</text>
+          <circle cx="397" cy="76" r="15" class="secondary"/>
+          <text x="397" y="81" text-anchor="middle" class="on-fill">O</text>
+          <text x="117" y="128" text-anchor="middle">3 blue out of 5</text>
+          <text x="343" y="128" text-anchor="middle">2 blue out of 4</text>
+          <text x="230" y="82" text-anchor="middle">→</text>
+        </svg>
+        <figcaption>Blue marbles carry a B and orange marbles carry an O. Removing one blue changes both the number of blue marbles and the total.</figcaption>
+      </figure>
+
+      <h3>Ask what changed</h3>
+      <p>If you draw a blue marble and keep it, two of the four remaining marbles are blue. The chance of a second blue is now 2/4. This is a <strong>conditional probability</strong>, a chance calculated with new information. If you put the first marble back and mix again, the chance stays 3/5. In that setup the two draws are <strong>independent</strong>, meaning the first result leaves the second draw's chances the same.</p>
+
+      <h3>Try it</h3>
+      <p>What is the chance of drawing two blue marbles in a row if you keep the first marble out?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>The first blue has probability 3/5. Given that result, the second blue has probability 2/4. Multiply to get 6/20, or 30%.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>The complement of event A includes every outcome outside A. In the multiplication rule, the vertical bar means “given.” For an “A or B” question, subtract any overlap counted twice.</p>
+        <div class="formula">$$P(\text{not }A)=1-P(A),\quad P(A\cap B)=P(A)P(B\mid A)$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch3">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch3" aria-labelledby="ch3-title">
+      <div class="meta">Chapter 03</div>
+      <h2 id="ch3-title">Random Variables &amp; Distributions</h2>
+      <p class="chapter-intro">Flip two fair coins and count the heads. Your count could be 0, 1, or 2. Which count should appear most often?</p>
+
+      <h3>Turn an outcome into a number</h3>
+      <p>A <strong>random variable</strong> gives a number to each outcome. The outcomes here are TT, TH, HT, and HH, where T means tails and H means heads. They are equally likely if the flips are independent. TT gives zero heads, TH and HT each give one, and HH gives two. A <strong>probability distribution</strong> shows the chances for the different values. One head has probability 2/4, twice the chance of zero or two heads.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 182" role="img" aria-label="Probability of zero, one, and two heads from two fair flips">
+          <title>Probability of zero, one, and two heads from two fair flips</title>
+          <line x1="54" y1="122" x2="407" y2="122" class="axis"/>
+          <rect x="84" y="80.75" width="60" height="41.25" rx="3" class="primary"/>
+          <text x="114" y="70.75" text-anchor="middle">25%</text>
+          <text x="114" y="145" text-anchor="middle">0</text>
+          <rect x="200" y="39.5" width="60" height="82.5" rx="3" class="primary"/>
+          <text x="230" y="29.5" text-anchor="middle">50%</text>
+          <text x="230" y="145" text-anchor="middle">1</text>
+          <rect x="316" y="80.75" width="60" height="41.25" rx="3" class="primary"/>
+          <text x="346" y="70.75" text-anchor="middle">25%</text>
+          <text x="346" y="145" text-anchor="middle">2</text>
+          <text x="230" y="169" text-anchor="middle">Number of heads</text>
+        </svg>
+        <figcaption>The middle bar is twice as tall because two flip sequences give exactly one head.</figcaption>
+      </figure>
+
+      <h3>Counts and measurements</h3>
+      <p>A <strong>discrete</strong> variable has countable values, like the number of heads. The <strong>binomial distribution</strong> describes a success count from a fixed number of independent tries with the same success chance. A <strong>continuous</strong> variable can be modeled on a number line, like the exact time for a race. We talk about the chance of finishing within an interval, such as 12 to 13 seconds. One continuous model is the <strong>normal distribution</strong>, a symmetric bell-shaped curve where area represents probability.</p>
+
+      <h3>Try it</h3>
+      <p>If you play the two-coin game many times, how many heads per game would you expect on average?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>About 1 head per game. Multiply each possible count by its probability and add: 0 × 1/4 + 1 × 1/2 + 2 × 1/4 = 1.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>The <strong>expected value</strong> of a discrete variable is the probability-weighted average. Here X is the random variable and x is one possible value.</p>
+        <div class="formula">$$E(X)=\sum_x x\,P(X=x)$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch4">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch4" aria-labelledby="ch4-title">
+      <div class="meta">Chapter 04</div>
+      <h2 id="ch4-title">Sampling Distributions</h2>
+      <p class="chapter-intro">Suppose you want to know how long students at your school spend getting there. You randomly pick 25 students and find their average travel time. Another group of 25 will probably give a different average.</p>
+
+      <h3>Imagine doing it again and again</h3>
+      <p>The whole school is the <strong>population</strong>. The students you pick are a <strong>sample</strong>. A <strong>statistic</strong> is a number calculated from a sample, like its mean. Picture taking many samples of the same size with the same method, then plotting one mean for each sample. The pattern of those means is the <strong>sampling distribution</strong>. Each dot now stands for a whole sample.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 270" role="img" aria-label="Distributions of means for two and eight draws from equally likely 10 and 30">
+          <title>Distributions of means for two and eight draws from equally likely 10 and 30</title>
+          <text x="54" y="36" text-anchor="start">Average of 2 draws</text>
+          <line x1="54" y1="104" x2="406" y2="104" class="axis"/>
+          <rect x="49.0" y="79.0" width="10" height="25.0" rx="0" class="primary"/>
+          <rect x="225.0" y="54.0" width="10" height="50.0" rx="0" class="primary"/>
+          <rect x="401.0" y="79.0" width="10" height="25.0" rx="0" class="primary"/>
+          <text x="54" y="123" text-anchor="middle" class="small">10</text>
+          <text x="230" y="123" text-anchor="middle" class="small">20</text>
+          <text x="406" y="123" text-anchor="middle" class="small">30</text>
+          <text x="54" y="142" text-anchor="start">Average of 8 draws</text>
+          <line x1="54" y1="210" x2="406" y2="210" class="axis"/>
+          <rect x="49.0" y="209.609375" width="10" height="0.390625" rx="0" class="primary"/>
+          <rect x="93.0" y="206.875" width="10" height="3.125" rx="0" class="primary"/>
+          <rect x="137.0" y="199.0625" width="10" height="10.9375" rx="0" class="primary"/>
+          <rect x="181.0" y="188.125" width="10" height="21.875" rx="0" class="primary"/>
+          <rect x="225.0" y="182.65625" width="10" height="27.34375" rx="0" class="primary"/>
+          <rect x="269.0" y="188.125" width="10" height="21.875" rx="0" class="primary"/>
+          <rect x="313.0" y="199.0625" width="10" height="10.9375" rx="0" class="primary"/>
+          <rect x="357.0" y="206.875" width="10" height="3.125" rx="0" class="primary"/>
+          <rect x="401.0" y="209.609375" width="10" height="0.390625" rx="0" class="primary"/>
+          <text x="54" y="229" text-anchor="middle" class="small">10</text>
+          <text x="230" y="229" text-anchor="middle" class="small">20</text>
+          <text x="406" y="229" text-anchor="middle" class="small">30</text>
+          <text x="230" y="254" text-anchor="middle">Sample mean (minutes)</text>
+        </svg>
+        <figcaption>In this toy population, a draw is equally likely to be 10 or 30 minutes. Each bar’s height shows how likely that sample mean is. Means from eight draws pile up more tightly around 20.</figcaption>
+      </figure>
+
+      <h3>Bigger samples usually give steadier averages</h3>
+      <p>The <strong>standard error</strong> tells us how much a statistic varies from sample to sample. For independent draws from the same population, sample means get steadier as sample size grows. The <strong>central limit theorem</strong> explains why the pattern of means tends to look bell-shaped as samples get large, when the population has finite variance. Individual travel times can still have a long right tail.</p>
+
+      <h3>Try it</h3>
+      <p>If the standard error with 25 students is 2 minutes, what would you expect with 100 independent observations from the same population?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>About 1 minute. The sample size is four times as large, so the standard error is divided by the square root of four, which is 2.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>For independent observations from one population, divide the population standard deviation σ by the square root of sample size n. In practice, the sample standard deviation s can estimate σ.</p>
+        <div class="formula">$$\operatorname{SE}(\bar X)=\frac{\sigma}{\sqrt n}$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch5">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch5" aria-labelledby="ch5-title">
+      <div class="meta">Chapter 05</div>
+      <h2 id="ch5-title">Estimation &amp; Confidence Intervals</h2>
+      <p class="chapter-intro">Your sample says students take 20 minutes to get to school on average. How precise is that guess about the whole school?</p>
+
+      <h3>Give a best guess and a range</h3>
+      <p>A <strong>parameter</strong> is a number about a whole population. The school’s true average travel time is a parameter. A <strong>point estimate</strong> is a single best guess from the sample, here 20 minutes. If the <strong>margin of error</strong> is 3 minutes, the <strong>confidence interval</strong> runs from 17 to 23 minutes. A narrower interval gives a more precise estimate when the method and design are appropriate.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 213" role="img" aria-label="Four example confidence intervals and a fixed true mean of 20 minutes">
+          <title>Four example confidence intervals and a fixed true mean of 20 minutes</title>
+          <line x1="246" y1="34" x2="246" y2="153" class="guide"/>
+          <text x="246" y="24" text-anchor="middle">True mean in this illustration</text>
+          <line x1="144" y1="54" x2="348" y2="54" class="strong"/>
+          <line x1="144" y1="49" x2="144" y2="59" class="strong"/>
+          <line x1="348" y1="49" x2="348" y2="59" class="strong"/>
+          <line x1="110" y1="81" x2="314" y2="81" class="strong"/>
+          <line x1="110" y1="76" x2="110" y2="86" class="strong"/>
+          <line x1="314" y1="76" x2="314" y2="86" class="strong"/>
+          <line x1="212" y1="108" x2="382" y2="108" class="strong"/>
+          <line x1="212" y1="103" x2="212" y2="113" class="strong"/>
+          <line x1="382" y1="103" x2="382" y2="113" class="strong"/>
+          <line x1="280" y1="135" x2="416" y2="135" class="strong-alt"/>
+          <line x1="280" y1="130" x2="280" y2="140" class="strong-alt"/>
+          <line x1="416" y1="130" x2="416" y2="140" class="strong-alt"/>
+          <line x1="76" y1="155" x2="416" y2="155" class="axis"/>
+          <text x="76" y="174" text-anchor="middle" class="small">15</text>
+          <text x="110" y="174" text-anchor="middle" class="small">16</text>
+          <text x="144" y="174" text-anchor="middle" class="small">17</text>
+          <text x="178" y="174" text-anchor="middle" class="small">18</text>
+          <text x="212" y="174" text-anchor="middle" class="small">19</text>
+          <text x="246" y="174" text-anchor="middle" class="small">20</text>
+          <text x="280" y="174" text-anchor="middle" class="small">21</text>
+          <text x="314" y="174" text-anchor="middle" class="small">22</text>
+          <text x="348" y="174" text-anchor="middle" class="small">23</text>
+          <text x="382" y="174" text-anchor="middle" class="small">24</text>
+          <text x="416" y="174" text-anchor="middle" class="small">25</text>
+          <text x="246" y="199" text-anchor="middle">Travel time (minutes)</text>
+        </svg>
+        <figcaption>Each row is an example interval from a different sample. Three intervals cross the dashed line at 20 minutes. The interval from 21 to 25 misses it.</figcaption>
+      </figure>
+
+      <h3>What 95% confidence means</h3>
+      <p>Imagine collecting many new random samples and making an interval from each. If the method’s conditions hold, about 95 out of 100 intervals made this way will cover the true mean over the long run. The true mean stays fixed while the intervals move. A larger sample usually shrinks the margin of error. A higher confidence level, such as 99%, usually makes the interval wider for the same data. A survey that leaves out certain students can still give a biased estimate.</p>
+
+      <h3>Try it</h3>
+      <p>A survey estimates 24 minutes with a margin of error of 4 minutes. What interval would you report?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>20 to 28 minutes. Subtract 4 to get the lower end and add 4 to get the upper end.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>For a one-sample t interval, multiply the estimated standard error by a critical value t*, which depends on the confidence level and degrees of freedom. The usual interval assumes independent observations and works best with a roughly normal population for small samples.</p>
+        <div class="formula">$$\bar{x}\pm t^*\frac{s}{\sqrt n}$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch6">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch6" aria-labelledby="ch6-title">
+      <div class="meta">Chapter 06</div>
+      <h2 id="ch6-title">Hypothesis Testing</h2>
+      <div class="why-how-what" style="background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0 20px;font-size:15px">
+        <p style="margin:0 0 8px"><strong>Why this method?</strong> You have a claim (null hypothesis) and want to see whether your data are surprising enough under that claim to question it.</p>
+        <p style="margin:0 0 8px"><strong>How to run it:</strong> Depends on the test (t-test, chi-square, etc.). The logic is the same: compare your result to what the null predicts.</p>
+        <p style="margin:0"><strong>What the result means:</strong> The p-value is the probability of a result at least this extreme if the null were true. A small p-value is evidence against the null, not proof that your alternative is correct. Always pair it with an estimate and interval.</p>
+      </div>
+      <p class="chapter-intro">A game coin lands heads 9 times in 10 flips. Would a fair coin do that often? Let’s compare what happened with what fairness predicts.</p>
+
+      <h3>Start with a claim you can test</h3>
+      <p>The <strong>null hypothesis</strong> is the starting claim, here that heads has probability 1/2. The <strong>alternative hypothesis</strong> here says the chance differs from 1/2 in either direction. That makes this a <strong>two-sided test</strong>. Assuming a fair coin and independent flips, results as far from five heads as our result include 0, 1, 9, or 10 heads. Those outcomes account for 22 of the 1,024 equally likely flip sequences.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 185" role="img" aria-label="Distribution of head counts from ten fair coin flips">
+          <title>Distribution of head counts from ten fair coin flips</title>
+          <text x="230" y="24" text-anchor="middle">A fair coin flipped 10 times</text>
+          <line x1="40" y1="123" x2="420" y2="123" class="axis"/>
+          <rect x="39.0" y="122.71428571428571" width="18" height="0.2857142857142857" rx="0" class="secondary"/>
+          <text x="48.0" y="144" text-anchor="middle" class="small">0</text>
+          <rect x="75.4" y="120.14285714285714" width="18" height="2.857142857142857" rx="0" class="secondary"/>
+          <text x="84.4" y="144" text-anchor="middle" class="small">1</text>
+          <rect x="111.8" y="110.14285714285714" width="18" height="12.857142857142858" rx="0" class="primary"/>
+          <text x="120.8" y="144" text-anchor="middle" class="small">2</text>
+          <rect x="148.2" y="88.71428571428572" width="18" height="34.285714285714285" rx="0" class="primary"/>
+          <text x="157.2" y="144" text-anchor="middle" class="small">3</text>
+          <rect x="184.6" y="63.0" width="18" height="60.0" rx="0" class="primary"/>
+          <text x="193.6" y="144" text-anchor="middle" class="small">4</text>
+          <rect x="221.0" y="51.0" width="18" height="72.0" rx="0" class="primary"/>
+          <text x="230.0" y="144" text-anchor="middle" class="small">5</text>
+          <rect x="257.4" y="63.0" width="18" height="60.0" rx="0" class="primary"/>
+          <text x="266.4" y="144" text-anchor="middle" class="small">6</text>
+          <rect x="293.79999999999995" y="88.71428571428572" width="18" height="34.285714285714285" rx="0" class="primary"/>
+          <text x="302.79999999999995" y="144" text-anchor="middle" class="small">7</text>
+          <rect x="330.2" y="110.14285714285714" width="18" height="12.857142857142858" rx="0" class="primary"/>
+          <text x="339.2" y="144" text-anchor="middle" class="small">8</text>
+          <rect x="366.59999999999997" y="120.14285714285714" width="18" height="2.857142857142857" rx="0" class="secondary"/>
+          <text x="375.59999999999997" y="144" text-anchor="middle" class="small">9</text>
+          <rect x="403.0" y="122.71428571428571" width="18" height="0.2857142857142857" rx="0" class="secondary"/>
+          <text x="412.0" y="144" text-anchor="middle" class="small">10</text>
+          <text x="48" y="114" text-anchor="middle" class="accent-label">↓</text>
+          <text x="84.4" y="114" text-anchor="middle" class="accent-label">↓</text>
+          <text x="375.6" y="114" text-anchor="middle" class="accent-label">↓</text>
+          <text x="412" y="114" text-anchor="middle" class="accent-label">↓</text>
+          <text x="230" y="171" text-anchor="middle">Number of heads</text>
+        </svg>
+        <figcaption>The arrows point to the four counts included in the two-sided p-value. Their probabilities are so small that their bars are almost flat.</figcaption>
+      </figure>
+
+      <h3>Decide how unusual is unusual enough</h3>
+      <p>The <strong>p-value</strong> is the chance of a result at least this extreme if the null and the test assumptions hold. Here it is 22/1,024, about 0.0215. If you chose a cutoff of 0.05 in advance, you would <strong>reject</strong> the fairness claim at that cutoff. If the p-value were larger than the cutoff, the sample would give too little evidence to reject. A false alarm is called a <strong>Type I error</strong>. Missing a real difference is called a <strong>Type II error</strong>.</p>
+
+      <h3>Try it</h3>
+      <p>Suppose you chose a stricter cutoff of 0.01 before flipping. What would you conclude with the same p-value?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>You would fail to reject the fairness claim because 0.0215 is above 0.01. More flips could help you learn whether the pattern holds up.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>The significance level α limits the long-run false alarm rate when the null holds and the test is valid. The p-value describes how surprising the data are under the starting claim and model. Use an estimate and interval to discuss how big a difference might be.</p>
+        <div class="formula">$$H_0:p_{\mathrm{heads}}=0.5,\quad H_A:p_{\mathrm{heads}}\ne 0.5$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch7">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch7" aria-labelledby="ch7-title">
+      <div class="meta">Chapter 07</div>
+      <h2 id="ch7-title">Comparing Two Groups (t-tests)</h2>
+      <div class="why-how-what" style="background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0 20px;font-size:15px">
+        <p style="margin:0 0 8px"><strong>Why this method?</strong> You have two groups (or paired measurements) and want to know if their means differ more than you’d expect from ordinary variation.</p>
+        <p style="margin:0 0 8px"><strong>How to run it (R):</strong> <code>t.test(score ~ group, data = df)</code> &nbsp;·&nbsp; <strong>Python:</strong> <code>from scipy import stats; stats.ttest_ind(a, b)</code></p>
+        <p style="margin:0"><strong>What the result means:</strong> A small p-value suggests the observed difference is unlikely if the true means were equal. Also look at the confidence interval and effect size (Cohen’s d) to judge practical importance.</p>
+      </div>
+      <p class="chapter-intro">A teacher wants to compare two ways to practice spelling. One group can use flashcards and another can write words by hand. How can the teacher tell whether a score difference is large compared with the ordinary ups and downs in scores?</p>
+
+      <h3>Find out who goes with whom</h3>
+      <p>An <strong>independent-samples t-test</strong> compares the means of two separate groups, such as different students assigned to flashcards or writing. The <strong>Welch t-test</strong> can handle different amounts of spread in the two groups. A <strong>paired t-test</strong> starts with pairs, such as each student’s score before and after a practice week. Find each person’s change first, then test whether the average change differs from zero.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 236" role="img" aria-label="Independent groups compared with paired measurements">
+          <title>Independent groups compared with paired measurements</title>
+          <text x="230" y="24" text-anchor="middle">Independent groups</text>
+          <rect x="71" y="38" width="118" height="62" rx="8" class="box"/>
+          <text x="130" y="63" text-anchor="middle">Flashcards</text>
+          <text x="130" y="84" text-anchor="middle" class="small">One group</text>
+          <rect x="271" y="38" width="118" height="62" rx="8" class="box"/>
+          <text x="330" y="63" text-anchor="middle">Writing</text>
+          <text x="330" y="84" text-anchor="middle" class="small">A different group</text>
+          <line x1="45" y1="118" x2="415" y2="118" class="axis"/>
+          <text x="230" y="145" text-anchor="middle">Paired measurements</text>
+          <rect x="71" y="158" width="118" height="62" rx="8" class="box"/>
+          <text x="130" y="183" text-anchor="middle">Mia before</text>
+          <text x="130" y="204" text-anchor="middle" class="small">70 points</text>
+          <text x="230" y="194" text-anchor="middle">→</text>
+          <rect x="271" y="158" width="118" height="62" rx="8" class="box"/>
+          <text x="330" y="183" text-anchor="middle">Mia after</text>
+          <text x="330" y="204" text-anchor="middle" class="small">76 points</text>
+        </svg>
+        <figcaption>Separate groups contain different students. In a paired design, the arrow connects the same student’s two scores.</figcaption>
+      </figure>
+
+      <h3>Compare the difference with its uncertainty</h3>
+      <p>Imagine the flashcard group averages 82 and the writing group averages 76. The estimated difference is 6 points. If its standard error is 3 points, the difference is two standard errors above zero. The test uses a <strong>t distribution</strong> to judge how unusual this is under a zero difference. Look at the confidence interval too. For a fair cause-and-effect comparison, randomly assign students to methods. An existing classroom difference could reflect something else, such as prior skill.</p>
+
+      <h3>Try it</h3>
+      <p>Mia scores 70 before practice and 76 after. Jay scores 80 before and 82 after. What two numbers go into a paired analysis?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>The changes are +6 and +2 points, with a mean change of +4. Each change belongs to one student.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>A t statistic divides the distance from the null value by the estimated standard error. Use independent observations across groups for Welch, or independent pairs for a paired test. With small samples, check for strong skew and unusual points in the groups or in the paired differences, respectively.</p>
+        <div class="formula">$$t=\frac{\text{estimated difference}-\text{null difference}}{\operatorname{SE}(\text{estimated difference})}$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch8">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch8" aria-labelledby="ch8-title">
+      <div class="meta">Chapter 08</div>
+      <h2 id="ch8-title">Analysis of Variance (ANOVA)</h2>
+      <div class="why-how-what" style="background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0 20px;font-size:15px">
+        <p style="margin:0 0 8px"><strong>Why this method?</strong> You have three or more groups and want to test whether their means are all the same, without running many separate t-tests.</p>
+        <p style="margin:0 0 8px"><strong>How to run it (R):</strong> <code>aov(distance ~ design, data = df)</code> &nbsp;·&nbsp; <strong>Python:</strong> <code>from scipy import stats; stats.f_oneway(g1, g2, g3)</code></p>
+        <p style="margin:0"><strong>What the result means:</strong> A significant F-test says at least one group mean differs. It does not tell you which groups differ — follow up with pairwise comparisons or contrasts, and report effect size (η² or ω²).</p>
+      </div>
+      <p class="chapter-intro">A paper-airplane club tests three designs. Each design has several flights. Can one test check whether the designs all have the same mean flight distance?</p>
+
+      <h3>Compare two kinds of variation</h3>
+      <p>In <strong>one-way ANOVA</strong>, one factor, airplane design, splits the flights into groups. Compare how far apart the group means are with how much individual distances vary inside each group. If group means are far apart and the flights in each group cluster tightly, the evidence for a difference is stronger. The <strong>F statistic</strong> divides the variation between groups by the variation within groups, after adjusting each for how many values can vary freely. For the flights in the picture, those adjusted amounts are 27 and 1, so F = 27.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 191" role="img" aria-label="Paper airplane flight distances by design">
+          <title>Paper airplane flight distances by design</title>
+          <text x="32" y="44" text-anchor="middle">A</text>
+          <line x1="126" y1="39" x2="416" y2="39" class="axis"/>
+          <circle cx="155" cy="39" r="5" class="primary"/>
+          <circle cx="184" cy="39" r="9" class="mean-dot"/>
+          <circle cx="213" cy="39" r="5" class="primary"/>
+          <text x="32" y="79" text-anchor="middle">B</text>
+          <line x1="126" y1="74" x2="416" y2="74" class="axis"/>
+          <circle cx="242" cy="74" r="5" class="primary"/>
+          <circle cx="271" cy="74" r="9" class="mean-dot"/>
+          <circle cx="300" cy="74" r="5" class="primary"/>
+          <text x="32" y="114" text-anchor="middle">C</text>
+          <line x1="126" y1="109" x2="416" y2="109" class="axis"/>
+          <circle cx="329" cy="109" r="5" class="primary"/>
+          <circle cx="358" cy="109" r="9" class="mean-dot"/>
+          <circle cx="387" cy="109" r="5" class="primary"/>
+          <line x1="126" y1="132" x2="416" y2="132" class="axis"/>
+          <text x="126" y="154" text-anchor="middle" class="small">2</text>
+          <text x="155" y="154" text-anchor="middle" class="small">3</text>
+          <text x="184" y="154" text-anchor="middle" class="small">4</text>
+          <text x="213" y="154" text-anchor="middle" class="small">5</text>
+          <text x="242" y="154" text-anchor="middle" class="small">6</text>
+          <text x="271" y="154" text-anchor="middle" class="small">7</text>
+          <text x="300" y="154" text-anchor="middle" class="small">8</text>
+          <text x="329" y="154" text-anchor="middle" class="small">9</text>
+          <text x="358" y="154" text-anchor="middle" class="small">10</text>
+          <text x="387" y="154" text-anchor="middle" class="small">11</text>
+          <text x="416" y="154" text-anchor="middle" class="small">12</text>
+          <text x="270" y="179" text-anchor="middle">Flight distance (meters)</text>
+        </svg>
+        <figcaption>Each dot marks a flight. The larger outlined dots also show the mean distances of 4, 7, and 10 meters for designs A, B, and C.</figcaption>
+      </figure>
+
+      <h3>Find out what a result tells you</h3>
+      <p>The null claim is that all the population means are equal. A small p-value supports the idea that at least one mean differs. To find which pairs differ, use follow-up comparisons that account for testing several pairs, such as Tukey’s method after a standard one-way ANOVA. The standard test assumes independent observations, roughly normal errors within groups, and similar group variances. Repeated flights from the same plane or pilot can call for a design or analysis that handles that dependence.</p>
+
+      <h3>Try it</h3>
+      <p>Imagine the group means are still 4, 7, and 10 meters, but flights within each group are now much more spread out. What happens to F?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>F gets smaller if the group sizes and means stay fixed. The within-group variation in the denominator gets larger.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>A mean square (MS) is a sum of squared deviations divided by its degrees of freedom. With k groups and N observations, the between-group degrees of freedom are k − 1 and the within-group degrees of freedom are N − k.</p>
+        <div class="formula">$$F=\frac{MS_{\mathrm{between}}}{MS_{\mathrm{within}}}$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch9">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch9" aria-labelledby="ch9-title">
+      <div class="meta">Chapter 09</div>
+      <h2 id="ch9-title">Correlation &amp; Simple Linear Regression</h2>
+      <div class="why-how-what" style="background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0 20px;font-size:15px">
+        <p style="margin:0 0 8px"><strong>Why this method?</strong> You want to describe the straight-line relationship between two continuous variables (correlation) or predict one from the other (regression).</p>
+        <p style="margin:0 0 8px"><strong>How to run it (R):</strong> <code>cor.test(x, y)</code> or <code>lm(y ~ x, data = df)</code> &nbsp;·&nbsp; <strong>Python:</strong> <code>scipy.stats.pearsonr(x, y)</code> or <code>statsmodels.OLS</code></p>
+        <p style="margin:0"><strong>What the result means:</strong> Correlation (r) shows direction and strength (−1 to +1). In regression, the slope is the expected change in y for a one-unit increase in x. Always check the scatterplot — a strong curve can still give a weak r.</p>
+      </div>
+      <p class="chapter-intro">Do students who practice more free throws tend to make more baskets? Give each player one dot. Put practice sessions on the bottom axis and baskets made in a ten-shot challenge on the side axis.</p>
+
+      <h3>Describe how the dots move</h3>
+      <p>A <strong>scatterplot</strong> shows two numbers for each player. <strong>Pearson correlation</strong>, called r, describes the direction and strength of a straight-line relationship. It ranges from −1 to +1. An upward pattern is positive, a downward pattern is negative, and a value near zero means a weak straight-line pattern. A strong curve can have a correlation near zero, so look at the dots first.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 238" role="img" aria-label="Baskets made versus practice sessions, with a fitted line">
+          <title>Baskets made versus practice sessions, with a fitted line</title>
+          <line x1="80" y1="180" x2="420.20000000000005" y2="180" class="axis"/>
+          <line x1="80" y1="180" x2="80" y2="27.0" class="axis"/>
+          <text x="18" y="30" text-anchor="start">Baskets</text>
+          <text x="18" y="48" text-anchor="start">made</text>
+          <text x="80" y="199" text-anchor="middle" class="small">0</text>
+          <text x="143" y="199" text-anchor="middle" class="small">1</text>
+          <text x="206" y="199" text-anchor="middle" class="small">2</text>
+          <text x="269" y="199" text-anchor="middle" class="small">3</text>
+          <text x="332" y="199" text-anchor="middle" class="small">4</text>
+          <text x="395" y="199" text-anchor="middle" class="small">5</text>
+          <text x="67" y="184" text-anchor="end" class="small">0</text>
+          <text x="67" y="148" text-anchor="end" class="small">2</text>
+          <text x="67" y="112" text-anchor="end" class="small">4</text>
+          <text x="67" y="76" text-anchor="end" class="small">6</text>
+          <text x="67" y="40" text-anchor="end" class="small">8</text>
+          <line x1="80" y1="144" x2="410.75" y2="49.5" class="strong"/>
+          <line x1="269" y1="90" x2="269" y2="72" class="guide"/>
+          <circle cx="143" cy="126" r="5" class="secondary"/>
+          <circle cx="206" cy="126" r="5" class="secondary"/>
+          <circle cx="269" cy="72" r="5" class="secondary"/>
+          <circle cx="332" cy="54" r="5" class="secondary"/>
+          <circle cx="395" cy="72" r="5" class="secondary"/>
+          <text x="260" y="62" text-anchor="end" class="small">+1 basket</text>
+          <text x="246" y="225" text-anchor="middle">Practice sessions</text>
+        </svg>
+        <figcaption>At 3 sessions the dot is at 6 baskets and the line predicts 5. The dashed segment shows the one-basket residual.</figcaption>
+      </figure>
+
+      <h3>Draw a line to make a prediction</h3>
+      <p><strong>Simple linear regression</strong> uses one predictor to estimate an outcome. Our example line predicts 2 baskets plus 1 for each practice session. The <strong>slope</strong> is the predicted change per extra session. The <strong>intercept</strong> is the prediction at zero sessions. A <strong>residual</strong> is the actual score minus the predicted score. Other factors, such as experience, could help explain the pattern. Keep predictions near the range of practice sessions you observed.</p>
+
+      <h3>Try it</h3>
+      <p>At 3 practice sessions, the line predicts 5 baskets. If a player makes 6, what is the residual?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>+1 basket, because the actual score is 6 and the predicted score is 5.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>The hat on y means a fitted value. Least squares chooses the line that minimizes the sum of squared vertical residuals.</p>
+        <div class="formula">$$\hat y=b_0+b_1x,\quad e=y-\hat y$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch10">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch10" aria-labelledby="ch10-title">
+      <div class="meta">Chapter 10</div>
+      <h2 id="ch10-title">Multiple Regression</h2>
+      <p class="chapter-intro">A teacher wants to predict a reading quiz score using both practice sets finished and hours slept. How can we describe the link with practice when students sleep for different amounts of time?</p>
+
+      <h3>Change one number at a time</h3>
+      <p><strong>Multiple regression</strong> uses two or more predictors. Imagine a model that predicts 40 points plus 2 for each practice set and 3 for each hour of sleep. With sleep fixed at 8 hours, going from 3 to 4 practice sets raises the prediction from 70 to 72. The coefficient 2 means the model predicts 2 more points per extra set <strong>holding sleep fixed</strong>. It describes a pattern in the model. A separate study design would help test whether practice causes the change.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 138" role="img" aria-label="Comparing predicted scores while keeping sleep at eight hours">
+          <title>Comparing predicted scores while keeping sleep at eight hours</title>
+          <text x="230" y="31" text-anchor="middle">Sleep stays at 8 hours</text>
+          <rect x="55" y="54" width="118" height="62" rx="8" class="box"/>
+          <text x="114" y="79" text-anchor="middle">3 practice sets</text>
+          <text x="114" y="100" text-anchor="middle" class="small">70 points</text>
+          <rect x="287" y="54" width="118" height="62" rx="8" class="box"/>
+          <text x="346" y="79" text-anchor="middle">4 practice sets</text>
+          <text x="346" y="100" text-anchor="middle" class="small">72 points</text>
+          <text x="230" y="80" text-anchor="middle">+2 points</text>
+          <text x="230" y="103" text-anchor="middle">→</text>
+        </svg>
+        <figcaption>The model’s predicted score rises from 70 to 72 when practice goes from three sets to four and sleep stays at eight hours.</figcaption>
+      </figure>
+
+      <h3>Check whether the model travels well</h3>
+      <p>Predictors sometimes overlap. If students who finish more sets almost always sleep longer, the model may struggle to separate their contributions. This is called <strong>multicollinearity</strong>. Check predictions on new data if your goal is prediction. Also look at the residuals to see whether errors show a curve or get bigger for certain predicted scores. Those patterns can signal that the model needs work.</p>
+
+      <h3>Try it</h3>
+      <p>For two predictions with the same number of practice sets, how much higher is the predicted score with 8 hours of sleep than with 7?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>3 points. The practice term stays fixed and the sleep term goes up by 3.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>Here x₁ and x₂ are the predictors. Each slope describes the fitted change for one additional unit of that predictor with the other held fixed. This additive example uses the same practice slope at every sleep value.</p>
+        <div class="formula">$$\hat y=b_0+b_1x_1+b_2x_2$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch11">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch11" aria-labelledby="ch11-title">
+      <div class="meta">Chapter 11</div>
+      <h2 id="ch11-title">Categorical Data &amp; Chi-Square</h2>
+      <p class="chapter-intro">A school club surveys 40 students about their favorite game. Each chooses chess or soccer. Do the two grades show different preferences?</p>
+
+      <h3>Put the counts in a table</h3>
+      <p>In Grade 6, 14 pick chess and 6 pick soccer. In Grade 7, 6 pick chess and 14 pick soccer. These are the <strong>observed counts</strong>. If grade and preference were independent, each grade’s 20 students would split according to the overall 20–20 preference totals. That gives an <strong>expected count</strong> of 10 in each cell. A <strong>chi-square test of independence</strong> checks how far the observed table is from that expectation.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 188" role="img" aria-label="Observed and expected chess and soccer votes by grade">
+          <title>Observed and expected chess and soccer votes by grade</title>
+          <text x="201" y="30" text-anchor="middle">Chess</text>
+          <text x="339" y="30" text-anchor="middle">Soccer</text>
+          <text x="29" y="78" text-anchor="start">Grade 6</text>
+          <text x="29" y="147" text-anchor="start">Grade 7</text>
+          <rect x="142" y="42" width="118" height="62" rx="8" class="box"/>
+          <text x="201" y="67" text-anchor="middle">14 observed</text>
+          <text x="201" y="88" text-anchor="middle" class="small">10 expected</text>
+          <rect x="280" y="42" width="118" height="62" rx="8" class="box"/>
+          <text x="339" y="67" text-anchor="middle">6 observed</text>
+          <text x="339" y="88" text-anchor="middle" class="small">10 expected</text>
+          <rect x="142" y="111" width="118" height="62" rx="8" class="box"/>
+          <text x="201" y="136" text-anchor="middle">6 observed</text>
+          <text x="201" y="157" text-anchor="middle" class="small">10 expected</text>
+          <rect x="280" y="111" width="118" height="62" rx="8" class="box"/>
+          <text x="339" y="136" text-anchor="middle">14 observed</text>
+          <text x="339" y="157" text-anchor="middle" class="small">10 expected</text>
+        </svg>
+        <figcaption>The observed counts are 14 and 6 for Grade 6 and 6 and 14 for Grade 7. Under independence, the expected count is 10 in each cell.</figcaption>
+      </figure>
+
+      <h3>Put a number on the mismatch</h3>
+      <p>For each cell, subtract expected from observed, square the gap, and divide by the expected count. Each cell here contributes 16/10 = 1.6, for a total of 6.4. This is the Pearson chi-square statistic. Larger totals are stronger evidence against independence when judged against the appropriate chi-square distribution. Use counts of independent observations with one response per person. Very small expected counts can make the usual approximation unreliable. A 2-by-2 table with small counts can use Fisher’s exact test.</p>
+
+      <h3>Try it</h3>
+      <p>If 12 of 40 students had chosen chess overall and Grade 6 still had 20 students, how many Grade 6 chess votes would you expect under independence?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>6. The overall chess share would be 12/40, so multiply that share by the 20 Grade 6 students.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>For a table with r rows and c columns, the degrees of freedom are (r − 1)(c − 1). In the formula, O is an observed count and E is its expected count under independence.</p>
+        <div class="formula">$$E=\frac{\text{row total}\times\text{column total}}{\text{grand total}},\quad \chi^2=\sum_{\mathrm{cells}}\frac{(O-E)^2}{E}$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch12">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch12" aria-labelledby="ch12-title">
+      <div class="meta">Chapter 12</div>
+      <h2 id="ch12-title">Nonparametric Methods</h2>
+      <p class="chapter-intro">Two groups rate a puzzle from 1 star to 5 stars. A 5-star rating ranks above 4 stars. The jump from 4 to 5 might feel different from the jump from 1 to 2. We can use the order of the ratings to compare groups.</p>
+
+      <h3>Swap values for their positions</h3>
+      <p>A <strong>rank</strong> is a position in a sorted list. Imagine Team A gives ratings 1, 2, 4 and Team B gives 3, 4, 5. The two 4s tie for positions 4 and 5, so each gets rank 4.5. Team A’s ranks sum to 7.5 and Team B’s sum to 13.5. The bigger rank sum for Team B suggests its ratings tend to be higher in this tiny example. A test helps judge the evidence with the sample size and ties in mind.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 167" role="img" aria-label="Ratings sorted from low to high, with team labels and ranks">
+          <title>Ratings sorted from low to high, with team labels and ranks</title>
+          <text x="25" y="40" text-anchor="start">Rating</text>
+          <text x="25" y="100" text-anchor="start">Team</text>
+          <text x="25" y="149" text-anchor="start">Rank</text>
+          <text x="108" y="40" text-anchor="middle">1</text>
+          <circle cx="108" cy="95" r="14" class="primary"/>
+          <text x="108" y="100" text-anchor="middle" class="on-fill">A</text>
+          <text x="108" y="149" text-anchor="middle">1</text>
+          <text x="166" y="40" text-anchor="middle">2</text>
+          <circle cx="166" cy="95" r="14" class="primary"/>
+          <text x="166" y="100" text-anchor="middle" class="on-fill">A</text>
+          <text x="166" y="149" text-anchor="middle">2</text>
+          <text x="224" y="40" text-anchor="middle">3</text>
+          <circle cx="224" cy="95" r="14" class="secondary"/>
+          <text x="224" y="100" text-anchor="middle" class="on-fill">B</text>
+          <text x="224" y="149" text-anchor="middle">3</text>
+          <text x="282" y="40" text-anchor="middle">4</text>
+          <circle cx="282" cy="95" r="14" class="primary"/>
+          <text x="282" y="100" text-anchor="middle" class="on-fill">A</text>
+          <text x="282" y="149" text-anchor="middle">4.5</text>
+          <text x="340" y="40" text-anchor="middle">4</text>
+          <circle cx="340" cy="95" r="14" class="secondary"/>
+          <text x="340" y="100" text-anchor="middle" class="on-fill">B</text>
+          <text x="340" y="149" text-anchor="middle">4.5</text>
+          <text x="398" y="40" text-anchor="middle">5</text>
+          <circle cx="398" cy="95" r="14" class="secondary"/>
+          <text x="398" y="100" text-anchor="middle" class="on-fill">B</text>
+          <text x="398" y="149" text-anchor="middle">6</text>
+          <line x1="282" y1="53" x2="340" y2="53" class="strong-alt"/>
+          <text x="311" y="74" text-anchor="middle" class="small">Tie</text>
+        </svg>
+        <figcaption>Both 4-star ratings get rank 4.5, the average of the two places they share.</figcaption>
+      </figure>
+
+      <h3>Choose a method that fits the design</h3>
+      <p>The <strong>Mann–Whitney</strong> or <strong>Wilcoxon rank-sum</strong> test compares two independent groups using ranks. A difference in ranks can reflect differences in where scores sit or in their distribution shapes. The <strong>Kruskal–Wallis</strong> test extends a rank comparison to several independent groups. For matched measurements, a <strong>sign test</strong> can count which direction each pair changes, or a <strong>Wilcoxon signed-rank</strong> test can use signs and ranked change sizes when its assumptions fit.</p>
+
+      <h3>Try it</h3>
+      <p>If three values tie for ranks 2, 3, and 4, what rank does each get?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>Each gets rank 3, the average of 2, 3, and 4.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>For signed ranks, discard zero differences in the usual version, rank the absolute differences, and total the ranks attached to positive changes. The standard paired test assumes the differences are independent across pairs and symmetric about zero under the null. Rank tests still depend on the sampling or assignment design.</p>
+        <div class="formula">$$W_+=\sum_{i:\,d_i>0}\operatorname{rank}(|d_i|)$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#ch13">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter" id="ch13" aria-labelledby="ch13-title">
+      <div class="meta">Chapter 13</div>
+      <h2 id="ch13-title">Effect Size, Power &amp; Putting It Together</h2>
+      <p class="chapter-intro">Two paper-airplane designs differ by 20 centimeters on average. That might matter if the club’s record is only 10 centimeters away. If the goal is to fly an extra meter, the same difference may feel small.</p>
+
+      <h3>How big is the difference?</h3>
+      <p>An <strong>effect size</strong> describes the size of a difference or relationship. A raw difference of 20 centimeters is already an effect size. A standardized difference such as <strong>Cohen’s d</strong> gives the difference in standard deviation units. If the pooled standard deviation is 40 centimeters, d = 20/40 = 0.50. An interval gives a sense of precision, and your goal helps you judge whether the difference matters.</p>
+      <figure class="lesson-figure">
+        <svg viewBox="0 0 460 166" role="img" aria-label="An illustration of 80 percent statistical power">
+          <title>An illustration of 80 percent statistical power</title>
+          <text x="230" y="27" text-anchor="middle">100 studies when the effect is real</text>
+          <rect x="38" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="58" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="78" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="98" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="118" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="138" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="158" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="178" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="198" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="218" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="238" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="258" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="278" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="298" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="318" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="338" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="358" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="378" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="398" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="418" y="42" width="12" height="11" rx="2" class="primary"/>
+          <rect x="38" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="58" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="78" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="98" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="118" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="138" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="158" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="178" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="198" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="218" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="238" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="258" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="278" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="298" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="318" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="338" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="358" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="378" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="398" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="418" y="59" width="12" height="11" rx="2" class="primary"/>
+          <rect x="38" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="58" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="78" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="98" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="118" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="138" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="158" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="178" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="198" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="218" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="238" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="258" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="278" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="298" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="318" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="338" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="358" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="378" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="398" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="418" y="76" width="12" height="11" rx="2" class="primary"/>
+          <rect x="38" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="58" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="78" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="98" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="118" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="138" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="158" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="178" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="198" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="218" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="238" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="258" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="278" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="298" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="318" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="338" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="358" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="378" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="398" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="418" y="93" width="12" height="11" rx="2" class="primary"/>
+          <rect x="38" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="58" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="78" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="98" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="118" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="138" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="158" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="178" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="198" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="218" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="238" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="258" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="278" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="298" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="318" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="338" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="358" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="378" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="398" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="418" y="110" width="12" height="11" rx="2" class="box"/>
+          <rect x="52" y="140" width="12" height="11" rx="3" class="primary"/>
+          <text x="71" y="151" text-anchor="start">80 detect it</text>
+          <rect x="244" y="140" width="12" height="11" rx="2" class="box"/>
+          <text x="263" y="151" text-anchor="start">20 miss it</text>
+        </svg>
+        <figcaption>Each square is a study. The filled squares represent 80 detections out of 100 for the effect the study was designed to find.</figcaption>
+      </figure>
+
+      <h3>How likely is the study to spot it?</h3>
+      <p><strong>Power</strong> is the chance that a planned test will reject its null claim when a particular real effect exists. If a plan has 80% power for a 20-centimeter effect, about 80 out of 100 repeated studies would detect it if that effect and the planning assumptions hold. Larger samples generally raise power for the same effect and cutoff. To plan your own study, write a question first. Decide what size of effect would matter, choose how to collect and compare the data, and pick a sample size. Then report the effect you found, its interval, and how you ran the study.</p>
+
+      <h3>Try it</h3>
+      <p>The club randomly assigns each independently built plane to one of two designs and records one distance per plane. What would you analyze and report?</p>
+      <details class="answer">
+        <summary>Show answer</summary>
+        <p>Plot both groups, compare their mean distances using a method for independent groups such as Welch’s t-test, and report the difference in centimeters with its confidence interval. Explain whether the estimated gain matters for the club’s goal.</p>
+      </details>
+      <details class="math-note">
+        <summary>Go deeper with the math</summary>
+        <p>For two independent groups, one common version of Cohen’s d divides the mean difference by the pooled sample standard deviation. Power equals one minus the chance of a missed detection, β, for the specified effect and study plan.</p>
+        <div class="formula">$$d=\frac{\bar x_1-\bar x_2}{s_{\mathrm{pooled}}},\quad \mathrm{power}=1-\beta$$</div>
+      </details>
+      <div class="chapter-links"><a href="#chapters">All chapters</a><a href="#further-reading">Further reading →</a></div>
+    </article>
+
+    <section class="chapter reading" id="further-reading" aria-labelledby="reading-title">
+      <h2 id="reading-title">Further reading</h2>
+      <ul>
+        <li><a href="https://openstax.org/details/books/introductory-statistics-2e">OpenStax Introductory Statistics 2e</a></li>
+        <li><a href="https://online.stat.psu.edu/stat501/Lesson05">Penn State on multiple linear regression</a></li>
+        <li><a href="https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf">American Statistical Association statement on p-values</a></li>
+        <li><a href="https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signrank.htm">NIST guide to the signed-rank test</a></li>
+        <li><a href="https://online.stat.psu.edu/statprogram/reviews/statistical-concepts/power-analysis">Penn State on power analysis</a></li>
+      </ul>
+    </section>
+
+    <section class="chapter coding-track" id="r-track" aria-labelledby="r-title">
+      <div class="meta">Data science project · School reading log</div>
+      <h2 id="r-title">Data Science with R</h2>
+      <p>Use R or RStudio. This track uses base R, so you can begin without installing any R packages. Run these five code chunks in order in the same session. The first chunk includes the full practice dataset.</p>
+      <ol class="coding-toc">
+        <li><a href="#r-1">Read and clean the data</a></li>
+        <li><a href="#r-2">Make a new column</a></li>
+        <li><a href="#r-3">Filter and sort rows</a></li>
+        <li><a href="#r-4">Summarize by day</a></li>
+        <li><a href="#r-5">Draw and read a bar chart</a></li>
+      </ol>
+    </section>
+
+    <article class="chapter coding-lesson" id="r-1" aria-labelledby="r-1-title">
+      <div class="meta">R · Chapter 1</div>
+      <h2 id="r-1-title">Read and clean the data</h2>
+      <p>A CSV is a table written as text. Each row in this fictional reading log is one student’s record for one day. Trim extra spaces so “ Mon ” and “Mon” match. Remove the exact duplicate, then leave out rows that lack a measurement or have a negative count. A real zero is useful data, so keep it.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 1"><code>csv_text &lt;- "student,day,minutes,pages
+A, Mon ,20,12
+A,Tue,30,18
+B,Mon,15,9
+B,Tue,25,10
+B,Tue,25,10
+C,Mon,10,0
+C,Tue,40,24
+D,Mon,0,0
+D,Tue,20,8
+E,Mon,,7
+F,Tue,12,-2"
+raw &lt;- read.csv(text = csv_text, na.strings = c("", "NA"),
+                stringsAsFactors = FALSE)
+
+clean &lt;- raw
+clean$day &lt;- trimws(clean$day)
+clean &lt;- unique(clean)
+clean &lt;- clean[complete.cases(clean) &amp;
+               clean$minutes &gt;= 0 &amp; clean$pages &gt;= 0, ]
+
+cat(nrow(raw), "raw rows;", nrow(clean), "clean rows\n")
+print(clean)</code></pre>
+      <p><strong>Check your result.</strong> You should see 11 raw rows and 8 clean rows. Student D’s Monday record stays because both recorded values are zero.</p>
+      <p><strong>Try it.</strong> Find the three rows that the cleaning rules remove. How is a blank different from zero?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-1">This chapter in Python</a><a href="#r-2">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-2" aria-labelledby="r-2-title">
+      <div class="meta">R · Chapter 2</div>
+      <h2 id="r-2-title">Make a new column</h2>
+      <p>A rate helps compare sessions of different lengths. Divide pages by minutes to find pages per minute. Calculate the rate only when reading time is greater than zero. A zero-minute record has no defined reading rate, while reading zero pages in ten minutes gives a rate of zero.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 2"><code>clean$pages_per_minute &lt;- NA_real_
+has_time &lt;- clean$minutes &gt; 0
+clean$pages_per_minute[has_time] &lt;-
+  clean$pages[has_time] / clean$minutes[has_time]
+
+print(clean[c("student", "day", "pages_per_minute")])</code></pre>
+      <p><strong>Check your result.</strong> A’s Monday rate is 12 ÷ 20 = 0.60 pages per minute. D’s Monday rate is missing, shown as NA in R and NaN in pandas.</p>
+      <p><strong>Try it.</strong> Find C’s rate on Monday. Compare it with D’s rate on that day.</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-2">This chapter in Python</a><a href="#r-3">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-3" aria-labelledby="r-3-title">
+      <div class="meta">R · Chapter 3</div>
+      <h2 id="r-3-title">Filter and sort rows</h2>
+      <p>Ask a smaller question. Which records show at least 20 minutes of reading? A filter keeps rows that match a rule. Sort the result so the longest sessions appear first. Keep this result in a new table so you can still use the full clean dataset later.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 3"><code>long_sessions &lt;- clean[clean$minutes &gt;= 20, ]
+long_sessions &lt;- long_sessions[
+  order(-long_sessions$minutes, long_sessions$student,
+        long_sessions$day), ]
+
+print(long_sessions[c("student", "day", "minutes", "pages")])</code></pre>
+      <p><strong>Check your result.</strong> Five rows pass the filter. C’s 40-minute Tuesday session comes first.</p>
+      <p><strong>Try it.</strong> Change the rule from at least 20 minutes to more than 20 minutes. How many rows remain?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-3">This chapter in Python</a><a href="#r-4">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-4" aria-labelledby="r-4-title">
+      <div class="meta">R · Chapter 4</div>
+      <h2 id="r-4-title">Summarize by day</h2>
+      <p>A group summary turns many rows into one row per group. Split the full clean table by day, count the records, and calculate the mean pages for each day. The mean is total pages divided by the number of records in that group, including the valid zero-page records.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 4"><code>daily &lt;- aggregate(pages ~ day, data = clean, FUN = mean)
+names(daily)[names(daily) == "pages"] &lt;- "mean_pages"
+counts &lt;- table(clean$day)
+daily$records &lt;- as.integer(counts[daily$day])
+
+print(daily[c("day", "records", "mean_pages")])</code></pre>
+      <p><strong>Check your result.</strong> Monday has four records and a mean of 5.25 pages. Tuesday has four records and a mean of 15 pages.</p>
+      <p><strong>Try it.</strong> Calculate Monday’s mean by hand from the four page counts. What changes if you drop the two zero-page records?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-4">This chapter in Python</a><a href="#r-5">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-5" aria-labelledby="r-5-title">
+      <div class="meta">R · Chapter 5</div>
+      <h2 id="r-5-title">Draw and read a bar chart</h2>
+      <p>A bar chart compares categories. Here each bar stands for a day and its height shows mean pages per record. Start the vertical axis at zero so the bar heights show the comparison fairly. These two days describe the reading log. You would need more data to tell whether Tuesday is usually higher.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for chapter 5"><code>bars &lt;- barplot(
+  daily$mean_pages, names.arg = daily$day,
+  ylim = c(0, 18), col = "#17628b",
+  main = "Average pages by day",
+  ylab = "Mean pages per record", xlab = "Day"
+)
+text(bars, daily$mean_pages, labels = daily$mean_pages, pos = 3)</code></pre>
+      <p><strong>Check your result.</strong> The Tuesday bar reaches 15 pages and the Monday bar reaches 5.25. The gap is 9.75 pages per record.</p>
+      <p><strong>Try it.</strong> Make a second chart that shows the mean minutes by day. Do the two charts tell the same story about which day was higher?</p>
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-5">This chapter in Python</a><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">R 
+    <section class="chapter coding-track" id="r-adv" aria-labelledby="r-adv-title">
+      <div class="meta">Advanced · Tidyverse & easy stats</div>
+      <h2 id="r-adv-title">Tidyverse & Simple Mediation</h2>
+      <p>These short lessons use the tidyverse (dplyr + ggplot2) for cleaner code and show how to run a very simple mediation analysis. Install the packages once with <code>install.packages(c("tidyverse", "broom"))</code>. The example is a tiny fictional study of practice, confidence, and quiz score.</p>
+      <ol class="coding-toc">
+        <li><a href="#r-adv-1">Tidy a small dataset</a></li>
+        <li><a href="#r-adv-2">Summarize and plot with dplyr & ggplot2</a></li>
+        <li><a href="#r-adv-3">Simple mediation (practice → confidence → score)</a></li>
+      </ol>
+    </section>
+
+    <article class="chapter coding-lesson" id="r-adv-1" aria-labelledby="r-adv-1-title">
+      <div class="meta">R · Advanced 1</div>
+      <h2 id="r-adv-1-title">Tidy a small dataset</h2>
+      <p>Imagine six students. Each practiced for a different number of minutes, reported how confident they felt (1–10), and then took a short quiz (0–20). We will keep the data in a tidy data frame so later steps stay simple.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for advanced chapter 1"><code>library(tidyverse)
+
+students <- tibble(
+  student = c("A","B","C","D","E","F"),
+  practice_min = c(10, 20, 15, 30, 25, 40),
+  confidence = c(4, 6, 5, 8, 7, 9),
+  quiz_score = c(8, 12, 10, 16, 14, 18)
+)
+
+print(students)</code></pre>
+      <p><strong>Check your result.</strong> You should see a 6-row table. Student F practiced the longest (40 min) and scored the highest (18).</p>
+      <p><strong>Try it.</strong> Add a new column called <code>practice_hours</code> that divides minutes by 60. Which student practiced more than half an hour?</p>
+      <div class="chapter-links"><a href="#r-adv">All advanced chapters</a><a href="#r-adv-2">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-adv-2" aria-labelledby="r-adv-2-title">
+      <div class="meta">R · Advanced 2</div>
+      <h2 id="r-adv-2-title">Summarize and plot with dplyr & ggplot2</h2>
+      <p>Tidyverse verbs make summaries and plots easier to read. Here we calculate the mean quiz score and draw a simple scatterplot of practice time versus quiz score.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for advanced chapter 2"><code># Mean quiz score
+students %>%
+  summarise(mean_score = mean(quiz_score))
+
+# Scatterplot
+ggplot(students, aes(x = practice_min, y = quiz_score)) +
+  geom_point(size = 3, color = "#17628b") +
+  geom_smooth(method = "lm", se = FALSE, color = "#b05020") +
+  labs(title = "Practice minutes and quiz score",
+       x = "Practice (minutes)", y = "Quiz score") +
+  theme_minimal()</code></pre>
+      <p><strong>Check your result.</strong> The mean quiz score is 13. The points rise from left to right — more practice tends to go with higher scores in this tiny sample.</p>
+      <p><strong>Try it.</strong> Change the plot so the x-axis is confidence instead of practice minutes. Does the upward pattern still appear?</p>
+      <div class="chapter-links"><a href="#r-adv">All advanced chapters</a><a href="#r-adv-1">← Previous</a><a href="#r-adv-3">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="r-adv-3" aria-labelledby="r-adv-3-title">
+      <div class="meta">R · Advanced 3</div>
+      <h2 id="r-adv-3-title">Simple mediation (practice → confidence → score)</h2>
+      <p>Mediation asks: does practice improve the quiz score partly because it raises confidence? We run three ordinary linear models and look at the numbers in plain language.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code for advanced chapter 3"><code>library(broom)
+
+# 1. Total effect: practice → score
+total <- lm(quiz_score ~ practice_min, data = students)
+tidy(total)
+
+# 2. Practice → confidence (the mediator)
+a_path <- lm(confidence ~ practice_min, data = students)
+tidy(a_path)
+
+# 3. Practice + confidence → score
+full <- lm(quiz_score ~ practice_min + confidence, data = students)
+tidy(full)</code></pre>
+      <p><strong>How to read it (simply).</strong></p>
+      <ul>
+        <li>The coefficient of <code>practice_min</code> in the first model is the total effect.</li>
+        <li>The coefficient of <code>practice_min</code> in the second model shows how much confidence rises with each extra minute of practice (path a).</li>
+        <li>In the third model, the coefficient of <code>confidence</code> is path b. The coefficient of <code>practice_min</code> that remains is the direct effect. The indirect (mediated) effect is roughly a × b.</li>
+      </ul>
+      <p>In this tiny example the numbers will be large because the sample is only six students — the goal is to see the pattern, not to draw real conclusions.</p>
+      <p><strong>Check your result.</strong> You should see positive coefficients for practice in all models and a positive coefficient for confidence in the full model. The practice coefficient gets smaller once confidence is added — that is the classic mediation pattern.</p>
+      <p><strong>Try it.</strong> Print the three models with <code>summary()</code> instead of <code>tidy()</code>. Which number is the easiest to explain to a friend?</p>
+      <div class="chapter-links"><a href="#r-adv">All advanced chapters</a><a href="#r-adv-2">← Previous</a><a href="#r-track">Back to beginner R track</a></div>
+    </article>
+
+reference →</a></div>
+    </article>
+
+    <section class="chapter coding-track" id="py-track" aria-labelledby="py-title">
+      <div class="meta">Data science project · School reading log</div>
+      <h2 id="py-title">Data Science with Python</h2>
+      <p>Use Python or a Jupyter notebook. Install pandas and Matplotlib with <code>python -m pip install pandas matplotlib</code> in a terminal. Run these five code chunks in order in the same session. The first chunk includes the full practice dataset.</p>
+      <ol class="coding-toc">
+        <li><a href="#py-1">Read and clean the data</a></li>
+        <li><a href="#py-2">Make a new column</a></li>
+        <li><a href="#py-3">Filter and sort rows</a></li>
+        <li><a href="#py-4">Summarize by day</a></li>
+        <li><a href="#py-5">Draw and read a bar chart</a></li>
+      </ol>
+    </section>
+
+    <article class="chapter coding-lesson" id="py-1" aria-labelledby="py-1-title">
+      <div class="meta">Python · Chapter 1</div>
+      <h2 id="py-1-title">Read and clean the data</h2>
+      <p>A CSV is a table written as text. Each row in this fictional reading log is one student’s record for one day. Trim extra spaces so “ Mon ” and “Mon” match. Remove the exact duplicate, then leave out rows that lack a measurement or have a negative count. A real zero is useful data, so keep it.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 1"><code>from io import StringIO
+import pandas as pd
+
+csv_text = """student,day,minutes,pages
+A, Mon ,20,12
+A,Tue,30,18
+B,Mon,15,9
+B,Tue,25,10
+B,Tue,25,10
+C,Mon,10,0
+C,Tue,40,24
+D,Mon,0,0
+D,Tue,20,8
+E,Mon,,7
+F,Tue,12,-2"""
+raw = pd.read_csv(StringIO(csv_text))
+
+clean = raw.assign(day=raw["day"].str.strip())
+clean = clean.drop_duplicates().dropna()
+clean = clean.loc[
+    (clean["minutes"] &gt;= 0) &amp; (clean["pages"] &gt;= 0)
+].copy()
+clean = clean.astype({"minutes": "int64", "pages": "int64"})
+
+print(len(raw), "raw rows;", len(clean), "clean rows")
+print(clean)</code></pre>
+      <p><strong>Check your result.</strong> You should see 11 raw rows and 8 clean rows. Student D’s Monday record stays because both recorded values are zero.</p>
+      <p><strong>Try it.</strong> Find the three rows that the cleaning rules remove. How is a blank different from zero?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-1">This chapter in R</a><a href="#py-2">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-2" aria-labelledby="py-2-title">
+      <div class="meta">Python · Chapter 2</div>
+      <h2 id="py-2-title">Make a new column</h2>
+      <p>A rate helps compare sessions of different lengths. Divide pages by minutes to find pages per minute. Calculate the rate only when reading time is greater than zero. A zero-minute record has no defined reading rate, while reading zero pages in ten minutes gives a rate of zero.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 2"><code>has_time = clean["minutes"] &gt; 0
+clean["pages_per_minute"] = clean["pages"].div(
+    clean["minutes"].where(has_time)
+)
+
+print(clean[["student", "day", "pages_per_minute"]])</code></pre>
+      <p><strong>Check your result.</strong> A’s Monday rate is 12 ÷ 20 = 0.60 pages per minute. D’s Monday rate is missing, shown as NA in R and NaN in pandas.</p>
+      <p><strong>Try it.</strong> Find C’s rate on Monday. Compare it with D’s rate on that day.</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-2">This chapter in R</a><a href="#py-3">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-3" aria-labelledby="py-3-title">
+      <div class="meta">Python · Chapter 3</div>
+      <h2 id="py-3-title">Filter and sort rows</h2>
+      <p>Ask a smaller question. Which records show at least 20 minutes of reading? A filter keeps rows that match a rule. Sort the result so the longest sessions appear first. Keep this result in a new table so you can still use the full clean dataset later.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 3"><code>long_sessions = clean.loc[clean["minutes"] &gt;= 20].sort_values(
+    ["minutes", "student", "day"], ascending=[False, True, True]
+)
+
+print(long_sessions[["student", "day", "minutes", "pages"]])</code></pre>
+      <p><strong>Check your result.</strong> Five rows pass the filter. C’s 40-minute Tuesday session comes first.</p>
+      <p><strong>Try it.</strong> Change the rule from at least 20 minutes to more than 20 minutes. How many rows remain?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-3">This chapter in R</a><a href="#py-4">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-4" aria-labelledby="py-4-title">
+      <div class="meta">Python · Chapter 4</div>
+      <h2 id="py-4-title">Summarize by day</h2>
+      <p>A group summary turns many rows into one row per group. Split the full clean table by day, count the records, and calculate the mean pages for each day. The mean is total pages divided by the number of records in that group, including the valid zero-page records.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 4"><code>daily = clean.groupby("day", as_index=False).agg(
+    records=("pages", "size"),
+    mean_pages=("pages", "mean"),
+)
+
+print(daily)</code></pre>
+      <p><strong>Check your result.</strong> Monday has four records and a mean of 5.25 pages. Tuesday has four records and a mean of 15 pages.</p>
+      <p><strong>Try it.</strong> Calculate Monday’s mean by hand from the four page counts. What changes if you drop the two zero-page records?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-4">This chapter in R</a><a href="#py-5">Next chapter →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="py-5" aria-labelledby="py-5-title">
+      <div class="meta">Python · Chapter 5</div>
+      <h2 id="py-5-title">Draw and read a bar chart</h2>
+      <p>A bar chart compares categories. Here each bar stands for a day and its height shows mean pages per record. Start the vertical axis at zero so the bar heights show the comparison fairly. These two days describe the reading log. You would need more data to tell whether Tuesday is usually higher.</p>
+      <pre class="code-sample" tabindex="0" aria-label="Python code for chapter 5"><code>import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(6, 4))
+bars = ax.bar(daily["day"], daily["mean_pages"], color="#17628b")
+ax.set(title="Average pages by day", xlabel="Day",
+       ylabel="Mean pages per record", ylim=(0, 18))
+ax.bar_label(bars, padding=3)
+fig.tight_layout()
+plt.show()</code></pre>
+      <p><strong>Check your result.</strong> The Tuesday bar reaches 15 pages and the Monday bar reaches 5.25. The gap is 9.75 pages per record.</p>
+      <p><strong>Try it.</strong> Make a second chart that shows the mean minutes by day. Do the two charts tell the same story about which day was higher?</p>
+      <div class="chapter-links"><a href="#py-track">All Python chapters</a><a href="#r-5">This chapter in R</a><a href="https://pandas.pydata.org/docs/user_guide/index.html">Python reference →</a></div>
+    </article>
+  </div>
+</main>
+<footer><div class="footer-grid"><div><h2>Let’s connect.</h2><p>University of Houston · Houston, Texas</p></div><div class="social"><a href="mailto:tjroy@cougarnet.uh.edu">Email</a><a href="https://www.linkedin.com/in/tamaljoytiroy/" target="_blank">LinkedIn</a><a href="https://github.com/tjroy1997" target="_blank">GitHub</a></div></div></footer>
+
+</body>
+</html>
+
