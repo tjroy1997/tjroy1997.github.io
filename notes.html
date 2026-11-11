@@ -79,6 +79,7 @@
     .first-analysis caption{text-align:left;font-weight:700;margin-bottom:6px}
     .first-analysis th,.first-analysis td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}
     .first-analysis th{background:var(--paper)}
+    @media(max-width:400px){.first-analysis th,.first-analysis td{padding-inline:5px}}
     .learning-pages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:28px}
     .learning-page{display:flex;gap:15px;align-items:flex-start;border:1px solid var(--line);border-radius:15px;background:var(--card);padding:19px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
     .learning-page:hover{border-color:var(--accent);transform:translateY(-2px)}
@@ -129,6 +130,7 @@
       <a href="#first-analysis">Try your first analysis</a>
       <a href="#chapters">Browse statistics lessons</a>
       <a href="#r-track">Learn with R</a>
+      <a href="#penguins-project">Analyze real penguin data</a>
       <a href="#py-track">Learn with Python</a>
     </div>
   </header>
@@ -1008,7 +1010,7 @@
         <li><a href="#r-4">Summarize by day</a></li>
         <li><a href="#r-5">Draw and read a bar chart</a></li>
       </ol>
-      <p><a href="#r-adv">Continue with tidyverse and mediation</a></p>
+      <p><a href="#penguins-project">Next project: analyze real penguin data with tidyverse</a></p>
     </section>
 
     <article class="chapter coding-lesson" id="r-1" aria-labelledby="r-1-title">
@@ -1101,7 +1103,90 @@ print(daily[c("day", "records", "mean_pages")])</code></pre>
 text(bars, daily$mean_pages, labels = daily$mean_pages, pos = 3)</code></pre>
       <p><strong>Check your result.</strong> The Tuesday bar reaches 15 pages and the Monday bar reaches 5.25. The gap is 9.75 pages per record.</p>
       <p><strong>Try it.</strong> Make a second chart that shows the mean minutes by day. Do the two charts tell the same story about which day was higher?</p>
-      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-5">This chapter in Python</a><a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">R 
+      <div class="chapter-links"><a href="#r-track">All R chapters</a><a href="#py-5">This chapter in Python</a><a href="#penguins-project">Next project →</a></div>
+    </article>
+
+    <article class="chapter coding-lesson" id="penguins-project" aria-labelledby="penguins-title">
+      <h2 id="penguins-title">Do penguin species have different flipper lengths?</h2>
+      <p>Start with measurements from 344 penguins observed near Palmer Station, Antarctica. Each row represents one penguin. For this question, we need two columns: the species and the flipper length in millimeters.</p>
+      <p>Data collected by Kristen Gorman and Palmer Station Antarctica LTER. The lesson uses the simplified Palmer Penguins dataset (CC0). <a href="https://allisonhorst.github.io/palmerpenguins/">Dataset documentation and citation</a> · <a href="https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv">Open the CSV</a></p>
+
+      <h3>1. Load the data</h3>
+      <p>Use R 4.1 or newer for the built-in pipe <code>|&gt;</code>. Install tidyverse once, then run these blocks in order. Tidyverse gives us readr to import the CSV, dplyr to work with the table, and ggplot2 to draw the chart.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code to load the penguin data"><code># Run this once if tidyverse is not installed:
+# install.packages("tidyverse")
+library(tidyverse)
+
+csv_url &lt;- paste0(
+  "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/",
+  "main/inst/extdata/penguins.csv"
+)
+penguins &lt;- read_csv(csv_url, show_col_types = FALSE)
+glimpse(penguins)</code></pre>
+
+      <h3>2. Keep the columns and rows you need</h3>
+      <p>Read <code>|&gt;</code> as “then.” Start with the penguin table, then choose two columns with <code>select()</code>, then keep rows with a recorded flipper length using <code>filter()</code>. A missing length is stored as <code>NA</code>.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code to clean the penguin data"><code>flippers &lt;- penguins |&gt;
+  select(species, flipper_length_mm) |&gt;
+  filter(!is.na(flipper_length_mm))
+
+nrow(penguins)  # 344 rows before filtering
+nrow(flippers)  # 342 rows after filtering</code></pre>
+      <p>Two rows are missing a flipper measurement. We can still use penguins with a missing value in another column, such as sex, because this comparison only needs species and flipper length.</p>
+
+      <h3>3. Compare counts, means, and medians</h3>
+      <p>Use <code>group_by()</code> to make one group per species. Within each group, <code>n()</code> counts penguins, <code>mean()</code> finds the average, and <code>median()</code> finds the middle of the sorted lengths.</p>
+      <pre class="code-sample" tabindex="0" aria-label="R code to summarize flipper lengths by species"><code>by_species &lt;- flippers |&gt;
+  group_by(species) |&gt;
+  summarise(
+    n_penguins = n(),
+    mean_mm = mean(flipper_length_mm),
+    median_mm = median(flipper_length_mm),
+    .groups = "drop"
+  ) |&gt;
+  arrange(desc(mean_mm))
+
+by_species</code></pre>
+      <div class="first-analysis">
+        <table>
+          <caption>Flipper length by species, means rounded to one decimal</caption>
+          <thead><tr><th scope="col">Species</th><th scope="col">Count</th><th scope="col">Mean (mm)</th><th scope="col">Median (mm)</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Gentoo</th><td>123</td><td>217.2</td><td>216</td></tr>
+            <tr><th scope="row">Chinstrap</th><td>68</td><td>195.8</td><td>196</td></tr>
+            <tr><th scope="row">Adelie</th><td>151</td><td>190.0</td><td>190</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4. Draw the chart with ggplot2</h3>
+      <p>Give <code>ggplot()</code> the summary table. Map species to the horizontal axis and mean length to the vertical axis. <code>geom_col()</code> draws one bar at each computed mean. In ggplot2, <code>+</code> adds a chart layer.</p>
+      <pre class="code-sample" tabindex="0" aria-label="ggplot2 code for a flipper length bar chart"><code>by_species |&gt;
+  ggplot(aes(x = reorder(species, -mean_mm), y = mean_mm)) +
+  geom_col(fill = "#17628b", width = 0.65) +
+  labs(
+    title = "Average flipper length by penguin species",
+    x = "Species",
+    y = "Mean flipper length (mm)"
+  ) +
+  theme_minimal()</code></pre>
+      <p><strong>What the chart tells us.</strong> In this sample, Gentoo penguins had the longest flippers on average. A bar shows the group average, so use a boxplot of individual measurements to see how much lengths vary and overlap.</p>
+
+      <h3>Try it yourself</h3>
+      <p>Change the chart to show <code>median_mm</code>. Update the species order, title, and vertical-axis label. Does the ranking change?</p>
+      <details>
+        <summary>Check your answer</summary>
+        <p>The ranking stays the same. Gentoo has the highest median (216 mm), followed by Chinstrap (196 mm) and Adelie (190 mm).</p>
+      </details>
+
+      <h3>More real datasets to practice with</h3>
+      <ul>
+        <li><a href="https://jennybc.github.io/gapminder/">Gapminder country data</a>. Pick one country and plot its life expectancy over time.</li>
+        <li><a href="https://nycflights13.tidyverse.org/">New York City flights in 2013</a>. Compare median departure delays by airport using flights with a recorded delay.</li>
+      </ul>
+      <div class="chapter-links"><a href="#r-track">Back to the R lessons</a><a href="#r-adv">Continue to tidyverse and mediation →</a></div>
+    </article>
+
     <section class="chapter coding-track" id="r-adv" aria-labelledby="r-adv-title">
       <div class="meta">Advanced · Tidyverse & easy stats</div>
       <h2 id="r-adv-title">Tidyverse & Simple Mediation</h2>
@@ -1137,7 +1222,7 @@ print(students)</code></pre>
       <h2 id="r-adv-2-title">Summarize and plot with dplyr & ggplot2</h2>
       <p>Tidyverse verbs make summaries and plots easier to read. Here we calculate the mean quiz score and draw a simple scatterplot of practice time versus quiz score.</p>
       <pre class="code-sample" tabindex="0" aria-label="R code for advanced chapter 2"><code># Mean quiz score
-students %>%
+students |&gt;
   summarise(mean_score = mean(quiz_score))
 
 # Scatterplot
