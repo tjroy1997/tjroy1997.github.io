@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Stats & Data Science Notes by Tamal Joyti Roy — 13 chapters covering core statistical methods and formulas.">
-  <title>Stats & Data Science Notes | Tamal Joyti Roy</title>
+  <meta name="description" content="Try a no-code reading-log example, explore statistics in plain language, and practice analyzing data with R or Python.">
+  <title>Learn Data Analysis | Tamal Joyti Roy</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
@@ -75,6 +75,10 @@
       padding:14px 16px;max-width:100%;overflow-x:auto;color:var(--ink);line-height:1.55;tab-size:2}
     .code-sample code{font:inherit;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.875rem}
   
+    .first-analysis table{border-collapse:collapse;width:100%;max-width:460px;margin:16px 0}
+    .first-analysis caption{text-align:left;font-weight:700;margin-bottom:6px}
+    .first-analysis th,.first-analysis td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}
+    .first-analysis th{background:var(--paper)}
     .learning-pages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:28px}
     .learning-page{display:flex;gap:15px;align-items:flex-start;border:1px solid var(--line);border-radius:15px;background:var(--card);padding:19px;text-decoration:none;color:var(--ink);transition:border-color .2s,transform .2s}
     .learning-page:hover{border-color:var(--accent);transform:translateY(-2px)}
@@ -87,7 +91,7 @@
 </style>
 </head>
 <body>
-<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="index.html#work">Experience</a><a href="index.html#publications">Publications</a><a href="notes.html">Notes</a><a href="index.html#gallery">Gallery</a><a href="index.html#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="Menu">☰</button></div></div></nav>
+<nav><div class="wrap"><a class="brand" href="index.html">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks"><a href="index.html#work">Experience</a><a href="index.html#publications">Publications</a><a href="notes.html" aria-current="page">Learn Data Analysis</a><a href="index.html#gallery">Gallery</a><a href="index.html#contact">Contact</a></div><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">☾</button><button class="menu-toggle" id="menuToggle" type="button" aria-controls="navlinks" aria-expanded="false" aria-label="Menu">☰</button></div></div></nav>
 <script>
 (function(){
   var menuBtn=document.getElementById('menuToggle');
@@ -119,26 +123,42 @@
 </script>
 <main>
   <header class="page-header wrap">
-    <div class="kicker" style="color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700">Writing</div>
-    <h1>Stats & Data Science Notes</h1>
-    <p>Learn statistics through coins, games, school surveys, and paper airplanes. Start with a story, read a picture, and try a short question. Open the math notes when you’re ready for the formulas.</p>
-    <div style="background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:18px 20px;margin:20px 0 8px;max-width:640px">
-      <strong style="display:block;margin-bottom:6px;color:var(--green)">Why this method · How to run it · What the result means</strong>
-      <span style="color:var(--muted);font-size:15px">Most tutorials skip these three questions. For the key methods below you’ll find a short answer to each before the deeper explanation.</span>
-    </div>
-    <div class="coding-jump" aria-label="Coding tracks"><a href="#r-track">Learn data science with R</a><a href="#r-adv">Tidyverse & mediation</a><a href="#py-track">Learn data science with Python</a></div>
-    <div class="learning-pages" aria-label="Additional interactive learning resources">
-      <a class="learning-page" href="math-symbols.html">
-        <span class="learning-icon" aria-hidden="true">∑</span>
-        <span><span class="learning-label">Foundations · K–12</span><strong>Math Symbols &amp; Formulas</strong><small>155 explanations and 74 symbols, searchable by grade—with worked examples.</small><span class="learning-arrow">Explore mathematics →</span></span>
-      </a>
-      <a class="learning-page" href="method-finder.html">
-        <span class="learning-icon" aria-hidden="true">ƒ</span>
-        <span><span class="learning-label">Interactive decision guide</span><strong>Statistical Method Finder</strong><small>Describe your data, explore suitable statistical tests, and get R starting code.</small><span class="learning-arrow">Find a method →</span></span>
-      </a>
+    <h1>Learn data analysis</h1>
+    <p>Start with a question, look at the data, and explain what you found. Each statistics lesson uses a familiar example, with formulas available when you’re ready.</p>
+    <div class="coding-jump" aria-label="Learning paths">
+      <a href="#first-analysis">Try your first analysis</a>
+      <a href="#chapters">Browse statistics lessons</a>
+      <a href="#r-track">Learn with R</a>
+      <a href="#py-track">Learn with Python</a>
     </div>
   </header>
   <div class="wrap">
+    <article class="chapter first-analysis" id="first-analysis" aria-labelledby="first-analysis-title">
+      <h2 id="first-analysis-title">Your first analysis</h2>
+      <p>Four students kept a reading log. Here’s how many pages each student recorded on Monday and Tuesday. The log is fictional.</p>
+      <table>
+        <caption>Pages read by each student</caption>
+        <thead><tr><th scope="col">Student</th><th scope="col">Monday</th><th scope="col">Tuesday</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">A</th><td>12</td><td>18</td></tr>
+          <tr><th scope="row">B</th><td>9</td><td>10</td></tr>
+          <tr><th scope="row">C</th><td>0</td><td>24</td></tr>
+          <tr><th scope="row">D</th><td>0</td><td>8</td></tr>
+        </tbody>
+      </table>
+      <h3>Which day did the group read more?</h3>
+      <p>Add the pages in each column. Compare the two totals, then write a sentence about what you found.</p>
+      <details>
+        <summary>Check your answer</summary>
+        <p>Monday’s total was 21 pages. Tuesday’s total was 60 pages. These four students read 39 more pages on Tuesday. The log tells us how many pages they read on each day. To explain why they read more on Tuesday, we’d need more information.</p>
+      </details>
+      <div class="chapter-links">
+        <a href="#ch1">Next, learn about averages →</a>
+        <a href="#r-track">Analyze the full log in R</a>
+        <a href="#py-track">Analyze the full log in Python</a>
+      </div>
+    </article>
+
     <nav class="toc" id="chapters" aria-labelledby="chapters-title">
       <h2 id="chapters-title">Chapters</h2>
       <ol>
@@ -156,6 +176,16 @@
         <li><a href="#ch12">Nonparametric Methods</a></li>
         <li><a href="#ch13">Effect Size, Power &amp; Putting It Together</a></li>
       </ol>
+      <div class="learning-pages" aria-label="Additional interactive learning resources">
+        <a class="learning-page" href="math-symbols.html">
+          <span class="learning-icon" aria-hidden="true">∑</span>
+          <span><span class="learning-label">Foundations · K–12</span><strong>Math Symbols &amp; Formulas</strong><small>155 explanations and 74 symbols, searchable by grade—with worked examples.</small><span class="learning-arrow">Explore mathematics →</span></span>
+        </a>
+        <a class="learning-page" href="method-finder.html">
+          <span class="learning-icon" aria-hidden="true">ƒ</span>
+          <span><span class="learning-label">Interactive decision guide</span><strong>Statistical Method Finder</strong><small>Describe your data, explore suitable statistical tests, and get R starting code.</small><span class="learning-arrow">Find a method →</span></span>
+        </a>
+      </div>
     </nav>
 
     <article class="chapter" id="ch1" aria-labelledby="ch1-title">
@@ -978,6 +1008,7 @@
         <li><a href="#r-4">Summarize by day</a></li>
         <li><a href="#r-5">Draw and read a bar chart</a></li>
       </ol>
+      <p><a href="#r-adv">Continue with tidyverse and mediation</a></p>
     </section>
 
     <article class="chapter coding-lesson" id="r-1" aria-labelledby="r-1-title">

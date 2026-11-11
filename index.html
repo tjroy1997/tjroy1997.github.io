@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Tamal Joyti Roy — doctoral student in quantitative methods, psychometrics, digital health, and learning sciences at the University of Houston.">
+  <meta name="description" content="Learn data analysis with Tamal Joyti Roy. Try a no-code example, learn statistics in plain language, and practice with R or Python.">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>Tamal Joyti Roy | Quantitative Researcher</title>
-  <!-- cache-bust: 2026-11-10T15:48Z -->
+  <title>Tamal Joyti Roy | Learn Data Analysis</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
   <style>
@@ -23,7 +22,7 @@
     .nav-group-label{display:none;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:16px 14px 4px}
     .menu-toggle,.theme-toggle{background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:18px}
     .menu-toggle{display:none}
-    @media(max-width:760px){
+    @media(max-width:1050px){
       .menu-toggle{display:grid}
       .navlinks{display:none;position:absolute;top:72px;left:0;right:0;background:var(--card);border-bottom:1px solid var(--line);flex-direction:column;padding:12px 16px 24px;gap:4px;z-index:19;max-height:calc(100dvh - 72px);overflow-y:auto}
       .navlinks.open{display:flex}
@@ -39,6 +38,21 @@
     .section-head h2{font:600 36px Newsreader,serif;margin:0 0 12px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:12px}
   
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+    .hero .about{max-width:65ch;color:var(--muted);margin-bottom:0}
+    .learning-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+    .learning-grid .card{display:flex;flex-direction:column;margin:0}
+    .learning-grid h3{margin:0;font:600 24px Newsreader,serif}
+    .learning-grid p{color:var(--muted);margin:8px 0 16px}
+    .learning-grid a{font-weight:700;color:var(--accent);margin-top:auto;text-underline-offset:3px}
+    .learning-tools{display:flex;flex-wrap:wrap;gap:8px 20px;margin:22px 0 0;padding:0;list-style:none}
+    .learning-tools a{text-underline-offset:3px}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    [data-theme="dark"] .btn.primary{color:#0f1613;background:#85c7b2;border-color:#85c7b2}
+    @media(max-width:1150px){.navlinks{gap:4px}.navlinks a{padding-inline:6px}}
+    @media(max-width:1050px){.hero{padding:52px 0 40px}}
+    @media(max-width:620px){.learning-grid{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
     .visitor-strip{background:#103a30;color:#d5e1dc;text-align:center;padding:14px 20px;border-top:1px solid rgba(255,255,255,.1);font-size:13px}
     .visitor-strip img{display:inline-block;vertical-align:middle;height:22px;margin-left:8px}
     
@@ -46,6 +60,11 @@
 </head>
 <body>
 <nav><div class="wrap"><a class="brand" href="#top">Tamal Joyti Roy</a><div class="nav-right"><div class="navlinks" id="navlinks">
+  <div class="nav-group-label">Learn</div>
+  <a href="notes.html">Learn Data Analysis</a>
+  <a href="tools.html">Tools</a>
+  <a href="snippets.html">Snippets</a>
+  <a href="playground.html">Playground</a>
   <div class="nav-group-label">Academic</div>
   <a href="#work">Experience</a>
   <a href="#publications">Publications</a>
@@ -53,26 +72,21 @@
   <a href="#awards">Awards</a>
   <a href="#posters">Posters</a>
   <a href="#impact">Impact</a>
-  <div class="nav-group-label">Resources</div>
-  <a href="notes.html">Notes</a>
-  <a href="tools.html">Tools</a>
-  <a href="snippets.html">Snippets</a>
-  <a href="playground.html">Playground</a>
   <div class="nav-group-label">Personal</div>
   <a href="#gallery">Gallery</a>
   <a href="social.html">Updates</a>
   <div class="nav-group-label">About</div>
   <a href="#education">Education</a>
   <a href="#contact">Contact</a>
-</div><button class="theme-toggle" id="themeToggle">☾</button><button class="menu-toggle" id="menuToggle">☰</button></div></div></nav>
+</div><button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">☾</button><button class="menu-toggle" id="menuToggle" type="button" aria-label="Menu" aria-controls="navlinks" aria-expanded="false">☰</button></div></div></nav>
 <script>
 (function(){
   var menuBtn=document.getElementById('menuToggle'),nav=document.getElementById('navlinks');
-  function setMenu(o){nav.classList.toggle('open',o);menuBtn.textContent=o?'✕':'☰';}
+  function setMenu(o){nav.classList.toggle('open',o);menuBtn.setAttribute('aria-expanded',String(o));menuBtn.textContent=o?'✕':'☰';}
   menuBtn.onclick=function(){setMenu(!nav.classList.contains('open'))};
   nav.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
   var t=document.getElementById('themeToggle');
-  function setTheme(th){document.documentElement.setAttribute('data-theme',th);t.textContent=th==='dark'?'☀':'☾';}
+  function setTheme(th){document.documentElement.setAttribute('data-theme',th);t.textContent=th==='dark'?'☀':'☾';t.setAttribute('aria-pressed',String(th==='dark'));}
   var s;try{s=localStorage.getItem('theme')}catch{};
   setTheme(s|| (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
   t.onclick=function(){var th=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';setTheme(th);try{localStorage.setItem('theme',th)}catch{}};
@@ -80,22 +94,41 @@
 </script>
 <main id="top">
   <header class="hero wrap">
-    <div class="eyebrow" style="color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">Quantitative researcher · Educator · Data scientist</div>
-    <h1>Research at the intersection of education, health & data science.</h1>
-    <p class="lead">I'm a doctoral student in Measurement, Quantitative Methods & Learning Sciences at the University of Houston. With a background in computer science and machine learning, I bring computational and psychometric methods to questions of student motivation, engagement, and digital health.</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
-      <a class="btn primary" href="notes.html">Open Notes →</a>
-      <a class="btn" href="tools.html">Tools →</a>
-      <a class="btn" href="playground.html">Playground →</a>
-      <a class="btn" href="TJR_CV.pdf" target="_blank">View CV ↗</a>
+    <h1>Learn data analysis, one question at a time.</h1>
+    <p class="lead">Start with a small table. Learn how to spot a pattern, make a chart, and explain what you found. You can do your first analysis right here, with no coding or software to install.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="notes.html#first-analysis">Start your first analysis →</a>
+      <a class="btn" href="#learning">Browse lessons</a>
+      <a class="btn" href="TJR_CV.pdf" target="_blank" rel="noopener">View my CV ↗</a>
     </div>
+    <p class="about">I’m Tamal Joyti Roy, a doctoral student in Measurement, Quantitative Methods &amp; Learning Sciences at the University of Houston. My research focuses on student motivation, engagement, and digital health.</p>
   </header>
-  <section id="learning"><div class="wrap"><div class="section-head"><h2>For data people</h2></div>
-    <div class="card"><strong>Notes</strong> — 13 statistics chapters + R & Python data science tracks<br><a href="notes.html" style="color:var(--green);font-weight:700">Open notes.html →</a></div>
-    <div class="card"><strong>Tools</strong> — BMI, unit converter, Cohen’s d, effect size converter, confidence intervals, sample size, R²<br><a href="tools.html" style="color:var(--green);font-weight:700">Open tools.html →</a></div>
-    <div class="card"><strong>Code Snippets</strong> — Copy-paste R and Python for cleaning, modeling, effect sizes, plots<br><a href="snippets.html" style="color:var(--green);font-weight:700">Open snippets.html →</a></div>
-    <div class="card"><strong>Data Playground</strong> — Paste a small CSV and get instant summary statistics<br><a href="playground.html" style="color:var(--green);font-weight:700">Open playground.html →</a></div>
-    <div class="card"><strong>Method Finder</strong> & <strong>Math Symbols</strong><br><a href="method-finder.html" style="color:var(--green);font-weight:700">Method finder →</a> · <a href="math-symbols.html" style="color:var(--green);font-weight:700">Math symbols →</a></div>
+  <section id="learning"><div class="wrap">
+    <div class="section-head"><h2>Choose what to learn</h2></div>
+    <div class="learning-grid">
+      <article class="card">
+        <h3>Statistics in plain language</h3>
+        <p>Learn what an average tells you, how to compare groups, and how to make sense of uncertainty.</p>
+        <a href="notes.html#ch1">Start with averages →</a>
+      </article>
+      <article class="card">
+        <h3>Data analysis with R</h3>
+        <p>Clean a reading log, summarize the data, and draw a chart using base R.</p>
+        <a href="notes.html#r-track">Explore the R project →</a>
+      </article>
+      <article class="card">
+        <h3>Data analysis with Python</h3>
+        <p>Work through the same reading-log project using pandas and Matplotlib.</p>
+        <a href="notes.html#py-track">Explore the Python project →</a>
+      </article>
+    </div>
+    <ul class="learning-tools" aria-label="Practice tools and references">
+      <li><a href="method-finder.html">Find a statistical method</a></li>
+      <li><a href="playground.html">Explore your own data</a></li>
+      <li><a href="math-symbols.html">Look up a math symbol</a></li>
+      <li><a href="tools.html">Use statistical calculators</a></li>
+      <li><a href="snippets.html">Find a code example</a></li>
+    </ul>
   </div></section>
   <section id="work"><div class="wrap"><div class="section-head"><h2>Current work</h2></div>
     <div class="card"><strong>Research Assistant</strong> · Tilman J. Fertitta Family College of Medicine<br><span style="color:var(--muted)">Preparing quantitative datasets and supporting psychometric analyses.</span></div>
